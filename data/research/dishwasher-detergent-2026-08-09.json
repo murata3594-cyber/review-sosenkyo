@@ -1,0 +1,200 @@
+{
+  "topic_id": "dishwasher-detergent-2026-08-09",
+  "topic": "食洗機用洗剤",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "公開レビューから共通する使用感・不満・評価が割れる点だけを要約し、原文は保存・大量転載しない",
+    "dynamic_values": "レビュー件数・評価・価格・在庫は変動するため確認日を必ず表示する"
+  },
+  "products": [
+    {
+      "id": "finish-power-cube-l",
+      "name": "フィニッシュ 凝縮パワーキューブ",
+      "brand": "Finish",
+      "format": "タブレット",
+      "official_source": "https://www.finishinfo.jp/lineup/tablet/index.html",
+      "official_facts": [
+        "フィルム付きタブレットで、食洗機にそのまま入れるタイプ",
+        "メーカー公式ではギトギト汚れへの洗浄力と99.9%除菌を訴求。除菌試験条件の注記あり"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/343fc138cfb563bb2dd08a343f73a769/",
+      "review_snapshot": {
+        "rating": 4.71,
+        "count": 819,
+        "checked_at": "2026-08-09"
+      },
+      "usage_trends": [
+        "計量不要で投入しやすいという評価が目立つ",
+        "油汚れの落ち方と日常使いの手軽さを評価する声がある",
+        "まとめ買い・継続利用の言及が多い"
+      ],
+      "tradeoffs": [
+        "粉末タイプより1回あたりコストを高く感じる人がいる",
+        "食器量に応じて洗剤量を細かく調整しにくい"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "joy-geltab-76",
+      "name": "ジョイ ジェルタブ 76P",
+      "brand": "JOY",
+      "format": "ジェルタブ",
+      "official_source": "https://www.myrepi.com/brands/joy/geltab_76p_refill_review/",
+      "official_facts": [
+        "ジェルと粉末の2種類の洗浄成分を組み合わせたジェルタブ",
+        "公式ではこびりつき・油汚れ・茶渋などの3大汚れを主な対象としている",
+        "ポンと置くだけの投入方式"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/8a37405bdb79f40eebda094cadc38857/review/",
+      "review_snapshot": {
+        "rating": 4.73,
+        "count": 155,
+        "checked_at": "2026-08-09"
+      },
+      "usage_trends": [
+        "洗浄力の強さを評価する声が目立つ",
+        "魚料理などのニオイ残りを抑えたという評価がある",
+        "粉末から切り替えた利用者から、計量不要の手軽さを評価する声がある"
+      ],
+      "tradeoffs": [
+        "開封時の香りを強く感じるという声がある",
+        "タブレット系のため使用量の微調整はしにくい"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "joy-powder",
+      "name": "食洗機用 ジョイ 粉末タイプ",
+      "brand": "JOY",
+      "format": "粉末",
+      "official_source": "https://www.myrepi.com/home/cleaning/joy-pwd-gel/",
+      "official_facts": [
+        "粉末タイプで食器量に合わせて使用量を調整できる",
+        "公式では食器・庫内の洗浄と消臭を訴求"
+      ],
+      "review_source": "https://review.rakuten.co.jp/review/item/1/261122_10573944/1.1/",
+      "review_snapshot": {
+        "rating": 4.53,
+        "count": 80,
+        "checked_at": "2026-08-09"
+      },
+      "usage_trends": [
+        "長期継続利用のレビューが確認できる",
+        "詰め替え量や日常的な使いやすさを評価する声がある",
+        "油汚れの落ち方を評価する声がある"
+      ],
+      "tradeoffs": [
+        "タブレットより投入時の計量作業が必要",
+        "使用頻度が高い家庭では表示上の使用期間より早く消費するという声がある"
+      ],
+      "evidence_strength": "medium_high"
+    },
+    {
+      "id": "finish-powder-lemon",
+      "name": "フィニッシュ パウダー レモン",
+      "brand": "Finish",
+      "format": "粉末",
+      "official_source": "https://www.finishinfo.jp/lineup/lemon/",
+      "official_facts": [
+        "粉末タイプでメーカー目安は1回約4.5g",
+        "メーカー公式では予洗い不要の洗浄力と99.9%除菌を訴求。除菌試験条件の注記あり",
+        "レモンの香り"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/c8d6b864e5dfd12ca143698a98bfee97/",
+      "review_snapshot": {
+        "rating": 4.77,
+        "count": 30,
+        "checked_at": "2026-08-09"
+      },
+      "usage_trends": [
+        "コストを重視する利用者に選ばれやすい",
+        "量を調整できることを利点として挙げる声がある",
+        "洗浄力と香りのバランスを評価する声がある"
+      ],
+      "tradeoffs": [
+        "毎回の計量が必要",
+        "粉末の取り扱いを手間と感じる人には向きにくい"
+      ],
+      "evidence_strength": "medium"
+    },
+    {
+      "id": "kyukyutto-clear-powder",
+      "name": "食器洗い乾燥機専用 キュキュット クリア除菌 粉末タイプ",
+      "brand": "キュキュット",
+      "format": "粉末",
+      "official_source": "https://www.kao.com/jp/qa/detail/37843/",
+      "official_facts": [
+        "2025年秋に『クエン酸効果』から『クリア除菌 粉末タイプ』へ名称・パッケージ変更",
+        "花王公式では中身の変更はないと案内",
+        "花王は粉末タイプを茶渋・コーヒー渋などのくすみが気になる場合に推奨"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/be789b608515ce1dd751e8eb452f0e0a/",
+      "review_snapshot": {
+        "rating": 4.8,
+        "count": 5,
+        "checked_at": "2026-08-09"
+      },
+      "usage_trends": [
+        "洗浄力を評価するレビューが確認できる",
+        "粉末派から安定した使い心地を評価する声がある",
+        "液体よりコスパがよいと感じる利用者がいる"
+      ],
+      "tradeoffs": [
+        "現行パッケージの商品レビュー母数がまだ少ない",
+        "粉末が指先につく点を気にする声がある"
+      ],
+      "evidence_strength": "low_medium"
+    },
+    {
+      "id": "crysta-clear-ex",
+      "name": "CHARMY クリスタ クリアEXジェル",
+      "brand": "CHARMY クリスタ",
+      "format": "ジェル",
+      "official_source": "https://crysta.lion.co.jp/product/",
+      "official_facts": [
+        "2026年4月15日に改良新発売された現行ジェル",
+        "通常汚れ5.5g、汚れが多い場合11gがメーカー目安",
+        "計量キャップ付きで、卓上・ビルトインタイプに対応"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/a10a540efdfea6c83241c6b287b380b4/",
+      "review_snapshot": {
+        "rating": 0.0,
+        "count": 0,
+        "checked_at": "2026-08-09"
+      },
+      "usage_trends": [],
+      "tradeoffs": [
+        "2026年改良品はレビュー母数が不足しており、現段階で口コミベースの順位付けは行わない"
+      ],
+      "evidence_strength": "official_only"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason_overall_not_selected": "現行商品のレビュー母数に大きな差があり、単純な平均評価で総合順位を決めると母数の少ない商品を過大評価するため",
+    "use_case_winners": [
+      {
+        "label": "手軽さ重視",
+        "product_id": "joy-geltab-76",
+        "reason": "計量不要のジェルタブで、洗浄力に関するレビュー母数も十分"
+      },
+      {
+        "label": "定番・レビュー母数重視",
+        "product_id": "finish-power-cube-l",
+        "reason": "今回確認した中でレビュー母数が最も大きく、投入の手軽さに関する評価が安定"
+      },
+      {
+        "label": "粉末・コスト調整重視",
+        "product_id": "finish-powder-lemon",
+        "reason": "粉末で使用量を調整でき、メーカーの1回使用量目安も明確"
+      },
+      {
+        "label": "新製品・ジェル派の注目枠",
+        "product_id": "crysta-clear-ex",
+        "reason": "2026年改良品で公式仕様は明確だが、レビュー不足のため順位ではなく注目枠とする"
+      }
+    ]
+  }
+}
