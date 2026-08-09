@@ -1,0 +1,77 @@
+{
+  "topic_id": "food-wrap-30cm-50m-2026-08-09",
+  "topic": "食品用ラップ 30cm×50m",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "comparison_scope": "家庭用30cm×50m、ポリ塩化ビニリデン製の定番2ブランド",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、密着・切りやすさ・箱の扱いやすさ・保存用途の共通傾向のみ要約",
+    "rating_limit": "現行30cm×50mのレビュー母数がサランラップ7件、NEWクレラップ353件と大きく異なるため平均評価の絶対順位は付けない"
+  },
+  "products": [
+    {
+      "id": "saran-wrap-30-50",
+      "name": "サランラップ 30cm×50m",
+      "maker": "旭化成ホームプロダクツ",
+      "official_source": "https://www.asahi-kasei.co.jp/saran/products/saranwrap/",
+      "official_facts": [
+        "幅30cm×長さ50m",
+        "ポリ塩化ビニリデン製",
+        "耐熱温度140℃、耐冷温度-60℃",
+        "酸素や水蒸気を通しにくく、におい移りを抑えやすいバリア性を特徴とする",
+        "電子レンジ加熱・冷凍保存に対応。油性食品を直接包んで電子レンジ加熱しない等の注意がある",
+        "刃の取り外しや箱の分別性を考慮したパッケージ設計"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/ab9604ed94e5a8377a53fc69c9eeaa6c/",
+      "review_snapshot": {"rating": 4.71, "count": 7, "scope": "楽天商品価格ナビ 30cm×50m単品", "checked_at": "2026-08-09"},
+      "additional_review_context": {"rating": 5.0, "count": 11, "scope": "Joshin楽天 30cm×50m単品", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "密着性と食品保存の安心感を理由に長期利用するレビューがある",
+        "電子レンジから冷凍まで幅広く使う定番用途が多い",
+        "箱の分解・刃の取り外しやすさを評価する声がある"
+      ],
+      "tradeoffs": [
+        "現行30cm×50m単品の楽天商品価格ナビのレビュー母数は7件と小さい",
+        "薄さ・張り・切り味の好みはブランド間で分かれやすい"
+      ],
+      "evidence_strength": "medium_high"
+    },
+    {
+      "id": "new-kurewrap-30-50",
+      "name": "NEWクレラップ レギュラー 30cm×50m",
+      "maker": "クレハ",
+      "official_source": "https://kurelife.jp/products/newkrewrap/",
+      "official_facts": [
+        "幅30cm×長さ50m",
+        "ポリ塩化ビニリデン製",
+        "耐熱温度140℃、耐冷温度-60℃",
+        "酸素を通しにくく水分を逃がしにくいバリア性を特徴とする",
+        "V字刃のクレハカットで中央から切れやすい設計",
+        "フラップ・巻き戻り防止ストッパーなど箱の扱いやすさを工夫",
+        "電子レンジ・冷凍保存に対応。油性食品の加熱などは注意事項に従う"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/47804a9aba4cdcb047c5e312c41b19ca/review/",
+      "review_snapshot": {"rating": 4.74, "count": 353, "scope": "楽天商品価格ナビ NEWクレラップ レギュラー30cm×50m", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "V字刃で切りやすい、箱を握ってカットしやすいという評価がある",
+        "皿や容器への密着性を評価する継続利用者が多い",
+        "冷凍・電子レンジを含む日常用途で長く使うレビューが多い"
+      ],
+      "tradeoffs": [
+        "切り味やラップの張り・コシは個人の慣れで好みが分かれる",
+        "安価なポリエチレン系ラップより価格を高く感じる利用者がいる"
+      ],
+      "evidence_strength": "high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "基本素材・耐熱耐冷・用途が非常に近く、サランラップの現行単品レビュー母数が小さいため平均評価で総合順位を付けない",
+    "use_case_winners": [
+      {"label": "レビュー母数・V字刃の切りやすさ重視", "product_id": "new-kurewrap-30-50"},
+      {"label": "箱の分別・刃の取り外しやすさを重視", "product_id": "saran-wrap-30-50"},
+      {"label": "食品保存のバリア性・電子レンジ・冷凍を幅広く使う", "products": ["saran-wrap-30-50", "new-kurewrap-30-50"]}
+    ]
+  }
+}
