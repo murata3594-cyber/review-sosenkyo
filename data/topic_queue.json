@@ -14,6 +14,7 @@
     {"id":"T006","topic":"生ごみ用防臭袋","status":"PUBLISHED_INITIAL","article":"article-odor-proof-bags.html","research":"data/research/odor-proof-food-waste-bags-2026-08-09.json","next_action":"add direct-comparison evidence only if comparable test conditions become available"},
     {"id":"T007","topic":"システムトイレ用シート","status":"PUBLISHED_INITIAL","article":"article-system-toilet-sheets.html","research":"data/research/system-toilet-sheets-2026-08-09.json","next_action":"periodic official specification and review recheck"},
     {"id":"T008","topic":"システムトイレ用シート 複数ねこ用","status":"PUBLISHED_INITIAL","article":"article-multi-cat-sheets.html","research":"data/research/multi-cat-system-toilet-sheets-2026-08-09.json","next_action":"periodic review recheck and compare new multi-cat products"},
-    {"id":"T009","topic":"ペットシーツ レギュラーサイズ","status":"RESEARCHING","comparison_axes":["吸収","尿戻り","厚さ","1枚単価","レビュー母数"],"next_action":"standardize size and usage class before product comparison"}
+    {"id":"T009","topic":"高吸収ペットシーツ レギュラー","status":"PUBLISHED_INITIAL","article":"article-pet-sheets-regular.html","research":"data/research/pet-sheets-regular-2026-08-09.json","next_action":"periodic review and SKU recheck"},
+    {"id":"T010","topic":"薄型ペットシーツ レギュラー","status":"RESEARCHING","comparison_axes":["1枚単価","吸収","薄さ","枚数","交換頻度","レビュー母数"],"next_action":"standardize regular size and one-use class before product comparison"}
   ]
 }
