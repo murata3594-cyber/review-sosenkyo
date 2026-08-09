@@ -1,0 +1,30 @@
+{
+  "topic_id": "toilet-cleaning-sheets-2026-08-09",
+  "topic": "流せるトイレ掃除シート",
+  "researched_at": "2026-08-09",
+  "status": "HOLD_RENEWAL",
+  "hold_reason": "主要比較候補のキレキラ！トイレクリーナー現行品が2026年7月製造終了で、2026年10月1日に防汚コート成分入りリニューアル品が発売予定。現時点で記事を公開すると短期間で旧製品比較になるため保留。",
+  "current_findings": [
+    {
+      "name": "トイレクイックル 容器入10枚",
+      "maker": "花王",
+      "official_source": "https://www.kao.com/jp/qa/detail/16295/",
+      "review_source": "https://product.rakuten.co.jp/product/-/5cf3528e9d895daa180fe9e618d54355/review/",
+      "review_snapshot": {"rating": 4.58, "count": 82, "checked_at": "2026-08-09"},
+      "facts": ["厚手で丈夫", "便器から床まで使用", "除菌・抗菌・ウイルス除去を訴求", "使用後は1枚ずつトイレへ流す"]
+    },
+    {
+      "name": "キレキラ！トイレクリーナー 現行品",
+      "maker": "大王製紙",
+      "official_source": "https://www.elleair.jp/product/detail/clean_kirekira_cleanfloral",
+      "facts": ["2026年7月製造終了", "厚手の立体凸凹シート", "セルロースナノファイバー配合", "1枚ずつ大の水量で流す"]
+    },
+    {
+      "name": "キレキラ！トイレクリーナー 2026年10月リニューアル品",
+      "maker": "大王製紙",
+      "official_source": "https://www.elleair.jp/product/detail/kirekira_12_0015",
+      "facts": ["2026年10月1日リニューアル発売予定", "防汚コート成分を新配合", "汚れを付きにくく・落としやすくする設計"]
+    }
+  ],
+  "resume_condition": "2026-10-01以降、リニューアル品の現行SKU・公式仕様・レビュー蓄積を再確認して比較を再開する"
+}
