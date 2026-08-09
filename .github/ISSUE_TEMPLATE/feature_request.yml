@@ -1,0 +1,23 @@
+name: 改善・機能追加
+description: HP改善、記事機能、分析機能などの提案を記録します
+title: "[Feature] "
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目的
+      description: 何を改善したいかを記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: 変更内容
+      description: 実装イメージや必要条件を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 完了条件
+      description: 何を満たせば完了かを記載してください。
