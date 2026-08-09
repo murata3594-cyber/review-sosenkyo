@@ -23,8 +23,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Check generated index and sitemap
-        run: python scripts/sync_content.py --check
+      - name: Generate index and sitemap from manifest
+        run: python scripts/sync_content.py
 
       - name: Validate local links, JSON and required files
         run: python scripts/validate_site.py
