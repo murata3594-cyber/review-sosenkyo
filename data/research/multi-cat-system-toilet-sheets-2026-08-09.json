@@ -1,0 +1,60 @@
+{
+  "topic_id": "multi-cat-system-toilet-sheets-2026-08-09",
+  "topic": "猫2匹以上向けシステムトイレシート",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "policy": {
+    "raw_review_text_stored": false,
+    "compatibility": "デオトイレ、ニャンとも清潔トイレとも各ブランドの専用シートを基本とする",
+    "review_scope_note": "商品・店舗・ケース販売でレビュー集計単位が異なるため、平均点の横断順位は付けない"
+  },
+  "products": [
+    {
+      "id": "deotoilet-standard-sheet",
+      "name": "デオトイレ 消臭・抗菌シート",
+      "type": "単頭用",
+      "official_source": "https://jp.unicharmpet.com/ja/products/cat/toiletcare-deotoilet-4520699613443.html",
+      "official_facts": ["愛猫1頭・体重8kgまでで1週間分の尿を吸収する目安", "4枚・10枚・20枚", "白色シート"],
+      "review_snapshot": {"rating": 4.66, "count": 184, "scope": "楽天24 10枚入", "checked_at": "2026-08-09"}
+    },
+    {
+      "id": "deotoilet-multi-sheet",
+      "name": "デオトイレ 複数ねこ用消臭・抗菌シート",
+      "type": "複数ねこ用",
+      "official_source": "https://jp.unicharmpet.com/ja/products/cat/toiletcare-deotoilet-4520699612415.html",
+      "official_facts": ["1枚で愛猫2頭分のオシッコ1週間分を強力に消臭・吸収する目安", "8枚・16枚", "超吸収タイプ", "白色シート", "銀イオン配合・ニオイ菌99.9%抑制を訴求（規定試験）"],
+      "review_source": "https://review.rakuten.co.jp/item/1/261122_10503945/1.1/",
+      "review_snapshot": {"rating": 4.84, "count": 51, "scope": "楽天24 8枚入", "checked_at": "2026-08-09"},
+      "usage_trends": ["2匹飼育で吸収・消臭を評価するレビューがある", "1匹でも通常品より吸収余裕を求めて選ぶ利用者がいる"],
+      "tradeoffs": ["単頭用より1枚あたり価格が高くなりやすい", "1匹で2週間使えるという公式保証ではない"]
+    },
+    {
+      "id": "nyantomo-standard-sheet",
+      "name": "ニャンとも清潔トイレ 脱臭・抗菌シート",
+      "type": "通常用",
+      "official_source": "https://products.st-c.co.jp/detail/16149/",
+      "official_facts": ["愛猫1頭で約1週間", "愛猫2頭で約3〜4日", "4枚・8枚・12枚", "白色シート"],
+      "review_snapshot": {"rating": 4.63, "count": 8, "scope": "楽天24 12枚入", "checked_at": "2026-08-09"}
+    },
+    {
+      "id": "nyantomo-multi-sheet",
+      "name": "ニャンとも清潔トイレ 脱臭・抗菌シート 複数ねこ用",
+      "type": "複数ねこ用",
+      "official_source": "https://products.st-c.co.jp/detail/16148/",
+      "official_facts": ["愛猫2頭で1枚約1週間", "愛猫3頭で約4〜5日", "愛猫4頭で約3〜4日", "8枚入", "超吸収・超脱臭タイプ", "白色シート", "愛猫1頭で2週間使用できるシートではないと公式明記"],
+      "review_source": "https://product.rakuten.co.jp/product/-/d039134a1932725695fa65fe455ae34f/",
+      "review_snapshot": {"rating": 4.83, "count": 42, "scope": "楽天商品価格ナビ 8枚×4個", "checked_at": "2026-08-09"},
+      "usage_trends": ["多頭飼育で吸収力を評価するレビューがある", "週1回程度の交換サイクルを便利とする声がある"],
+      "tradeoffs": ["単頭用より単価は高くなりやすい", "1頭飼育で交換周期を2週間へ延長する用途ではない"]
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "use_case_winners": [
+      {"label": "猫1匹", "recommendation": "各ブランドの通常シートを基本"},
+      {"label": "猫2匹で週1回交換を目指す", "recommendation": "各ブランドの複数ねこ用シート"},
+      {"label": "猫3〜4匹", "recommendation": "複数ねこ用でも公式交換目安を短縮。尿量に応じさらに早める"}
+    ],
+    "key_point": "複数ねこ用は単頭用を単に長持ちさせる製品ではなく、多頭分の尿量を吸収するための高吸収タイプ"
+  }
+}
