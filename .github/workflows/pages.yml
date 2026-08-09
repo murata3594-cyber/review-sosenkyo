@@ -25,6 +25,8 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Check generated index and sitemap
+        run: python scripts/sync_content.py --check
       - name: Validate site
         run: python scripts/validate_site.py
 
