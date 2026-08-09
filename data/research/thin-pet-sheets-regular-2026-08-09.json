@@ -1,0 +1,117 @@
+{
+  "topic_id": "thin-pet-sheets-regular-2026-08-09",
+  "topic": "薄型ペットシーツ レギュラー",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "comparison_scope": "レギュラー約44〜45×32〜34cm、薄型・こまめな交換向けを中心に比較",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、1回交換・吸収・薄さ・保管・使い勝手の共通傾向のみ要約",
+    "price": "価格は変動が大きいため固定比較値として保存しない",
+    "rating_limit": "販売サイトごとにレビュー集計範囲が異なるため平均点の絶対順位は付けない"
+  },
+  "products": [
+    {
+      "id": "iris-ultrathin-regular-1200",
+      "name": "アイリスオーヤマ 超薄型ペットシーツ レギュラー 1200枚",
+      "maker": "アイリスオーヤマ",
+      "official_source": "https://www.irisplaza.co.jp/index.php?KB=SHOSAI&SID=210914",
+      "official_facts": [
+        "レギュラー約44×32.5cm",
+        "1200枚（300枚×4袋）",
+        "綿状パルプ、抗菌ポリマー、ポリエチレン",
+        "吸収面は薄水色",
+        "超薄型・大量ストック向け"
+      ],
+      "review_source": "https://www.irisplaza.co.jp/index.php?KB=SHOSAI&SID=210914",
+      "review_snapshot": {"rating": 4.75, "count": 339, "scope": "アイリスプラザ レギュラー/ワイド同一ページ", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "こまめに交換するため大容量が便利という評価がある",
+        "薄型で保管時の省スペース性を評価する利用者がいる",
+        "1回ごとに交換する家庭との相性が良い"
+      ],
+      "tradeoffs": [
+        "レビューはレギュラーとワイドが同一ページに含まれる",
+        "高吸収厚型のように複数回使用する設計ではない"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "askul-lohaco-thin-regular-160",
+      "name": "ASKUL / LOHACO限定 ペットシーツ レギュラー 薄型 国産 160枚",
+      "maker": "アスクル",
+      "official_source": "https://lohaco.yahoo.co.jp/store/h-lohaco/item/x331459/",
+      "official_facts": [
+        "レギュラー・薄型・国産",
+        "160枚",
+        "LOHACOオリジナル商品"
+      ],
+      "review_source": "https://lohaco.yahoo.co.jp/store/h-lohaco/item/x331459/",
+      "review_snapshot": {"rating": 4.53, "count": 1431, "scope": "LOHACO商品ページ表示。販売単位バリエーションを含む", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "1回排尿ごとに交換する家庭で使いやすいというレビューがある",
+        "薄すぎる格安品より吸収に安心感があるという評価がある",
+        "国産・大容量・日常交換用として継続利用する声が多い"
+      ],
+      "tradeoffs": [
+        "高吸収厚型と比べると複数回排尿には向きにくい",
+        "吸収面の色や薄さは健康チェック・犬の好みによって評価が分かれる"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "charm-original-thin-regular-160",
+      "name": "チャームオリジナル 国産ペットシーツ 薄型レギュラー 160枚",
+      "maker": "チャーム",
+      "official_source": "https://www.shopping-charm.jp/category/2c2c2c2c-2c2c-3430-3235-363030303030",
+      "official_facts": [
+        "レギュラー45×34cm",
+        "160枚",
+        "国産",
+        "1回交換タイプ"
+      ],
+      "review_source": "https://www.shopping-charm.jp/category/2c2c2c2c-2c2c-3430-3235-363030303030",
+      "review_snapshot": {"rating": 4.5916667, "count": 120, "scope": "チャーム商品一覧の単品表示", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "1回交換タイプとして日常的に使う購入者がいる",
+        "45×34cmのレギュラーサイズが明示され比較しやすい",
+        "国産の薄型をまとめて使いたい層に向く"
+      ],
+      "tradeoffs": [
+        "厚型の吸収余裕を求める家庭には向きにくい",
+        "レビュー母数はASKUL商品より小さい"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "kojima-deodorizing-gel-thin-regular-180",
+      "name": "コジマ 脱臭ゼリーシーツ 薄型タイプ レギュラー 180枚",
+      "maker": "コジマ",
+      "official_source": "https://online-store.pets-kojima.com/Form/Product/ProductDetail.aspx?cat=023031&pid=21062461&shop=0",
+      "official_facts": [
+        "レギュラー34×45cm",
+        "180枚",
+        "日本製",
+        "シーツ1枚で1回しか排尿しない犬や頻繁に交換する家庭向けと公式に案内",
+        "高分子吸収材を使用"
+      ],
+      "review_snapshot": {"rating": null, "count": 0, "scope": "公式単品ページでは評価母数を確認できず", "checked_at": "2026-08-09"},
+      "usage_trends": [],
+      "tradeoffs": [
+        "現行薄型180枚単品のレビュー母数が十分に確認できないため、口コミ順位には使用しない",
+        "公式仕様上の1回交換向け候補として紹介"
+      ],
+      "evidence_strength": "official_only"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "レビュー集計範囲が異なり、薄型商品は価格と交換回数の影響が大きいため総合順位より運用スタイルで選ぶ方が適切",
+    "use_case_winners": [
+      {"label": "大量ストック・交換頻度重視", "product_id": "iris-ultrathin-regular-1200"},
+      {"label": "レビュー母数・日常1回交換", "product_id": "askul-lohaco-thin-regular-160"},
+      {"label": "寸法明示・国産160枚", "product_id": "charm-original-thin-regular-160"},
+      {"label": "公式が1回交換用途を明示", "product_id": "kojima-deodorizing-gel-thin-regular-180"}
+    ]
+  }
+}
