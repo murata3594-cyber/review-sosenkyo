@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://murata3594-cyber.github.io/review-sosenkyo/sitemap.xml
