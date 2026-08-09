@@ -6,50 +6,11 @@
     "dynamic_data": "Review counts, ratings, price and stock require checked_at."
   },
   "topics": [
-    {
-      "id": "T001",
-      "topic": "食洗機用洗剤",
-      "status": "PUBLISHED_INITIAL",
-      "article": "article.html",
-      "research": "data/research/dishwasher-detergent-2026-08-09.json",
-      "next_action": "recheck current SKU and review counts before major update"
-    },
-    {
-      "id": "T002",
-      "topic": "ドラム式洗濯槽クリーナー",
-      "status": "PUBLISHED_INITIAL",
-      "article": "article-washer-cleaner.html",
-      "research": "data/research/drum-washer-cleaner-2026-08-09.json",
-      "next_action": "recheck review counts and manufacturer guidance periodically"
-    },
-    {
-      "id": "T003",
-      "topic": "システムトイレ用猫砂・チップ",
-      "status": "PUBLISHED_INITIAL",
-      "article": "article-cat-litter.html",
-      "research": "data/research/system-toilet-cat-litter-2026-08-09.json",
-      "next_action": "add more current Deotoilet/Nyantomo variants only when review volume is sufficient"
-    },
-    {
-      "id": "T004",
-      "topic": "浄水器交換カートリッジ",
-      "status": "RESEARCHING",
-      "comparison_axes": ["互換性", "交換周期", "年間費用", "交換しやすさ"],
-      "next_action": "split into compatible filter families before product comparison"
-    },
-    {
-      "id": "T005",
-      "topic": "キッチンスポンジ",
-      "status": "DISCOVERED",
-      "comparison_axes": ["泡立ち", "水切れ", "耐久", "価格"],
-      "next_action": "identify products with sufficient review volume"
-    },
-    {
-      "id": "T006",
-      "topic": "防臭ゴミ袋",
-      "status": "DISCOVERED",
-      "comparison_axes": ["防臭", "厚さ", "破れにくさ", "1枚単価"],
-      "next_action": "identify comparable size and volume class"
-    }
+    {"id":"T001","topic":"食洗機用洗剤","status":"PUBLISHED_INITIAL","article":"article.html","research":"data/research/dishwasher-detergent-2026-08-09.json","next_action":"recheck current SKU and review counts before major update"},
+    {"id":"T002","topic":"ドラム式洗濯槽クリーナー","status":"PUBLISHED_INITIAL","article":"article-washer-cleaner.html","research":"data/research/drum-washer-cleaner-2026-08-09.json","next_action":"recheck review counts and manufacturer guidance periodically"},
+    {"id":"T003","topic":"システムトイレ用猫砂・チップ","status":"PUBLISHED_INITIAL","article":"article-cat-litter.html","research":"data/research/system-toilet-cat-litter-2026-08-09.json","next_action":"add more current variants only when review volume is sufficient"},
+    {"id":"T004","topic":"BRITA MAXTRA PRO交換カートリッジ","status":"PUBLISHED_INITIAL","article":"article-brita-maxtra-pro.html","research":"data/research/brita-maxtra-pro-2026-08-09.json","next_action":"recheck review counts and official filtration specifications periodically"},
+    {"id":"T005","topic":"キッチンスポンジ","status":"RESEARCHING","comparison_axes":["泡立ち","水切れ","耐久","研磨性","価格"],"next_action":"verify comparable current products and sufficient review volume"},
+    {"id":"T006","topic":"防臭ゴミ袋","status":"DISCOVERED","comparison_axes":["防臭","厚さ","破れにくさ","1枚単価"],"next_action":"identify comparable size and volume class"}
   ]
 }
