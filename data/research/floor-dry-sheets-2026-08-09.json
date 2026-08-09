@@ -1,0 +1,74 @@
+{
+  "topic_id": "floor-dry-sheets-2026-08-09",
+  "topic": "フロア用ドライシート",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "comparison_scope": "家庭用フロアワイパーへ装着する標準的なドライシート",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、髪の毛・ホコリ・ペット毛・粒ゴミ・拭き心地の共通傾向のみ要約",
+    "rating_limit": "レビュー母数365件対47件で差が大きいため、平均点4.55対4.89をそのまま性能順位にはしない"
+  },
+  "products": [
+    {
+      "id": "quickle-dry-sheet-40",
+      "name": "クイックルワイパー 立体吸着ドライシート 40枚",
+      "maker": "花王",
+      "official_source": "https://www.kao.com/jp/qa/detail/16288/",
+      "official_facts": [
+        "ふっくらとした凸凹シートで細かいホコリ・髪の毛・ペットの毛をミクロ繊維の間にからめ取る",
+        "約50万本のミクロ繊維の立体構造を採用",
+        "両面使用可能",
+        "1枚両面で6畳の部屋を約10〜12回掃除できるメーカー目安",
+        "フローリング・ビニール床・畳に使用可能。畳は目に沿って拭く"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/c9d19935ca14a8e4ca7b00436841bef9/",
+      "review_snapshot": {"rating": 4.55, "count": 365, "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "髪の毛や細かいホコリを日常的に取りやすいという評価が多い",
+        "掃除機を出すほどではない時のこまめな掃除に使うレビューが多い",
+        "両面を使いながら何度か掃除できる点を評価する利用者がいる"
+      ],
+      "tradeoffs": [
+        "毛足の長い起毛タイプほど溝や粒ゴミを包み込む構造ではない",
+        "楽天レビューには配送・袋破損など商品性能と関係しない不満が混ざるため除外が必要"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "wave-floor-dry-36",
+      "name": "ウェーブ フロア用ドライシート 36枚",
+      "maker": "ユニ・チャーム",
+      "official_source": "https://item.rakuten.co.jp/unicharm/100990/",
+      "official_facts": [
+        "最長1.5cmのロング毛束ファイバーで溝に入った微細なホコリ・髪の毛を巻き込む設計",
+        "ゴミとりポケットで砂粒・パンくずなど粒ゴミを捕集する設計",
+        "抗菌EXファイバーで取ったホコリの菌の増殖を抑制すると案内。すべての菌を抑制するものではない",
+        "各社共通タイプで各種フロアワイパーに使用可能",
+        "両面使用可能"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/c891e9cc0ce2c9f2fcd8ce448ecfbf1d/",
+      "review_snapshot": {"rating": 4.89, "count": 47, "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "髪の毛・ペット毛・細かいホコリを絡め取りやすいという評価が目立つ",
+        "ふわふわした厚みと長い繊維を使いやすいとする声がある",
+        "掃除機を使いにくい時間帯の静かな掃除で継続利用するレビューがある"
+      ],
+      "tradeoffs": [
+        "レビュー母数はクイックルより小さい",
+        "毛束のボリュームがあるため、薄く平らなシートを好む人とは使用感が分かれる可能性がある"
+      ],
+      "evidence_strength": "high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "シート構造とレビュー母数が異なり、同一条件の捕集試験がないため総合順位は付けない",
+    "use_case_winners": [
+      {"label": "標準的な日常掃除・使用回数の目安を重視", "product_id": "quickle-dry-sheet-40"},
+      {"label": "髪の毛・ペット毛・粒ゴミを毛束で絡めたい", "product_id": "wave-floor-dry-36"},
+      {"label": "畳も含めて公式の使い方を確認しやすい", "product_id": "quickle-dry-sheet-40"},
+      {"label": "各社ワイパー本体へ迷わず使いたい", "product_id": "wave-floor-dry-36"}
+    ]
+  }
+}
