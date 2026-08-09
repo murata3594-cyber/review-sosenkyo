@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,15 +14,17 @@ def load_manifest() -> dict:
     return json.loads(MANIFEST.read_text(encoding="utf-8"))
 
 
+def item_row(item: dict, status: str = "公開済み") -> str:
+    return (
+        f'<a class="rank-list-row" href="{item["article"]}"><span class="num">{item["number"]}</span>'
+        f'<span class="topic"><b>{item["title"]}</b><br><small>{item["subtitle"]}</small></span>'
+        f'<span class="subcat">{item["axes"]}</span><span class="reviews"><span class="status">{status}</span></span>'
+        '<span class="readmore">読む →</span></a>'
+    )
+
+
 def render_rankings(data: dict) -> str:
-    rows = []
-    for item in data["published"]:
-        rows.append(
-            f'<a class="rank-list-row" href="{item["article"]}"><span class="num">{item["number"]}</span>'
-            f'<span class="topic"><b>{item["title"]}</b><br><small>{item["subtitle"]}</small></span>'
-            f'<span class="subcat">{item["axes"]}</span><span class="reviews"><span class="status">公開済み</span></span>'
-            '<span class="readmore">読む →</span></a>'
-        )
+    rows = [item_row(item) for item in data["published"]]
     for item in data.get("next", []):
         rows.append(
             f'<div class="rank-list-row"><span class="num">{item["number"]}</span>'
@@ -41,12 +44,7 @@ def render_rankings(data: dict) -> str:
 
 def render_sitemap(data: dict) -> str:
     paths = [""] + [item["article"] for item in data["published"]] + [
-        "rankings.html",
-        "category.html",
-        "methodology.html",
-        "about.html",
-        "disclosure.html",
-        "privacy.html",
+        "rankings.html", "category.html", "methodology.html", "about.html", "disclosure.html", "privacy.html"
     ]
     urls = "\n".join(f"  <url><loc>{BASE_URL}{path}</loc></url>" for path in paths)
     return f'''<?xml version="1.0" encoding="UTF-8"?>
@@ -56,9 +54,50 @@ def render_sitemap(data: dict) -> str:
 '''
 
 
+def render_index(current: str, data: dict) -> str:
+    published = data.get("published", [])
+    total = len(published)
+    counts = {
+        "kitchen": sum(1 for x in published if x.get("category") == "kitchen"),
+        "cleaning": sum(1 for x in published if x.get("category") == "cleaning"),
+        "pet": sum(1 for x in published if x.get("category") == "pet"),
+    }
+    next_item = (data.get("next") or [{}])[0]
+    next_title = next_item.get("title", "次の調査を選定中")
+    next_subtitle = next_item.get("subtitle", "候補を自動調査")
+
+    text = current
+    text = re.sub(r'(<div class="big">)\d+テーマ(</div>)', rf'\g<1>{total}テーマ\g<2>', text, count=1)
+    text = re.sub(r'(<div class="vote-line"><span>キッチン・家事</span><b>)\d+テーマ(</b>)', rf'\g<1>{counts["kitchen"]}テーマ\g<2>', text, count=1)
+    text = re.sub(r'(<div class="vote-line"><span>掃除・洗濯</span><b>)\d+テーマ(</b>)', rf'\g<1>{counts["cleaning"]}テーマ\g<2>', text, count=1)
+    text = re.sub(r'(<div class="vote-line"><span>生活・ペット</span><b>)\d+テーマ(</b>)', rf'\g<1>{counts["pet"]}テーマ\g<2>', text, count=1)
+    text = re.sub(r'(<div class="signal"><small>公開済み</small><strong>)\d+テーマ(</strong>)', rf'\g<1>{total}テーマ\g<2>', text, count=1)
+    text = re.sub(r'(<div class="signal"><small>根拠台帳</small><strong>)\d+データセット(</strong>)', rf'\g<1>{total}データセット\g<2>', text, count=1)
+    text = re.sub(
+        r'<div class="signal"><small>次の調査</small><strong>.*?</strong><em>.*?</em></div>',
+        f'<div class="signal"><small>次の調査</small><strong>{next_title}</strong><em>{next_subtitle}</em></div>',
+        text,
+        count=1,
+    )
+    text = re.sub(r'(<div class="sec-kicker">RESEARCH LIBRARY</div><h2>)公開済み\d+テーマ(</h2>)', rf'\g<1>公開済み{total}テーマ\g<2>', text, count=1)
+
+    library_rows = "\n".join(item_row(item, status="公開") for item in published)
+    pattern = re.compile(
+        r'(<section class="section alt" id="library">.*?<div class="rank-list"><div class="rank-list-head"><span>No\.</span><span>テーマ</span><span>主な判断軸</span><span>状態</span><span></span></div>\n)(.*?)(\n</div><p style="margin-top:16px">)',
+        re.S,
+    )
+    text, count = pattern.subn(rf'\g<1>{library_rows}\g<3>', text, count=1)
+    if count != 1:
+        raise RuntimeError("index.html research library block could not be synchronized")
+    return text
+
+
 def sync(check: bool = False) -> int:
     data = load_manifest()
+    index_path = ROOT / "index.html"
+    index_current = index_path.read_text(encoding="utf-8")
     outputs = {
+        index_path: render_index(index_current, data),
         ROOT / "rankings.html": render_rankings(data),
         ROOT / "sitemap.xml": render_sitemap(data),
     }
@@ -76,10 +115,7 @@ def sync(check: bool = False) -> int:
             print(" -", path)
         print("Run: python scripts/sync_content.py")
         return 1
-    if check:
-        print("Content synchronization check PASSED")
-    else:
-        print("Content synchronization completed")
+    print("Content synchronization check PASSED" if check else "Content synchronization completed")
     return 0
 
 
