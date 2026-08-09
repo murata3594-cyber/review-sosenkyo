@@ -1,0 +1,90 @@
+{
+  "topic_id": "kitchen-sponge-2026-08-09",
+  "topic": "定番キッチンスポンジ",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、泡立ち・耐久・水切れ・形状・研磨性の共通傾向のみ要約",
+    "surface_safety": "研磨粒子や不織布面の使用可否はメーカー注意を優先し、傷つきやすい素材へ一般化しない"
+  },
+  "products": [
+    {
+      "id": "duskin-kitchen-sponge",
+      "name": "ダスキン 台所用スポンジ",
+      "variant_note": "ハード/ソフトのシリーズ。ハードは研磨材入り不織布、ソフトは研磨材入り不織布なし",
+      "official_source": "https://www.duskin.jp/item/sponge/sponge/dc000520/",
+      "official_facts": [
+        "3層構造で泡立ち・水切れ・耐久性を訴求",
+        "ハードはウレタンフォーム＋研磨材入りナイロン不織布",
+        "ソフトは研磨材入り不織布を使わないタイプ",
+        "縦長でグラスの底まで洗いやすい設計"
+      ],
+      "review_source": "https://dduet.duskin.jp/item/detail.html?hin_code=03534100",
+      "review_snapshot": {"rating": 4.73, "count": 4390, "scope": "series-level hard/soft combined", "checked_at": "2026-08-09"},
+      "usage_trends": ["へたりにくさ・長持ちを評価する声が非常に多い", "泡立ち・泡切れ・水切れを評価する声が多い", "食器用の後にシンクや掃除へ回して使い切る利用者が多い"],
+      "tradeoffs": ["使い始めの硬さや厚みを気にする声がある", "ハードの不織布面は傷つきやすいものへの使用を避ける必要がある", "レビューはハード/ソフトを合わせたシリーズ単位"],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "kikulon-a",
+      "name": "キクロンA",
+      "official_source": "https://www.kikulon.com/products/kikulon_a.html",
+      "official_facts": [
+        "1960年誕生の貼り合わせスポンジたわし",
+        "75×115×36mm",
+        "研磨粒子入りナイロン不織布＋高密度ポリウレタン",
+        "洗う・磨くを両立する設計",
+        "研磨粒子入り面は傷つきやすいガラス・プラスチック・フッ素加工品などに不向き"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/33d46155482c05c49891e1def885badc/",
+      "review_snapshot": {"rating": 4.92, "count": 145, "checked_at": "2026-08-09"},
+      "usage_trends": ["長年継続利用するレビューがある", "丈夫さ・泡立ちを評価する声がある", "硬い面と柔らかい面を使い分けやすいという評価がある", "コゲや頑固な汚れをしっかり洗いたい利用者に支持される"],
+      "tradeoffs": ["研磨粒子入り面は傷つきやすい素材には使えない", "柔らかさ最優先の人には硬めに感じる可能性がある"],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "scotch-brite-hybrid-hb21keh",
+      "name": "スコッチ・ブライト ハイブリッド貼り合わせスポンジ HB-21KE-H",
+      "official_source": "https://www.scotch-brite.jp/3M/ja_JP/p/d/v101092265/",
+      "official_facts": [
+        "ウレタンスポンジとハイブリッド研磨粒子付きナイロン不織布の貼り合わせ",
+        "握りやすいウェーブカット",
+        "フッ素加工フライパン、ホーロー、ココット鍋などを想定",
+        "コゲ・こびりつき・油汚れ・茶渋に対応"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/327c09d5d5f29b2d92e5ad844cde02eb/",
+      "review_snapshot": {"rating": 4.66, "count": 32, "checked_at": "2026-08-09"},
+      "usage_trends": ["握りやすさと洗いやすさを評価する声がある", "泡立ち・へたりにくさ・耐久性を評価するレビューがある", "軽いこびりつきや茶渋に使いやすいという評価がある"],
+      "tradeoffs": ["レビュー母数は32件と他の一部商品より小さい", "泡立ち特化スポンジと比べると泡立ちが物足りないと感じる声もある"],
+      "evidence_strength": "medium_high"
+    },
+    {
+      "id": "marna-osakana-k662",
+      "name": "マーナ おさかなスポンジ K662",
+      "official_source": "https://marna.jp/shop/g/gK662W/",
+      "official_facts": [
+        "3層構造で泡立ち・泡持ち・水切れを訴求",
+        "おさかな形状で手になじみ、長めの142×66×35mm",
+        "しっぽ部分でコップの底など細かい場所を洗いやすい",
+        "ポリウレタンスポンジ＋ナイロン不織布",
+        "傷つきやすいものにはナイロン不織布面を使わないよう注意"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/31009abf45ec8982c8901883c0599328/",
+      "review_snapshot": {"rating": 4.84, "count": 223, "checked_at": "2026-08-09"},
+      "usage_trends": ["泡立ち・水切れを評価する声が多い", "長めの形でコップの底を洗いやすいという評価がある", "頭・しっぽの形を細部洗いに使いやすいという声がある", "デザインとカラーを好む継続利用者がいる"],
+      "tradeoffs": ["傷つきやすいものには不織布面を使えない", "形状や長さはコンパクトな四角形を好む人には合わない場合がある"],
+      "evidence_strength": "high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "研磨力・柔らかさ・形状という役割が異なり、レビュー母数もシリーズ単位と単品で混在するため総合点の単純比較は不適切",
+    "use_case_winners": [
+      {"label": "耐久・長持ち重視", "product_id": "duskin-kitchen-sponge"},
+      {"label": "コゲ・頑固汚れ重視", "product_id": "kikulon-a"},
+      {"label": "フッ素加工なども含めた汚れ落としとのバランス", "product_id": "scotch-brite-hybrid-hb21keh"},
+      {"label": "コップ・細部の洗いやすさ", "product_id": "marna-osakana-k662"}
+    ]
+  }
+}
