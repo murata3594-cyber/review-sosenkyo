@@ -1,0 +1,96 @@
+{
+  "topic_id": "pet-sheets-regular-2026-08-09",
+  "topic": "高吸収ペットシーツ レギュラーサイズ",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "comparison_scope": "レギュラー約44×32〜32.5cmの高吸収・厚型クラスに限定",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、吸収・尿の広がり・足濡れ・交換頻度に関する共通傾向のみ要約",
+    "rating_limit": "販売ページ・バリエーション統合の違いがあるため、平均点の絶対順位は付けない"
+  },
+  "products": [
+    {
+      "id": "deosheet-super-absorb-regular",
+      "name": "デオシート しっかり超吸収 無香消臭タイプ レギュラー",
+      "maker": "ユニ・チャーム",
+      "official_source": "https://jp.unicharmpet.com/ja/products/dog/toiletcare-deosheet-4520699667071.html",
+      "official_facts": [
+        "レギュラー44×32cm",
+        "112枚 / 72枚の容量展開",
+        "瞬速とじこめ吸収体で尿を素早く閉じ込める設計",
+        "小型犬の平均尿量を基準に5回分・約150ccを吸収する目安",
+        "無香消臭タイプ"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/807e05bf9e77347b6b2ed22b29e94770/",
+      "review_snapshot": {"rating": 4.80, "count": 904, "scope": "楽天商品価格ナビ・レギュラー112枚系", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "吸収の速さと足濡れの少なさを評価する声が多い",
+        "同じ場所へ複数回排尿しても吸収しやすいという評価がある",
+        "ニオイと漏れにくさを理由に継続利用するレビューが多い"
+      ],
+      "tradeoffs": [
+        "低価格の薄型シーツより単価が高いという不満がある",
+        "端付近では中央部より吸収余裕が小さいという声がある"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "iris-superabsorb-cps88",
+      "name": "アイリスオーヤマ 超吸収ペットシーツ レギュラー CPS-88",
+      "maker": "アイリスオーヤマ",
+      "official_source": "https://www.irisohyama.co.jp/products/pet-supplies-pet-food/pet-care-sheets/pet-sheet/superabsorbent-ultra-clean-pet-sheets",
+      "official_facts": [
+        "レギュラー44×32.5cm",
+        "88枚",
+        "厚型タイプ",
+        "約12時間のおしっこ3回分を吸収する設計"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/8642c27055eff11bda6160f0e8f25521/",
+      "review_snapshot": {"rating": 4.57, "count": 106, "scope": "楽天商品価格ナビ CPS-88", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "厚みと吸収量を評価する声がある",
+        "尿量が多い犬でも漏れにくいという利用例がある",
+        "薄型から厚型へ切り替えて交換回数を減らした利用者がいる"
+      ],
+      "tradeoffs": [
+        "厚型でも尿量が非常に多い場合は1回ごとの交換が必要",
+        "薄型大量パックより1枚あたりコストは上がりやすい"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "iris-fastabsorb-csps88",
+      "name": "アイリスオーヤマ 超速吸ペットシーツ レギュラー CSPS-88",
+      "maker": "アイリスオーヤマ",
+      "official_source": "https://www.irisohyama.co.jp/products/pet-supplies-pet-food/pet-care-sheets/pet-sheet/pet-sheet-thick-type",
+      "official_facts": [
+        "レギュラー44×32.5cm",
+        "88枚",
+        "厚型タイプ",
+        "スピード吸収で尿が広がりにくい設計"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/3530450eddfd38d7f3091c769e19ac21/",
+      "review_snapshot": {"rating": 4.55, "count": 341, "scope": "楽天商品価格ナビ CSPS系統。サイズ・販売バリエーションを含むレビュー表示があるため順位には使用しない", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "吸収速度と足濡れ軽減を評価する声がある",
+        "尿が横へ広がりにくいことを評価する利用者がいる",
+        "厚型のため複数回の排尿や留守番用途で使うレビューがある"
+      ],
+      "tradeoffs": [
+        "楽天のレビュー表示はサイズ・販売バリエーションが混在するため、件数を単品性能の根拠として過大評価しない",
+        "吸収量重視のCPS系と、吸収速度重視のCSPS系では設計目的が異なる"
+      ],
+      "evidence_strength": "medium_high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "メーカーごとに吸収試験の基準が異なり、レビュー集計範囲も一致しないため総合性能順位は付けない",
+    "use_case_winners": [
+      {"label": "レビュー母数・定番性", "product_id": "deosheet-super-absorb-regular"},
+      {"label": "メーカー公称の複数回・長時間吸収を重視", "product_id": "iris-superabsorb-cps88"},
+      {"label": "尿の広がり・足濡れを抑える速度重視", "product_id": "iris-fastabsorb-csps88"}
+    ]
+  }
+}
