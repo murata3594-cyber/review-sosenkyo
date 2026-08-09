@@ -1,0 +1,66 @@
+{
+  "topic_id": "system-toilet-cat-litter-2026-08-09",
+  "topic": "システムトイレ用猫砂・チップ",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "brand_history": {
+    "nyantomo_current_owner": "エステー株式会社",
+    "transferred_from_kao": "2024-06",
+    "source": "https://www.st-c.co.jp/news/newsrelease/2023/20231211_002001.html"
+  },
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "原文を保存せず、現行商品の公開レビューに共通する使用感のみ要約",
+    "pet_safety": "猫の好み・排泄状況を優先し、無理な切替を推奨しない"
+  },
+  "products": [
+    {
+      "id": "deotoilet-wood-cat-chip-4l",
+      "name": "デオトイレ 消臭・抗菌チップ天然木 飛び散らないねこ型チップ 4L",
+      "brand": "デオトイレ",
+      "maker": "ユニ・チャーム",
+      "official_source": "https://jp.unicharmpet.com/ja/products/cat/toiletcare-deotoilet-4520699039878.html",
+      "official_facts": ["天然木タイプ", "飛び散りにくいねこ型チップ", "撥水技術でふやけにくい", "愛猫1頭・体重8kgまでのデオトイレ使用時は1ヶ月交換不要の目安", "木素材で地域ルールに従い可燃処理可能"],
+      "review_source": "https://product.rakuten.co.jp/product/-/44c2c7b63656d9cf67361858ecb3a334/",
+      "review_snapshot": {"rating": 4.58, "count": 55, "checked_at": "2026-08-09"},
+      "usage_trends": ["飛び散りにくさを評価する声がある", "ニオイを抑えやすいという評価がある", "チップが崩れにくく掃除しやすいという声がある"],
+      "tradeoffs": ["新しい現行SKUでレビュー母数はまだ55件", "木の香りや粒形状は猫の好みが分かれる可能性がある"],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "nyantomo-large-4-4l",
+      "name": "ニャンとも清潔トイレ 脱臭・抗菌チップ 大きめの粒 4.4L",
+      "brand": "ニャンとも清潔トイレ",
+      "maker": "エステー",
+      "official_source": "https://products.st-c.co.jp/detail/16160/",
+      "official_facts": ["天然素材の針葉樹が主原料", "オシッコで固まらず表面がさらさら", "手足に挟まりにくい大きめ粒で飛び散りにくさを訴求", "2.5Lの使用期間目安は愛猫1頭で約1.5ヶ月", "燃えるごみとして処理可能だが自治体ルールを優先"],
+      "review_source": "https://product.rakuten.co.jp/product/-/263b51eaee0f81ebb99f9d5a354f7ba2/",
+      "review_snapshot": {"rating": 4.75, "count": 186, "checked_at": "2026-08-09"},
+      "usage_trends": ["長期継続利用のレビューがある", "木の香りが強すぎないという評価がある", "大きめ粒で掃除しやすい・飛び散りにくいという支持がある"],
+      "tradeoffs": ["細かい砂を好む猫には粒が大きく感じられる場合がある", "重い4.4L袋の持ち運びは通販を選ぶ理由になりやすい"],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "nyantomo-small-4-4l",
+      "name": "ニャンとも清潔トイレ 脱臭・抗菌チップ 小さめの粒 4.4L",
+      "brand": "ニャンとも清潔トイレ",
+      "maker": "エステー",
+      "official_source": "https://products.st-c.co.jp/detail/16158/",
+      "official_facts": ["天然素材の針葉樹が主原料", "オシッコで固まらず表面がさらさら", "慣れやすく砂かきしやすい小さめ粒", "2.5Lの使用期間目安は愛猫1頭で約1.5ヶ月", "燃えるごみとして処理可能だが自治体ルールを優先"],
+      "review_source": "https://product.rakuten.co.jp/product/-/59dc58e82d6f516e6ddc53703cb94676/",
+      "review_snapshot": {"rating": 4.67, "count": 75, "checked_at": "2026-08-09"},
+      "usage_trends": ["崩れにくさを評価する声がある", "木の香りを好む利用者がいる", "猫が小さめ粒を好むというレビューがある"],
+      "tradeoffs": ["砂かきが激しい猫ではトイレ外へ飛び散るという声がある", "大粒と小粒の中間サイズを望む声がある"],
+      "evidence_strength": "high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "猫の粒サイズの好みと使用トイレが大きく影響し、ブランド・粒形状・レビュー母数が異なるため総合1位より用途別選択が適切",
+    "use_case_winners": [
+      {"label": "飛び散りにくさ重視", "products": ["deotoilet-wood-cat-chip-4l", "nyantomo-large-4-4l"]},
+      {"label": "砂かき・小粒への慣れやすさ重視", "products": ["nyantomo-small-4-4l"]},
+      {"label": "レビュー母数重視", "products": ["nyantomo-large-4-4l"]}
+    ]
+  }
+}
