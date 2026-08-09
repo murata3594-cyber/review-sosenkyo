@@ -1,0 +1,73 @@
+{
+  "topic_id": "floor-wet-sheets-2026-08-09",
+  "topic": "フロア用ウェットシート",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "comparison_scope": "家庭用フロアワイパーへ装着する標準的なウェットシート",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、水分保持・汚れの取りやすさ・広さ・厚みの共通傾向のみ要約",
+    "variant_note": "香り・除菌・ストロング等の派生品は別製品として扱い、通常タイプの比較へ混ぜない"
+  },
+  "products": [
+    {
+      "id": "quickle-3d-wet-unscented",
+      "name": "クイックルワイパー 立体吸着ウエットシート 香りが残らないタイプ",
+      "maker": "花王",
+      "official_source": "https://www.kao.com/jp/qa/detail/16289/",
+      "official_facts": [
+        "凹凸のある立体吸着シートで花粉・ハウスダスト・髪の毛・ホコリ・ザラつき・ベタつき汚れを拭き取る設計",
+        "シートは両面使用可能",
+        "1枚両面で約15〜20畳を1回掃除できるメーカー目安",
+        "ワックス済みフローリングにも使用可能だが、材質によってシミの可能性があるため目立たない場所で確認"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/1854841669490b3417a1efee8b616545/review/",
+      "review_snapshot": {"rating": 4.69, "count": 491, "scope": "楽天商品価格ナビ 香りが残らないタイプ32枚", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "広いリビングでもウェット感が続きやすいという評価がある",
+        "髪の毛・ホコリとベタつき汚れを一度に取りやすいという支持がある",
+        "香りが残りにくいタイプを日常使いするレビューが多い"
+      ],
+      "tradeoffs": [
+        "安価な汎用シートより価格を高く感じる声がある",
+        "油汚れをより強く落としたい場合は同シリーズのストロングという別選択肢がある"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "wave-floor-wet-unscented-14",
+      "name": "ウェーブ フロア用ウェットシート 無香タイプ 14枚",
+      "maker": "ユニ・チャーム",
+      "official_source": "https://www.unicharm.co.jp/ja/company/news/2024/0226-02.html",
+      "official_facts": [
+        "2024年3月改良品",
+        "3枚の多層構造と中央の超保水層",
+        "厚さ・水分量を増やして破れにくさと広い面積の拭き取りを訴求",
+        "端部のクロスエンボスでホコリ・ベタつき汚れを拭き取る設計",
+        "各社共通タイプで、どのフロアワイパー本体でも使用可能",
+        "無香タイプ14枚。ノンアルコール除菌タイプ等の派生品あり"
+      ],
+      "review_source": "https://lohaco.yahoo.co.jp/review/product/h-lohaco/e651815/",
+      "review_snapshot": {"rating": 4.57, "count": 30, "scope": "LOHACO 超保水14枚。レビューには改良前からの投稿も含まれる可能性があるため補助情報扱い", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "水分が最後まで残りやすいという評価がある",
+        "厚みがあり床の汚れを絡め取りやすいという支持がある",
+        "広い範囲の水拭きを1枚で済ませたい利用者に選ばれている"
+      ],
+      "tradeoffs": [
+        "レビュー母数はクイックルより小さく、改良前レビューが混ざる可能性がある",
+        "除菌やアルコール有無を重視する場合は無香通常タイプではなく派生品の仕様確認が必要"
+      ],
+      "evidence_strength": "medium_high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "公式が示す掃除可能面積の基準が揃わず、レビュー母数も異なるため総合順位は付けない",
+    "use_case_winners": [
+      {"label": "髪の毛・ホコリ・ベタつきを一度に広く拭きたい", "product_id": "quickle-3d-wet-unscented"},
+      {"label": "厚手・水分保持を重視", "product_id": "wave-floor-wet-unscented-14"},
+      {"label": "本体ブランドを選ばず使いたい", "product_id": "wave-floor-wet-unscented-14"}
+    ]
+  }
+}
