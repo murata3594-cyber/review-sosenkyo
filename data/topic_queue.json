@@ -1,7 +1,7 @@
 {
   "updated_at": "2026-08-09",
   "rules": {
-    "approval_gate": "AI may research and draft automatically, but only evidence-backed content may be published. Topics with weak evidence stay in RESEARCHING or NEEDS_REVIEW.",
+    "approval_gate": "AI may research and publish evidence-backed initial comparisons automatically. Weak or conflicting evidence stays in RESEARCHING or NEEDS_REVIEW.",
     "raw_reviews": "Do not store large volumes of raw review text in this public repository.",
     "dynamic_data": "Review counts, ratings, price and stock require checked_at."
   },
@@ -12,30 +12,30 @@
       "status": "PUBLISHED_INITIAL",
       "article": "article.html",
       "research": "data/research/dishwasher-detergent-2026-08-09.json",
-      "next_action": "review counts and current SKU recheck before major update"
+      "next_action": "recheck current SKU and review counts before major update"
     },
     {
       "id": "T002",
       "topic": "ドラム式洗濯槽クリーナー",
-      "status": "RESEARCHING",
-      "comparison_axes": ["塩素系", "容量", "対応機種", "ニオイ・汚れ", "レビュー母数"],
-      "candidate_products": ["Panasonic N-W2", "日立 SK-750", "シャープ ES-CD"],
-      "next_action": "verify current official specifications and one consistent review source per product"
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-washer-cleaner.html",
+      "research": "data/research/drum-washer-cleaner-2026-08-09.json",
+      "next_action": "recheck review counts and manufacturer guidance periodically"
     },
     {
       "id": "T003",
       "topic": "システムトイレ用猫砂・チップ",
-      "status": "RESEARCHING",
-      "comparison_axes": ["消臭", "飛び散り", "尿の通過性", "交換頻度", "レビュー母数"],
-      "candidate_products": ["デオトイレ 消臭・抗菌サンド", "ニャンとも清潔トイレ 脱臭・抗菌チップ"],
-      "next_action": "verify current brand ownership/official specifications and current review snapshots"
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-cat-litter.html",
+      "research": "data/research/system-toilet-cat-litter-2026-08-09.json",
+      "next_action": "add more current Deotoilet/Nyantomo variants only when review volume is sufficient"
     },
     {
       "id": "T004",
       "topic": "浄水器交換カートリッジ",
-      "status": "DISCOVERED",
+      "status": "RESEARCHING",
       "comparison_axes": ["互換性", "交換周期", "年間費用", "交換しやすさ"],
-      "next_action": "split by compatible filter family before product research"
+      "next_action": "split into compatible filter families before product comparison"
     },
     {
       "id": "T005",
@@ -49,7 +49,7 @@
       "topic": "防臭ゴミ袋",
       "status": "DISCOVERED",
       "comparison_axes": ["防臭", "厚さ", "破れにくさ", "1枚単価"],
-      "next_action": "identify comparable size/volume class"
+      "next_action": "identify comparable size and volume class"
     }
   ]
 }
