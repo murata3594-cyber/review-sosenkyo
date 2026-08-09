@@ -13,6 +13,7 @@
 - Push to `main`: validate site, then deploy to GitHub Pages
 - Pull request to `main`: validate site
 - Validation command: `python scripts/validate_site.py`
+- Pages source: GitHub Actions
 
 ## Branch policy
 - `main` = production
