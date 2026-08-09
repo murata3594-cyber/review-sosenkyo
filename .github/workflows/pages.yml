@@ -25,8 +25,8 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - name: Check generated index and sitemap
-        run: python scripts/sync_content.py --check
+      - name: Generate index and sitemap from manifest
+        run: python scripts/sync_content.py
       - name: Validate site
         run: python scripts/validate_site.py
 
@@ -40,7 +40,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Generate index and sitemap from manifest
+        run: python scripts/sync_content.py
       - name: Build publish directory
         run: |
           mkdir -p _site
@@ -48,15 +53,12 @@ jobs:
           cp -R ./assets _site/assets
           mkdir -p _site/data
           cp -R ./data/research _site/data/research
-
       - name: Configure Pages
         uses: actions/configure-pages@v6
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
           path: "_site"
-
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v5
