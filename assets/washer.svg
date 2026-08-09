@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420">
+<rect width="640" height="420" rx="34" fill="#EDF2F5"/>
+<circle cx="510" cy="100" r="86" fill="#C7D7E2"/>
+<rect x="130" y="60" width="270" height="310" rx="30" fill="#fff" stroke="#D4DEE5" stroke-width="8"/>
+<rect x="160" y="92" width="210" height="38" rx="12" fill="#16324F"/>
+<circle cx="265" cy="238" r="94" fill="#DCE7EF" stroke="#16324F" stroke-width="12"/>
+<circle cx="265" cy="238" r="66" fill="#98B3C5"/>
+<path d="M230 230c30-30 55 25 78 0" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+<rect x="430" y="190" width="92" height="145" rx="18" fill="#C8443A"/>
+<rect x="447" y="214" width="58" height="72" rx="10" fill="#fff"/>
+<text x="476" y="253" text-anchor="middle" font-family="Arial" font-size="20" font-weight="700" fill="#C8443A">CLEAN</text>
+</svg>

@@ -1,0 +1,27 @@
+{
+  "site_name": "レビュー総選挙",
+  "version": "v9-corporate",
+  "entry": "index.html",
+  "pages": {
+    "home": "index.html",
+    "article": "article.html",
+    "rankings": "rankings.html",
+    "category": "category.html",
+    "methodology": "methodology.html",
+    "about": "about.html",
+    "disclosure": "disclosure.html",
+    "privacy": "privacy.html"
+  },
+  "brand": {
+    "navy": "#132C45",
+    "red": "#D64036",
+    "gold": "#D4A72C"
+  },
+  "next_integration": [
+    "replace demo article data with researched products",
+    "connect generated article data",
+    "connect WordPress after hosting setup",
+    "add affiliate links after account setup"
+  ],
+  "design_direction": "corporate / premium tech / dark glass / subtle motion"
+}
