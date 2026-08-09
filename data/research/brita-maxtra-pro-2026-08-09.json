@@ -1,0 +1,63 @@
+{
+  "topic_id": "brita-maxtra-pro-2026-08-09",
+  "topic": "BRITA MAXTRA PRO ピュアパフォーマンス vs ホットドリンク",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "compatibility": "両製品ともBRITAのポット型/タンク型浄水器の全モデルに使用可能（クラシックタイプ除く）",
+  "products": [
+    {
+      "id": "maxtra-pro-pure-performance",
+      "name": "マクストラプロ ピュアパフォーマンス",
+      "official_source": "https://www.brita.co.jp/consumer-overview/water-filter-cartridges/maxtra-pro-pure-performance",
+      "official_facts": [
+        "飲み物から料理まで幅広く使いたい人向け",
+        "浄水能力15+1項目",
+        "PFOS/PFOA除去試験済み",
+        "軟水〜中硬水に適する",
+        "総ろ過水量150L",
+        "交換目安4週間に1回（1日5.3L使用の場合）"
+      ],
+      "review_source": "https://review.rakuten.co.jp/item/1/368318_10000052/1.1/a5/",
+      "review_snapshot": {"rating": 4.75, "count": 13093, "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "水道水が飲みやすくなったという評価が多い",
+        "料理にも広く使える点を評価する声がある",
+        "ペットボトル購入・ゴミ削減の利便性を評価する声がある",
+        "カートリッジ交換の簡単さを評価する声がある"
+      ],
+      "tradeoffs": ["交換カートリッジの価格を高めと感じる声がある", "正規品・販売元を慎重に選ぶ利用者が多い"],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "maxtra-pro-hot-drink",
+      "name": "マクストラプロ ホットドリンク",
+      "official_source": "https://www.brita.co.jp/製品一覧/フィルターカートリッジ/マクストラプロ-ホットドリンク",
+      "official_facts": [
+        "お茶やコーヒーをよりおいしく楽しみたい人向け",
+        "浄水能力8項目",
+        "ピュアパフォーマンス比で炭酸塩硬度の除去率50%向上（規定試験条件）",
+        "硬水〜超硬水に適する",
+        "総ろ過水量150L",
+        "交換目安4週間に1回（1日5.3L使用の場合）",
+        "熱湯・温水を直接ろ過してはいけない"
+      ],
+      "review_source": "https://review.rakuten.co.jp/review/item/1/368318_10000182/1.1/",
+      "review_snapshot": {"rating": 4.66, "count": 430, "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "コーヒーやお茶がまろやかに感じるという評価がある",
+        "水の味が良くなったと感じる利用者がいる",
+        "継続利用しているレビューが確認できる"
+      ],
+      "tradeoffs": ["通常タイプとの違いが分かりにくいという声がある", "『ホットドリンク』という名称でも熱湯を直接ろ過する製品ではない"],
+      "evidence_strength": "high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "用途が明確に異なる2製品であり、レビュー母数も大きく違うため総合順位より用途別選択が適切",
+    "use_case_winners": [
+      {"label": "飲み水・料理まで幅広く", "product_id": "maxtra-pro-pure-performance"},
+      {"label": "コーヒー・お茶・硬度対策を重視", "product_id": "maxtra-pro-hot-drink"}
+    ]
+  }
+}
