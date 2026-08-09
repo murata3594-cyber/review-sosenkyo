@@ -1,0 +1,76 @@
+{
+  "topic_id": "handy-dusters-2026-08-09",
+  "topic": "ハンディモップ・ハンディワイパー",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "comparison_scope": "使い捨て取り替えシート型の家庭用ハンディワイパー",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、ホコリ捕集・すき間・毛の絡め取り・取り替えやすさの共通傾向のみ要約",
+    "rating_limit": "本体・伸縮本体・色違い・交換シートで販売ページが分かれるため、レビュー平均を性能の絶対順位にはしない"
+  },
+  "products": [
+    {
+      "id": "quickle-handy-replacement-8",
+      "name": "クイックルハンディ 取り替え用シート 8枚入",
+      "maker": "花王",
+      "official_source": "https://www.kao-kirei.com/ja/item/khg/quickle/4901301440631/",
+      "official_facts": [
+        "両面のもふもふでホコリを吸着する設計",
+        "吸着センイが凸凹・すき間の奥のホコリ・花粉・ハウスダストを絡め取る",
+        "PC・TV周り、本棚、小物の間、サッシの溝などに使用可能",
+        "クイックルハンディ通常本体・伸び縮みタイプの両方に使用可能",
+        "先端側が汚れたら手元側と付け替えて全面を使える",
+        "シートは洗って再使用できない"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/a20a427fbfdc9bfee334ed9891b303e7/item/",
+      "review_snapshot": {"rating": 4.77, "count": 77, "scope": "楽天商品価格ナビ 取り替え用8枚", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "家具・家電・棚のホコリを軽くなでて取りやすいという評価がある",
+        "すき間やPC・TV周りのこまめな掃除で継続利用する声がある",
+        "シート全面を使い切りやすい点を評価する利用者がいる"
+      ],
+      "tradeoffs": [
+        "洗って再利用はできず、汚れたら交換が必要",
+        "砂粒や硬いごみが付着したままデリケートな面を拭くと傷の原因になる",
+        "ペット毛・粒ゴミ特化の長毛束タイプとは構造が異なる"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "wave-handy-replacement-8",
+      "name": "ウェーブ ハンディワイパー 共通取り替えシート 8枚",
+      "maker": "ユニ・チャーム",
+      "official_source": "https://item.rakuten.co.jp/unicharm/100998/",
+      "official_facts": [
+        "最長1.5cmのからめる超ロング毛束でホコリを絡め取る設計",
+        "ゴミとりポケットで細かなゴミ・粒ゴミも取り込む設計",
+        "からめとったホコリの菌の増殖を抑制する抗菌EXファイバーを採用。すべての菌を抑制するものではない",
+        "ハンディワイパー本体・のびるタイプに共通で使用可能",
+        "両面使用可能"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/368ea4aa9d365548541d74143d93e3c5/",
+      "review_snapshot": {"rating": 4.73, "count": 197, "scope": "楽天商品価格ナビ ブルー8枚", "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "毛足が長くホコリや髪・ペット毛を絡め取りやすいという評価がある",
+        "家具の上やすき間の掃除で継続利用する声がある",
+        "ふわふわした毛束のボリュームを使いやすいとするレビューがある"
+      ],
+      "tradeoffs": [
+        "毛束のボリュームがあるため、狭い場所や平らなシート感を好む人とは使用感が分かれる可能性がある",
+        "取り替え用シートのランニングコストは一般的な再利用布より高くなりやすい"
+      ],
+      "evidence_strength": "high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "繊維構造と得意なゴミが異なり、同一条件の捕集試験がないため総合順位は付けない",
+    "use_case_winners": [
+      {"label": "家電・本棚・小物の間・サッシ溝を標準的に掃除", "product_id": "quickle-handy-replacement-8"},
+      {"label": "髪・ペット毛・ふわふわ毛束の捕集感を重視", "product_id": "wave-handy-replacement-8"},
+      {"label": "シート全面を付け替えて無駄なく使いたい", "product_id": "quickle-handy-replacement-8"},
+      {"label": "ロング毛束・ゴミとりポケットを重視", "product_id": "wave-handy-replacement-8"}
+    ]
+  }
+}
