@@ -44,6 +44,8 @@ jobs:
           mkdir -p _site
           cp ./*.html ./styles.css ./site.js ./robots.txt ./sitemap.xml ./.nojekyll _site/
           cp -R ./assets _site/assets
+          mkdir -p _site/data
+          cp -R ./data/research _site/data/research
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
