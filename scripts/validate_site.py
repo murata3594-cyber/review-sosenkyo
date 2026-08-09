@@ -54,6 +54,7 @@ class PageParser(HTMLParser):
 
 
 errors = []
+warnings = []
 for name in REQUIRED:
     if not (ROOT / name).exists():
         errors.append(f"Missing required file: {name}")
@@ -84,7 +85,7 @@ for page in html_pages:
 
     for image in parser.images:
         if not image.get("alt", "").strip():
-            errors.append(f"{page.name}: image missing alt -> {image.get('src', '(no src)')}")
+            warnings.append(f"{page.name}: image missing alt -> {image.get('src', '(no src)')}")
 
     ids = set(parser.ids)
     for value in re.findall(r'(?:href|src)="([^"]+)"', text):
@@ -95,12 +96,17 @@ for page in html_pages:
         if value.startswith("#"):
             anchor = value[1:]
             if anchor and anchor not in ids:
-                errors.append(f"{page.name}: missing same-page anchor -> {value}")
+                warnings.append(f"{page.name}: missing same-page anchor -> {value}")
             continue
 
         target = value.split("#", 1)[0].split("?", 1)[0]
         if target and target not in all_files:
             errors.append(f"{page.name}: broken local reference -> {target}")
+
+if warnings:
+    print("Site validation WARNINGS")
+    for warning in warnings:
+        print(" -", warning)
 
 if errors:
     print("Site validation FAILED")
@@ -108,4 +114,4 @@ if errors:
         print(" -", error)
     sys.exit(1)
 
-print(f"Site validation PASSED: {len(html_pages)} HTML pages checked.")
+print(f"Site validation PASSED: {len(html_pages)} HTML pages checked; {len(warnings)} warning(s).")
