@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://murata3594-cyber.github.io/review-sosenkyo/schemas/research-ledger.schema.json",
+  "title": "Review Sosenkyo Research Ledger",
+  "type": "object",
+  "required": ["topic_id", "topic", "researched_at", "status"],
+  "properties": {
+    "topic_id": {"type": "string", "minLength": 1},
+    "topic": {"type": "string", "minLength": 1},
+    "researched_at": {"type": "string", "format": "date"},
+    "status": {"type": "string", "minLength": 1},
+    "products": {"type": "array"},
+    "editorial_conclusion": {"type": "object"},
+    "policy": {"type": "object"}
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "reviewSnapshot": {
+      "type": "object",
+      "required": ["checked_at"],
+      "properties": {
+        "rating": {"type": ["number", "null"], "minimum": 0, "maximum": 5},
+        "count": {"type": ["integer", "null"], "minimum": 0},
+        "checked_at": {"type": "string", "format": "date"},
+        "scope": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  }
+}
