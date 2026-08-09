@@ -1,0 +1,74 @@
+{
+  "topic_id": "odor-proof-food-waste-bags-2026-08-09",
+  "topic": "生ごみ用防臭袋",
+  "researched_at": "2026-08-09",
+  "status": "verified_initial_research",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、防臭体感・袋の扱いやすさ・サイズ・閉じ方に関する共通傾向のみ要約",
+    "comparison_limit": "メーカーごとに試験条件が異なるため、異なるメーカー間で防臭性能の絶対順位は付けない"
+  },
+  "products": [
+    {
+      "id": "bos-food-waste-m-90",
+      "name": "BOS 生ゴミが臭わない袋 M 90枚",
+      "brand": "BOS",
+      "official_source": "https://bos-bos.com/product/bos_food/",
+      "official_facts": [
+        "生ごみ用途向けの防臭袋",
+        "Mサイズは約23×38cm、90枚入り",
+        "袋へ入れた後、袋口をねじって結んで廃棄する使い方",
+        "薄く柔らかい素材のため、魚の骨や貝殻など鋭利なものは別袋へ入れてから使用するよう案内"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/f9f4f42b90a682db2fc0ba451888c25a/",
+      "review_snapshot": {"rating": 4.79, "count": 1087, "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "生ごみのニオイを抑えやすいという評価が多い",
+        "柔らかく結びやすいという声がある",
+        "夏場や魚・肉のごみで継続利用しているレビューが多い"
+      ],
+      "tradeoffs": [
+        "一般的なポリ袋より価格を高く感じる声がある",
+        "鋭利な生ごみでは破れ防止のため事前の小袋分けが必要",
+        "結んで閉じるため、一度閉じた後の再投入には向きにくい"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "nioi-bye-bye-kitchen-m-60",
+      "name": "においバイバイ袋 キッチン用 M 60枚",
+      "brand": "においバイバイ袋",
+      "official_source": "https://nioi-byebye.com/product/",
+      "official_facts": [
+        "キッチンの生ごみ・食品臭対策向け",
+        "Mサイズは厚さ0.013mm、約22×30cm、60枚入り",
+        "飽和ポリエステル樹脂製",
+        "袋口を強くねじって閉じる独自方式で、結び目を作らず開閉しやすい",
+        "透明タイプで中身を確認できる"
+      ],
+      "review_source": "https://product.rakuten.co.jp/product/-/81a8e38b61e41bc96443a263e0ed6a0f/",
+      "review_snapshot": {"rating": 4.57, "count": 7, "checked_at": "2026-08-09"},
+      "usage_trends": [
+        "ニオイ対策として継続利用しているレビューがある",
+        "袋口をねじるだけで閉じられる点を便利とする声がある",
+        "必要に応じて開けて追加投入できる点が独自の使い勝手"
+      ],
+      "tradeoffs": [
+        "現行商品レビュー母数が7件と非常に少ない",
+        "Mサイズを小さく感じる声がある",
+        "ねじり閉じの保持感は使用者によって評価が分かれる可能性がある"
+      ],
+      "evidence_strength": "low_medium"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "メーカー間で防臭試験条件が統一されておらず、レビュー母数も1087件と7件で大きく異なるため、防臭性能の絶対順位は付けない",
+    "use_case_winners": [
+      {"label": "レビュー母数・定番性重視", "product_id": "bos-food-waste-m-90"},
+      {"label": "Mサイズの余裕重視", "product_id": "bos-food-waste-m-90"},
+      {"label": "結ばず開閉・再投入したい", "product_id": "nioi-bye-bye-kitchen-m-60"},
+      {"label": "中身を確認したい", "product_id": "nioi-bye-bye-kitchen-m-60"}
+    ]
+  }
+}
