@@ -1,0 +1,36 @@
+{
+  "topic_id": "freezer-bags-m-2026-08-09",
+  "topic": "フリーザーバッグ Mサイズ",
+  "researched_at": "2026-08-09",
+  "status": "HOLD_REVIEW_ACCUMULATION",
+  "hold_reason": "クレハが2026年3月に家庭用品新ブランドiremoを発売し、フリーザーバッグMを16枚で展開。旧キチントさん系Mと新iremoの製品世代が移行中で、iremo現行Mの十分なレビュー母数をまだ確認できない。ジップロックM 18枚も現行単品レビュー母数が小さい販売ページが多く、現時点でブランド横断ランキングを作ると根拠が弱い。",
+  "current_findings": [
+    {
+      "name": "ジップロック フリーザーバッグ M 18枚",
+      "maker": "旭化成ホームプロダクツ",
+      "official_source": "https://www.asahi-kasei.co.jp/saran/products/ziploc/freezerbag.html",
+      "official_facts": [
+        "Mサイズ 189mm×177mm",
+        "18枚。大容量36枚タイプも展開",
+        "厚さ0.06mm",
+        "ポリエチレン製",
+        "耐熱温度100℃、耐冷温度-70℃",
+        "冷凍保存・電子レンジ解凍に対応。電子レンジ調理、煮沸、オーブン・グリル・直火は不可",
+        "ダブルジッパーと書き込み欄を備える"
+      ],
+      "review_note": "現行M 18枚の単品レビューは販売ページによって母数が非常に小さく、ブランド全体の評価として扱わない"
+    },
+    {
+      "name": "iremo フリーザーバッグ M 16枚",
+      "maker": "クレハ",
+      "official_source": "https://www.kureha.co.jp/newsrelease/release/detail/iremo.html",
+      "official_facts": [
+        "2026年3月2日より順次出荷開始",
+        "新ブランドiremoのフリーザーバッグ",
+        "S 18枚、M 16枚、L 10枚を展開"
+      ],
+      "review_note": "発売から約5か月で、現行Mの十分な単品レビュー母数を確認できない"
+    }
+  ],
+  "resume_condition": "iremo M現行SKUのレビューが十分蓄積し、ジップロックMと同一サイズ帯・現行世代で比較できること。旧キチントさんレビューをiremoへ混ぜない。"
+}
