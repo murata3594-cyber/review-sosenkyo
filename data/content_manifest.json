@@ -8,9 +8,10 @@
     {"id":"T005","number":"05","title":"キッチンスポンジ","subtitle":"ダスキン・キクロンA・3M・マーナ","axes":"泡立ち・水切れ・耐久・研磨性","article":"article-kitchen-sponge.html","research":"data/research/kitchen-sponge-2026-08-09.json"},
     {"id":"T006","number":"06","title":"生ごみ用防臭袋","subtitle":"BOS vs においバイバイ袋","axes":"防臭体感・サイズ・閉じ方・母数","article":"article-odor-proof-bags.html","research":"data/research/odor-proof-food-waste-bags-2026-08-09.json"},
     {"id":"T007","number":"07","title":"システムトイレ用シート","subtitle":"デオトイレ vs ニャンとも","axes":"吸収・消臭・交換頻度・レビュー","article":"article-system-toilet-sheets.html","research":"data/research/system-toilet-sheets-2026-08-09.json"},
-    {"id":"T008","number":"08","title":"システムトイレ用シート 複数ねこ用","subtitle":"通常用との違い・2頭以上の交換目安","axes":"吸収・頭数・交換頻度・レビュー","article":"article-multi-cat-sheets.html","research":"data/research/multi-cat-system-toilet-sheets-2026-08-09.json"}
+    {"id":"T008","number":"08","title":"システムトイレ用シート 複数ねこ用","subtitle":"通常用との違い・2頭以上の交換目安","axes":"吸収・頭数・交換頻度・レビュー","article":"article-multi-cat-sheets.html","research":"data/research/multi-cat-system-toilet-sheets-2026-08-09.json"},
+    {"id":"T009","number":"09","title":"高吸収ペットシーツ レギュラー","subtitle":"デオシート vs アイリス超吸収・超速吸","axes":"吸収量・吸収速度・足濡れ・レビュー","article":"article-pet-sheets-regular.html","research":"data/research/pet-sheets-regular-2026-08-09.json"}
   ],
   "next": [
-    {"id":"T009","number":"09","title":"ペットシーツ レギュラーサイズ","subtitle":"薄型・厚型を同条件で比較","axes":"吸収・戻り・厚さ・1枚単価","status":"候補"}
+    {"id":"T010","number":"10","title":"薄型ペットシーツ レギュラー","subtitle":"毎回交換する家庭向けを比較","axes":"1枚単価・吸収・薄さ・枚数","status":"調査中"}
   ]
 }
