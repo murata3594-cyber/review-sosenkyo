@@ -13,10 +13,11 @@
     {"id":"T010","number":"10","category":"pet","title":"薄型ペットシーツ レギュラー","subtitle":"アイリス・ASKUL・チャーム・コジマ","axes":"枚数・薄さ・交換頻度・レビュー","article":"article-thin-pet-sheets-regular.html","research":"data/research/thin-pet-sheets-regular-2026-08-09.json"},
     {"id":"T011","number":"11","category":"cleaning","title":"こすらない浴室洗剤","subtitle":"ルックプラス vs バスマジックリン エアジェット","axes":"待ち時間・ミスト・香り・レビュー","article":"article-no-scrub-bath-cleaners.html","research":"data/research/no-scrub-bath-cleaners-2026-08-09.json"},
     {"id":"T013","number":"13","category":"cleaning","title":"フロア用ウェットシート","subtitle":"クイックル vs ウェーブ","axes":"水分保持・厚さ・広さ・レビュー","article":"article-floor-wet-sheets.html","research":"data/research/floor-wet-sheets-2026-08-09.json"},
-    {"id":"T014","number":"14","category":"cleaning","title":"フロア用ドライシート","subtitle":"クイックル vs ウェーブ","axes":"髪・ホコリ・ペット毛・粒ゴミ","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json"}
+    {"id":"T014","number":"14","category":"cleaning","title":"フロア用ドライシート","subtitle":"クイックル vs ウェーブ","axes":"髪・ホコリ・ペット毛・粒ゴミ","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json"},
+    {"id":"T015","number":"15","category":"cleaning","title":"ハンディモップ","subtitle":"クイックルハンディ vs ウェーブハンディ","axes":"毛束・ホコリ捕集・すき間・レビュー","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json"}
   ],
   "next": [
     {"id":"T012","number":"12","category":"cleaning","title":"流せるトイレ掃除シート","subtitle":"キレキラ！2026年10月リニューアル待ち","axes":"厚さ・破れ・除菌・流しやすさ","status":"2026-10-01再調査"},
-    {"id":"T015","number":"15","category":"cleaning","title":"ハンディモップ","subtitle":"クイックルハンディ vs ウェーブハンディ","axes":"毛足・ホコリ捕集・すき間・レビュー","status":"調査中"}
+    {"id":"T016","number":"16","category":"kitchen","title":"フリーザーバッグ Mサイズ","subtitle":"定番ブランドを同サイズで比較","axes":"厚さ・密閉・冷凍・書き込み・レビュー","status":"調査中"}
   ]
 }
