@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://murata3594-cyber.github.io/review-sosenkyo/schemas/content-manifest.schema.json",
+  "title": "Review Sosenkyo Content Manifest",
+  "type": "object",
+  "required": ["updated_at", "published", "next"],
+  "properties": {
+    "updated_at": {"type": "string", "format": "date"},
+    "published": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "category", "title", "subtitle", "axes", "article", "research"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^T[0-9]{3}$"},
+          "number": {"type": "string", "pattern": "^[0-9]{2,}$"},
+          "category": {"enum": ["kitchen", "cleaning", "pet"]},
+          "title": {"type": "string", "minLength": 1},
+          "subtitle": {"type": "string", "minLength": 1},
+          "axes": {"type": "string", "minLength": 1},
+          "article": {"type": "string", "pattern": "^article.*\\.html$"},
+          "research": {"type": "string", "pattern": "^data/research/.+\\.json$"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "next": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "category", "title", "subtitle", "axes", "status"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^T[0-9]{3}$"},
+          "number": {"type": "string"},
+          "category": {"enum": ["kitchen", "cleaning", "pet"]},
+          "title": {"type": "string"},
+          "subtitle": {"type": "string"},
+          "axes": {"type": "string"},
+          "status": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}
