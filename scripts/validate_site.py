@@ -7,6 +7,8 @@ ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
     "index.html",
     "article.html",
+    "article-washer-cleaner.html",
+    "article-cat-litter.html",
     "rankings.html",
     "category.html",
     "methodology.html",
@@ -17,6 +19,9 @@ REQUIRED = [
     "site.js",
     "robots.txt",
     "sitemap.xml",
+    "data/research/dishwasher-detergent-2026-08-09.json",
+    "data/research/drum-washer-cleaner-2026-08-09.json",
+    "data/research/system-toilet-cat-litter-2026-08-09.json",
 ]
 IGNORED_PREFIXES = ("http://", "https://", "mailto:", "tel:", "javascript:", "data:")
 
