@@ -7,11 +7,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "data" / "content_manifest.json"
-BASE_URL = "https://murata3594-cyber.github.io/review-sosenkyo/"
+SITE_CONFIG = ROOT / "config" / "site.json"
 
 
 def load_manifest() -> dict:
     return json.loads(MANIFEST.read_text(encoding="utf-8"))
+
+
+def base_url() -> str:
+    cfg = json.loads(SITE_CONFIG.read_text(encoding="utf-8"))
+    return str(cfg["production_url"]).rstrip("/") + "/"
 
 
 def item_row(item: dict, status: str = "公開済み") -> str:
@@ -39,14 +44,16 @@ def render_rankings(data: dict) -> str:
 <div class="rank-list" style="margin-top:22px"><div class="rank-list-head"><span>No.</span><span>テーマ</span><span>比較軸</span><span>状態</span><span></span></div>
 {rows_html}
 </div></div></section>
+<footer class="footer"><div class="wrap"><a class="logo" href="index.html"><span class="logo-seal">選</span>レビュー<em>総選挙</em></a></div></footer>
 <nav class="mobile-nav"><a href="index.html"><span>⌂</span>ホーム</a><a href="rankings.html"><span>◎</span>調査一覧</a><a href="category.html"><span>□</span>カテゴリ</a><a href="methodology.html"><span>i</span>調査方法</a></nav><script src="site.js"></script></body></html>'''
 
 
 def render_sitemap(data: dict) -> str:
+    root = base_url()
     paths = [""] + [item["article"] for item in data["published"]] + [
-        "rankings.html", "category.html", "methodology.html", "about.html", "disclosure.html", "privacy.html"
+        "rankings.html", "category.html", "methodology.html", "about.html", "disclosure.html", "privacy.html", "contact.html"
     ]
-    urls = "\n".join(f"  <url><loc>{BASE_URL}{path}</loc></url>" for path in paths)
+    urls = "\n".join(f"  <url><loc>{root}{path}</loc></url>" for path in paths)
     return f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {urls}
