@@ -31,9 +31,10 @@ def copy_if_exists(src: Path, dst: Path) -> None:
 
 
 def main() -> None:
-    # Deterministic content comes first. Cloudflare does not need an extra manual sync step.
+    # Deterministic content and editorial QA come first.
     run("sync_content.py")
     run("validate_site.py")
+    run("audit_content_quality.py")
 
     # Resolve affiliate links. With no credentials this safely generates zero active links.
     run("build_affiliate_links.py")
