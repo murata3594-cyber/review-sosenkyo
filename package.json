@@ -1,0 +1,11 @@
+{
+  "name": "review-sosenkyo",
+  "private": true,
+  "scripts": {
+    "build": "python scripts/build_dist.py",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
