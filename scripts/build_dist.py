@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Build a clean Cloudflare Pages deploy directory for レビュー総選挙."""
+"""Build a clean Cloudflare/GitHub deploy directory for レビュー総選挙."""
 from __future__ import annotations
 
 from pathlib import Path
 import json
 import shutil
+import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
@@ -36,7 +38,6 @@ def main() -> None:
         shutil.rmtree(DIST)
     DIST.mkdir(parents=True)
 
-    # All root HTML files are public pages. Internal docs/config remain outside dist.
     for page in ROOT.glob("*.html"):
         copy_if_exists(page, DIST / page.name)
 
@@ -45,7 +46,6 @@ def main() -> None:
 
     copy_if_exists(ROOT / "assets", DIST / "assets")
 
-    # Validate that every published article in the canonical manifest is shipped.
     manifest_path = ROOT / "data" / "content_manifest.json"
     if manifest_path.exists():
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -60,7 +60,12 @@ def main() -> None:
     if not (DIST / "index.html").exists():
         raise SystemExit("dist/index.html is missing")
 
-    print(f"Cloudflare Pages dist built: {DIST}")
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "finalize_seo.py"), str(DIST)],
+        check=True,
+    )
+
+    print(f"Deploy dist built: {DIST}")
     print(f"HTML pages: {len(list(DIST.glob('*.html')))}")
 
 
