@@ -1,0 +1,102 @@
+{
+  "topic_id": "quickle-magnetic-vs-standard-2026-08-13",
+  "topic": "クイックルワイパー通常型 vs クイックル マグネットワイパー",
+  "researched_at": "2026-08-13",
+  "status": "verified_initial_research",
+  "comparison_scope": "花王の家庭用フロアワイパー本体2種。通常型の立体クッションヘッドと、2023年発売のマグネットワイパーを比較",
+  "policy": {
+    "raw_review_text_stored": false,
+    "review_use": "レビュー原文は保存せず、装着の手間、ズレにくさ、操作感、重さ、価格感の共通傾向のみ要約",
+    "comparison_note": "レビューは別々の楽天市場店舗の商品ページで、母数も異なるため評価点を直接優劣判定に使わない",
+    "price_note": "価格は店舗・時期で変動するため記事本文へ固定保存しない"
+  },
+  "products": [
+    {
+      "id": "quickle-wiper-standard",
+      "name": "クイックルワイパー 通常型",
+      "maker": "花王",
+      "official_source": "https://www.kao.com/jp/qa/detail/26107/",
+      "official_sources": [
+        "https://www.kao.com/jp/qa/detail/26107/",
+        "https://www.kao.com/jp/newsroom/news/release/2023/20230220-001/"
+      ],
+      "official_facts": [
+        "現行の花王Q&Aでクイックルワイパー交換用ヘッドが案内されており、2011年以降の白いジョイントタイプに対応する",
+        "マグネットワイパー発売時の花王比較では、通常型は立体クッションヘッドとして扱われている",
+        "通常型はシートを四つの差し込み口へ押し込んで固定する方式で、マグネット式ではない",
+        "花王の現行クイックル用フロアシートを使用する家庭用ワイパー本体"
+      ],
+      "review_source": "https://review.rakuten.co.jp/item/1/357621_10143529/1.1/",
+      "review_snapshot": {
+        "rating": 4.48,
+        "count": 29,
+        "scope": "ヤマダ電機 楽天市場店『花王 クイックルワイパー 本体』",
+        "checked_at": "2026-08-13"
+      },
+      "usage_trends": [
+        "類似の低価格ワイパーから替えて、柄や接合部のしっかり感を評価する声がある",
+        "軽さや滑らせやすさ、乾拭き・水拭きの扱いやすさを評価する声がある",
+        "長く使った本体から買い替える利用者が確認できる"
+      ],
+      "tradeoffs": [
+        "シート装着は四隅の差し込み口へ押し込む従来方式で、マグネット式より手数が多い",
+        "強く拭いた際のシートの緩み・ズレを不満に感じてマグネット式へ移行した利用者がいる"
+      ],
+      "evidence_strength": "high"
+    },
+    {
+      "id": "quickle-magnetic-wiper",
+      "name": "クイックル マグネットワイパー",
+      "maker": "花王",
+      "official_source": "https://www.kao.com/jp/newsroom/news/release/2023/20230220-001/",
+      "official_sources": [
+        "https://www.kao.com/jp/newsroom/news/release/2023/20230220-001/",
+        "https://www.kao.com/jp/qa/detail/31388/",
+        "https://www.kao.com/jp/qa/detail/31390/"
+      ],
+      "official_facts": [
+        "2023年3月25日に全国発売",
+        "ヘッド内蔵マグネットでシートを挟み、四つ穴へ押し込む作業を不要にした",
+        "花王の通常型立体クッションヘッド比で床との密着面積が126%",
+        "ウエットシート向けに、ベタつき汚れを軽い力で拭き取りやすい設計を訴求",
+        "ヘッド裏面は縦横方向の汚れを捕集するマルチ捕集構造",
+        "グリップ先端にラバー素材を採用し、立てかけ時の倒れにくさに配慮",
+        "わずか3cmのすき間へ届く設計",
+        "花王はクイックルワイパーシリーズの現行フロアシート各種を使用可能と案内している"
+      ],
+      "review_source": "https://review.rakuten.co.jp/review/review/review/item/1/206032_13902252/1.1/",
+      "review_snapshot": {
+        "rating": 4.57,
+        "count": 21,
+        "scope": "Joshin web 楽天市場店『クイックル マグネットワイパー』",
+        "checked_at": "2026-08-13"
+      },
+      "usage_trends": [
+        "シートの装着・裏返しが簡単になったという評価が繰り返し確認できる",
+        "掃除中のシートのズレや外れが減った点を評価する声が多い",
+        "マグネット固定と柄・ヘッドの安定感を掃除時のストレス軽減として評価する声がある"
+      ],
+      "tradeoffs": [
+        "通常型より価格が高いと感じる声がある",
+        "別の楽天商品ページではマグネット分の重さを感じるという指摘が確認できる",
+        "シート着脱時にはヘッドを開閉するため、床近くで操作する動作自体は残る"
+      ],
+      "evidence_strength": "high"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "通常型は軽さ・シンプルさ・従来方式の扱いやすさ、マグネット型は装着性・ズレにくさ・ウェット清掃時の密着性に価値が分かれる。レビュー母数と販売ページも異なるため評価点で総合順位は付けない",
+    "use_case_winners": [
+      {"label": "シートの付け替え・裏返しを簡単にしたい", "product_id": "quickle-magnetic-wiper"},
+      {"label": "ウェットシートでベタつきを拭くことが多い", "product_id": "quickle-magnetic-wiper"},
+      {"label": "従来の差し込み方式で十分・本体の軽快さを優先", "product_id": "quickle-wiper-standard"},
+      {"label": "使用中のシートずれを減らしたい", "product_id": "quickle-magnetic-wiper"}
+    ]
+  },
+  "rights_check": {
+    "article_images": "none",
+    "result": "pass",
+    "note": "外部商品画像を転載せず、本文と出典リンクのみで構成"
+  }
+}
