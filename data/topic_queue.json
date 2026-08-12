@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-12",
+  "updated_at": "2026-08-13",
   "rules": {
     "approval_gate": "AUTO_PUBLISH_POST_APPROVAL: AI may research and publish evidence-backed initial comparisons automatically. Weak or conflicting evidence stays in RESEARCHING or NEEDS_REVIEW.",
     "raw_reviews": "Do not store large volumes of raw review text in this public repository.",
@@ -22,6 +22,7 @@
     {"id":"T013","topic":"フロア用ウェットシート","status":"PUBLISHED_INITIAL","article":"article-floor-wet-sheets.html","research":"data/research/floor-wet-sheets-2026-08-09.json","next_action":"periodic product/review recheck"},
     {"id":"T014","topic":"フロア用ドライシート","status":"PUBLISHED_INITIAL","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json","next_action":"periodic product/review recheck"},
     {"id":"T015","topic":"ハンディモップ","status":"PUBLISHED_INITIAL","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json","next_action":"periodic official SKU and replacement-sheet review recheck"},
-    {"id":"T016","topic":"フリーザーバッグ Mサイズ","status":"RESEARCHING","comparison_axes":["厚さ","密閉","冷凍","書き込み","レビュー"],"next_action":"verify current same-size SKUs and comparable review evidence before publication"}
+    {"id":"T016","topic":"フリーザーバッグ Mサイズ","status":"RESEARCHING","comparison_axes":["厚さ","密閉","冷凍","書き込み","レビュー"],"next_action":"verify current same-size SKUs and comparable review evidence before publication"},
+    {"id":"T017","topic":"クイックルワイパー通常型 vs マグネットワイパー","status":"RESEARCHING","claimed_by":"ChatGPT","claimed_at":"2026-08-13T08:12:00+09:00","comparison_axes":["シート装着","床への密着","すき間","シート互換性","レビュー"],"next_action":"verify current SKUs, official differences, review snapshots and affiliate relevance"}
   ]
 }
