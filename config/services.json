@@ -16,6 +16,11 @@
   "contact": {
     "email_env": "CONTACT_EMAIL"
   },
+  "a8": {
+    "link_manager_tag_env": "A8_LINK_MANAGER_TAG",
+    "inject_exact_tag": true,
+    "global_pr_disclosure": true
+  },
   "privacy": {
     "analytics_only_when_configured": true,
     "ads_only_when_configured": true
