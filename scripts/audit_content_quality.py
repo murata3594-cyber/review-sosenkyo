@@ -56,9 +56,15 @@ def audit_research(path: Path, errors: list[str], warnings: list[str]) -> None:
         name=str(product.get("name", "unnamed")); snap=product.get("review_snapshot")
         if not isinstance(snap, dict): continue
         count=snap.get("count"); rating=snap.get("rating"); checked=str(snap.get("checked_at", ""))
-        if not isinstance(count, int) or count < 0: errors.append(f"{path.relative_to(ROOT)} / {name}: invalid review count {count}")
-        if not isinstance(rating, (int,float)) or not (0 <= float(rating) <= 5): errors.append(f"{path.relative_to(ROOT)} / {name}: invalid rating {rating}")
-        if count == 0 and rating not in (0, 0.0): errors.append(f"{path.relative_to(ROOT)} / {name}: rating must be 0 when count is 0")
+        count_valid=isinstance(count, int) and not isinstance(count, bool) and count >= 0
+        if not count_valid:
+            errors.append(f"{path.relative_to(ROOT)} / {name}: invalid review count {count}")
+        elif count == 0:
+            # No reviews means no average exists; both null and numeric 0 are valid ledger representations.
+            if rating not in (None, 0, 0.0):
+                errors.append(f"{path.relative_to(ROOT)} / {name}: rating must be null/0 when count is 0")
+        elif not isinstance(rating, (int,float)) or isinstance(rating, bool) or not (0 <= float(rating) <= 5):
+            errors.append(f"{path.relative_to(ROOT)} / {name}: invalid rating {rating}")
         if checked and not valid_date(checked): errors.append(f"{path.relative_to(ROOT)} / {name}: invalid checked_at {checked}")
         if not product.get("official_source"): warnings.append(f"{path.relative_to(ROOT)} / {name}: official_source missing")
 
