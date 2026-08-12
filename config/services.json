@@ -21,6 +21,11 @@
     "inject_exact_tag": true,
     "global_pr_disclosure": true
   },
+  "valuecommerce": {
+    "linkswitch_tag_env": "VC_LINKSWITCH_TAG",
+    "inject_exact_tag": true,
+    "global_pr_disclosure": true
+  },
   "privacy": {
     "analytics_only_when_configured": true,
     "ads_only_when_configured": true
