@@ -1,25 +1,28 @@
 {
-  "enabled": false,
+  "enabled": true,
+  "activation": "credential_gated",
   "disclosure_required": true,
   "providers": {
     "amazon": {
-      "enabled": false,
+      "enabled": true,
       "associate_tag_env": "AMAZON_ASSOCIATE_TAG",
-      "link_mode": "asin"
+      "link_mode": "asin_or_search"
     },
     "rakuten": {
-      "enabled": false,
+      "enabled": true,
       "affiliate_id_env": "RAKUTEN_AFFILIATE_ID",
       "application_id_env": "RAKUTEN_APPLICATION_ID",
       "access_key_env": "RAKUTEN_ACCESS_KEY",
-      "api_version": "2026-07-01"
+      "endpoint": "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701",
+      "api_version": "2026-07-01",
+      "selection_mode": "exact_query_first"
     },
     "a8": {
-      "enabled": false,
+      "enabled": true,
       "mode": "stored_url_only"
     },
     "valuecommerce": {
-      "enabled": false,
+      "enabled": true,
       "mode": "stored_url_only"
     }
   },
@@ -28,6 +31,9 @@
     "no_unverified_price": true,
     "no_auto_redirect": true,
     "no_self_purchase_prompt": true,
-    "only_article_relevant_offers": true
+    "only_article_relevant_offers": true,
+    "hide_when_credentials_missing": true,
+    "hide_empty_blocks": true,
+    "external_links_nofollow_sponsored": true
   }
 }
