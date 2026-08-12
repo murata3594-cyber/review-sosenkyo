@@ -16,19 +16,43 @@ def env_for(cfg: dict, key: str) -> str:
     return os.getenv(str(cfg.get(key, "")), "").strip()
 
 
-def replace_marker(text: str, name: str, content: str) -> str:
+def replace_marker(text: str, name: str, content: str) -> tuple[str, str]:
     start = f"<!-- {name}_START -->"
     end = f"<!-- {name}_END -->"
     text = re.sub(re.escape(start) + r".*?" + re.escape(end), "", text, flags=re.S)
     return text, start + content + end if content else ""
 
 
-def inject_head(text: str, marker: str) -> str:
+def inject_head(text: str, marker: str, *, near_top: bool = False) -> str:
     if not marker:
         return text
+    if near_top:
+        match = re.search(r"<head(?:\s[^>]*)?>", text, flags=re.I)
+        if match:
+            return text[:match.end()] + marker + text[match.end():]
     if "</head>" not in text:
         return text
     return text.replace("</head>", marker + "</head>", 1)
+
+
+def inject_after_body_start(text: str, marker: str) -> str:
+    if not marker:
+        return text
+    match = re.search(r"<body(?:\s[^>]*)?>", text, flags=re.I)
+    if not match:
+        return text
+    return text[:match.end()] + marker + text[match.end():]
+
+
+def valid_a8_tag(tag: str) -> bool:
+    if not tag:
+        return False
+    lowered = tag.lower()
+    # Keep the A8-issued tag byte-for-byte inside our wrapper comments; only reject
+    # strings that could escape the document head or inject a second document body.
+    if "</head" in lowered or "<body" in lowered or "</body" in lowered:
+        return False
+    return "<script" in lowered or "<link" in lowered
 
 
 def main() -> int:
@@ -40,10 +64,13 @@ def main() -> int:
     publisher = env_for(cfg["adsense"], "publisher_id_env")
     ads_txt = env_for(cfg["adsense"], "ads_txt_record_env")
     contact = env_for(cfg["contact"], "email_env")
+    a8_cfg = cfg.get("a8", {})
+    a8_tag = env_for(a8_cfg, "link_manager_tag_env")
 
     ga4_ok = bool(re.fullmatch(r"G-[A-Z0-9]+", ga4))
     publisher_ok = bool(re.fullmatch(r"ca-pub-\d+", publisher))
     email_ok = bool(re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", contact))
+    a8_ok = bool(a8_cfg.get("inject_exact_tag", True) and valid_a8_tag(a8_tag))
 
     for page in deploy.glob("*.html"):
         text = page.read_text(encoding="utf-8")
@@ -51,6 +78,29 @@ def main() -> int:
         text, _ = replace_marker(text, "GA4", "")
         text, _ = replace_marker(text, "GOOGLE_VERIFY", "")
         text, _ = replace_marker(text, "ADSENSE", "")
+        text, _ = replace_marker(text, "A8_LINK_MANAGER", "")
+        text, _ = replace_marker(text, "GLOBAL_AFFILIATE_DISCLOSURE", "")
+
+        if a8_ok:
+            # A8 requires its Link Manager tag to be placed in the document head.
+            # Do not rewrite, minify or otherwise alter the A8-issued snippet.
+            text = inject_head(
+                text,
+                f"<!-- A8_LINK_MANAGER_START -->{a8_tag}<!-- A8_LINK_MANAGER_END -->",
+                near_top=True,
+            )
+            if a8_cfg.get("global_pr_disclosure", True):
+                disclosure = (
+                    '<div class="global-affiliate-disclosure" role="note">'
+                    '<strong>PR</strong> 当サイトはアフィリエイト広告を利用しています。'
+                    '</div>'
+                )
+                text = inject_after_body_start(
+                    text,
+                    '<!-- GLOBAL_AFFILIATE_DISCLOSURE_START -->'
+                    + disclosure
+                    + '<!-- GLOBAL_AFFILIATE_DISCLOSURE_END -->',
+                )
 
         if ga4_ok:
             code = (
@@ -88,7 +138,12 @@ def main() -> int:
     elif ads_path.exists():
         ads_path.unlink()
 
-    print(f"Services: GA4={'on' if ga4_ok else 'off'}, verification={'on' if bool(verify) else 'off'}, AdSense={'on' if publisher_ok else 'off'}, contact={'on' if email_ok else 'off'}")
+    if a8_tag and not a8_ok:
+        print("A8 Link Manager tag was present but rejected by the safety check; A8 injection remains off.")
+    print(
+        f"Services: GA4={'on' if ga4_ok else 'off'}, verification={'on' if bool(verify) else 'off'}, "
+        f"AdSense={'on' if publisher_ok else 'off'}, contact={'on' if email_ok else 'off'}, A8={'on' if a8_ok else 'off'}"
+    )
     return 0
 
 
