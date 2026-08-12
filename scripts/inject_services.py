@@ -44,12 +44,10 @@ def inject_after_body_start(text: str, marker: str) -> str:
     return text[:match.end()] + marker + text[match.end():]
 
 
-def valid_a8_tag(tag: str) -> bool:
+def valid_vendor_tag(tag: str) -> bool:
     if not tag:
         return False
     lowered = tag.lower()
-    # Keep the A8-issued tag byte-for-byte inside our wrapper comments; only reject
-    # strings that could escape the document head or inject a second document body.
     if "</head" in lowered or "<body" in lowered or "</body" in lowered:
         return False
     return "<script" in lowered or "<link" in lowered
@@ -64,43 +62,50 @@ def main() -> int:
     publisher = env_for(cfg["adsense"], "publisher_id_env")
     ads_txt = env_for(cfg["adsense"], "ads_txt_record_env")
     contact = env_for(cfg["contact"], "email_env")
+
     a8_cfg = cfg.get("a8", {})
     a8_tag = env_for(a8_cfg, "link_manager_tag_env")
+    vc_cfg = cfg.get("valuecommerce", {})
+    vc_tag = env_for(vc_cfg, "linkswitch_tag_env")
 
     ga4_ok = bool(re.fullmatch(r"G-[A-Z0-9]+", ga4))
     publisher_ok = bool(re.fullmatch(r"ca-pub-\d+", publisher))
     email_ok = bool(re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", contact))
-    a8_ok = bool(a8_cfg.get("inject_exact_tag", True) and valid_a8_tag(a8_tag))
+    a8_ok = bool(a8_cfg.get("inject_exact_tag", True) and valid_vendor_tag(a8_tag))
+    vc_ok = bool(vc_cfg.get("inject_exact_tag", True) and valid_vendor_tag(vc_tag))
 
     for page in deploy.glob("*.html"):
         text = page.read_text(encoding="utf-8")
 
-        text, _ = replace_marker(text, "GA4", "")
-        text, _ = replace_marker(text, "GOOGLE_VERIFY", "")
-        text, _ = replace_marker(text, "ADSENSE", "")
-        text, _ = replace_marker(text, "A8_LINK_MANAGER", "")
-        text, _ = replace_marker(text, "GLOBAL_AFFILIATE_DISCLOSURE", "")
+        for marker_name in ("GA4", "GOOGLE_VERIFY", "ADSENSE", "A8_LINK_MANAGER", "VC_LINKSWITCH", "GLOBAL_AFFILIATE_DISCLOSURE"):
+            text, _ = replace_marker(text, marker_name, "")
 
         if a8_ok:
-            # A8 requires its Link Manager tag to be placed in the document head.
-            # Do not rewrite, minify or otherwise alter the A8-issued snippet.
             text = inject_head(
                 text,
                 f"<!-- A8_LINK_MANAGER_START -->{a8_tag}<!-- A8_LINK_MANAGER_END -->",
                 near_top=True,
             )
-            if a8_cfg.get("global_pr_disclosure", True):
-                disclosure = (
-                    '<div class="global-affiliate-disclosure" role="note">'
-                    '<strong>PR</strong> 当サイトはアフィリエイト広告を利用しています。'
-                    '</div>'
-                )
-                text = inject_after_body_start(
-                    text,
-                    '<!-- GLOBAL_AFFILIATE_DISCLOSURE_START -->'
-                    + disclosure
-                    + '<!-- GLOBAL_AFFILIATE_DISCLOSURE_END -->',
-                )
+
+        if vc_ok:
+            text = inject_head(
+                text,
+                f"<!-- VC_LINKSWITCH_START -->{vc_tag}<!-- VC_LINKSWITCH_END -->",
+                near_top=True,
+            )
+
+        if (a8_ok and a8_cfg.get("global_pr_disclosure", True)) or (vc_ok and vc_cfg.get("global_pr_disclosure", True)):
+            disclosure = (
+                '<div class="global-affiliate-disclosure" role="note">'
+                '<strong>PR</strong> 当サイトはアフィリエイト広告を利用しています。'
+                '</div>'
+            )
+            text = inject_after_body_start(
+                text,
+                '<!-- GLOBAL_AFFILIATE_DISCLOSURE_START -->'
+                + disclosure
+                + '<!-- GLOBAL_AFFILIATE_DISCLOSURE_END -->',
+            )
 
         if ga4_ok:
             code = (
@@ -140,9 +145,13 @@ def main() -> int:
 
     if a8_tag and not a8_ok:
         print("A8 Link Manager tag was present but rejected by the safety check; A8 injection remains off.")
+    if vc_tag and not vc_ok:
+        print("ValueCommerce LinkSwitch tag was present but rejected by the safety check; LinkSwitch injection remains off.")
+
     print(
         f"Services: GA4={'on' if ga4_ok else 'off'}, verification={'on' if bool(verify) else 'off'}, "
-        f"AdSense={'on' if publisher_ok else 'off'}, contact={'on' if email_ok else 'off'}, A8={'on' if a8_ok else 'off'}"
+        f"AdSense={'on' if publisher_ok else 'off'}, contact={'on' if email_ok else 'off'}, "
+        f"A8={'on' if a8_ok else 'off'}, ValueCommerce={'on' if vc_ok else 'off'}"
     )
     return 0
 
