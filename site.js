@@ -6,6 +6,15 @@ globalStyle.textContent=`
 .hot-inner::-webkit-scrollbar{display:none;width:0;height:0}
 .legal-links{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
 .legal-links a{font-size:10px;color:#718596}.legal-links a:hover{color:#dce6ee}
+.affiliate-kicker{font-size:9px;font-weight:900;letter-spacing:.14em;color:#8ccfff;margin-bottom:6px}
+.affiliate-note{font-size:11px;color:#8296a7}
+.affiliate-product{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0;border-top:1px solid rgba(255,255,255,.08)}
+.affiliate-product b{display:block;font-size:13px}.affiliate-product small{display:block;margin-top:3px;color:#748797;font-size:9px}
+.affiliate-buttons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.affiliate-btn{display:inline-flex;align-items:center;justify-content:center;min-width:116px;padding:9px 12px;border-radius:9px;font-size:10px;font-weight:900}
+.affiliate-amazon{background:#ffb84d;color:#15100a}.affiliate-rakuten{background:#bf0000;color:#fff}
+.amazon-disclosure{max-width:1180px;margin:18px auto 0;padding:0 20px;color:#718596;font-size:9px}
+@media(max-width:650px){.affiliate-product{align-items:flex-start;flex-direction:column}.affiliate-buttons{width:100%;justify-content:flex-start}.affiliate-btn{flex:1}.legal-links{gap:10px 14px}}
 `;
 document.head.appendChild(globalStyle);
 
