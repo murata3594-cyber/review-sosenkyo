@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "site": "レビュー総選挙",
+  "mode": "AUTO_PUBLISH_POST_APPROVAL",
+  "owner_pre_authorized": true,
+  "updated_at": "2026-08-12",
+  "allowed_agents": ["ChatGPT", "Claude", "Claude Code", "Codex", "other repo-connected AI"],
+  "topic_sources": ["owner_rough_brief", "ai_discovery", "stale_content_refresh", "product_revision"],
+  "default_topic_status": "RESEARCHING",
+  "post_publish_status": "AWAITING_OWNER_REVIEW",
+  "max_new_articles_per_agent_run": 1,
+  "auto_publish_if": [
+    "dedupe_pass",
+    "current_sku_verified",
+    "evidence_ledger_complete",
+    "no_fake_firsthand_claims",
+    "affiliate_compliance_pass",
+    "full_build_pass"
+  ],
+  "hold_if": [
+    "conflicting_or_missing_official_product_facts",
+    "unverifiable_dynamic_review_metrics",
+    "copyright_or_advertising_compliance_uncertain",
+    "high_risk_medical_financial_legal_topic",
+    "qa_or_ci_failure"
+  ],
+  "concurrency": {
+    "claim_required": true,
+    "claim_fields": ["claimed_by", "claimed_at"],
+    "do_not_duplicate_statuses": ["RESEARCHING", "PUBLISHED_INITIAL", "PUBLISHED"]
+  }
+}
