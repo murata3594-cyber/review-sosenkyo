@@ -8,19 +8,25 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "data" / "content_manifest.json"
 BASE_REQUIRED = [
     "index.html", "rankings.html", "category.html", "methodology.html",
-    "about.html", "disclosure.html", "privacy.html", "styles.css", "site.js",
-    "robots.txt", "sitemap.xml", "data/content_manifest.json", "data/topic_queue.json"
+    "about.html", "disclosure.html", "privacy.html", "contact.html",
+    "styles.css", "site.js", "robots.txt", "sitemap.xml",
+    "data/content_manifest.json", "data/topic_queue.json", "data/affiliate_catalog.json",
+    "config/site.json", "config/affiliate.json", "config/services.json",
+    "scripts/build_dist.py", "scripts/finalize_seo.py", "scripts/build_affiliate_links.py",
+    "scripts/render_affiliate_blocks.py", "scripts/inject_services.py", "scripts/audit_content_quality.py",
+    "package.json", "wrangler.jsonc"
 ]
 IGNORED_PREFIXES = ("http://", "https://", "mailto:", "tel:", "javascript:", "data:")
 
 class PageParser(HTMLParser):
     def __init__(self):
-        super().__init__(); self.ids=[]; self.images=[]; self.html_lang=None; self.has_viewport=False; self.title_depth=0; self.title_text=[]
+        super().__init__(); self.ids=[]; self.images=[]; self.html_lang=None; self.has_viewport=False; self.title_depth=0; self.title_text=[]; self.h1=0
     def handle_starttag(self, tag, attrs):
         attrs=dict(attrs)
         if tag == "html": self.html_lang=attrs.get("lang")
         if tag == "meta" and attrs.get("name", "").lower() == "viewport": self.has_viewport=True
         if tag == "img": self.images.append(attrs)
+        if tag == "h1": self.h1 += 1
         if "id" in attrs: self.ids.append(attrs["id"])
         if tag == "title": self.title_depth += 1
     def handle_endtag(self, tag):
@@ -46,6 +52,9 @@ for item in manifest.get("published", []):
 for name in dict.fromkeys(required):
     if not (ROOT/name).exists(): errors.append(f"Missing required file: {name}")
 
+for config_name in ("config/site.json","config/affiliate.json","config/services.json","data/affiliate_catalog.json"):
+    path=ROOT/config_name
+    if path.exists(): load_json(path, errors)
 for research in [item.get("research") for item in manifest.get("published", []) if item.get("research")]:
     path=ROOT/research
     if path.exists(): load_json(path, errors)
@@ -57,6 +66,7 @@ for page in html_pages:
     if not "".join(parser.title_text).strip(): errors.append(f"{page.name}: missing or empty <title>")
     if parser.html_lang != "ja": errors.append(f"{page.name}: <html lang=\"ja\"> is required")
     if not parser.has_viewport: errors.append(f"{page.name}: missing viewport meta tag")
+    if page.name != "404.html" and parser.h1 != 1: errors.append(f"{page.name}: exactly one h1 required, found {parser.h1}")
     for dup in sorted({x for x in parser.ids if parser.ids.count(x)>1}): errors.append(f"{page.name}: duplicate id -> #{dup}")
     for image in parser.images:
         if not image.get("alt", "").strip(): warnings.append(f"{page.name}: image missing alt -> {image.get('src', '(no src)')}")
@@ -71,11 +81,23 @@ for page in html_pages:
         target=value.split("#",1)[0].split("?",1)[0]
         if target and target not in all_files: errors.append(f"{page.name}: broken local reference -> {target}")
 
+secret_patterns=[
+    re.compile(r"ghp_[A-Za-z0-9]{20,}"),
+    re.compile(r"AIza[A-Za-z0-9_-]{20,}"),
+    re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
+]
+for path in ROOT.rglob("*"):
+    if not path.is_file() or ".git" in path.parts or "dist" in path.parts: continue
+    if path.suffix.lower() not in {".html",".js",".json",".md",".txt",".yml",".yaml",".py",".jsonc"}: continue
+    try: text=path.read_text(encoding="utf-8")
+    except Exception: continue
+    if any(rx.search(text) for rx in secret_patterns): errors.append(f"Possible secret committed: {path.relative_to(ROOT)}")
+
 if warnings:
     print("Site validation WARNINGS")
-    for warning in warnings: print(" -", warning)
+    for warning in sorted(set(warnings)): print(" -", warning)
 if errors:
     print("Site validation FAILED")
-    for error in errors: print(" -", error)
+    for error in sorted(set(errors)): print(" -", error)
     sys.exit(1)
 print(f"Site validation PASSED: {len(html_pages)} HTML pages checked; {len(manifest.get('published', []))} published item(s); {len(warnings)} warning(s).")
