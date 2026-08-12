@@ -17,6 +17,20 @@ BASE_REQUIRED = [
     "package.json", "wrangler.jsonc"
 ]
 IGNORED_PREFIXES = ("http://", "https://", "mailto:", "tel:", "javascript:", "data:")
+# Generated/vendor directories are not repository-authored source and may contain
+# token-shaped test strings inside third-party packages (for example Wrangler).
+# Keep the secret scan strict for all project-authored files while excluding only
+# external/build artefacts.
+IGNORED_DIR_NAMES = {".git", "dist", "node_modules", ".wrangler", ".cache", ".tmp", "tmp"}
+
+
+def is_ignored_path(path: Path) -> bool:
+    try:
+        rel = path.relative_to(ROOT)
+    except ValueError:
+        return True
+    return any(part in IGNORED_DIR_NAMES for part in rel.parts)
+
 
 class PageParser(HTMLParser):
     def __init__(self):
@@ -34,12 +48,14 @@ class PageParser(HTMLParser):
     def handle_data(self, data):
         if self.title_depth: self.title_text.append(data)
 
+
 def load_json(path: Path, errors: list[str]):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
         errors.append(f"Invalid JSON {path.relative_to(ROOT)}: {exc}")
         return {}
+
 
 errors=[]; warnings=[]
 manifest=load_json(MANIFEST_PATH, errors) if MANIFEST_PATH.exists() else {}
@@ -59,7 +75,11 @@ for research in [item.get("research") for item in manifest.get("published", []) 
     path=ROOT/research
     if path.exists(): load_json(path, errors)
 
-all_files={str(p.relative_to(ROOT)).replace("\\", "/") for p in ROOT.rglob("*") if p.is_file()}
+all_files={
+    str(p.relative_to(ROOT)).replace("\\", "/")
+    for p in ROOT.rglob("*")
+    if p.is_file() and not is_ignored_path(p)
+}
 html_pages=list(ROOT.glob("*.html"))
 for page in html_pages:
     text=page.read_text(encoding="utf-8"); parser=PageParser(); parser.feed(text)
@@ -87,7 +107,7 @@ secret_patterns=[
     re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
 ]
 for path in ROOT.rglob("*"):
-    if not path.is_file() or ".git" in path.parts or "dist" in path.parts: continue
+    if not path.is_file() or is_ignored_path(path): continue
     if path.suffix.lower() not in {".html",".js",".json",".md",".txt",".yml",".yaml",".py",".jsonc"}: continue
     try: text=path.read_text(encoding="utf-8")
     except Exception: continue
