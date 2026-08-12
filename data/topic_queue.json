@@ -23,6 +23,6 @@
     {"id":"T014","topic":"フロア用ドライシート","status":"PUBLISHED_INITIAL","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json","next_action":"periodic product/review recheck"},
     {"id":"T015","topic":"ハンディモップ","status":"PUBLISHED_INITIAL","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json","next_action":"periodic official SKU and replacement-sheet review recheck"},
     {"id":"T016","topic":"フリーザーバッグ Mサイズ","status":"RESEARCHING","comparison_axes":["厚さ","密閉","冷凍","書き込み","レビュー"],"next_action":"verify current same-size SKUs and comparable review evidence before publication"},
-    {"id":"T017","topic":"クイックルワイパー通常型 vs マグネットワイパー","status":"RESEARCHING","claimed_by":"ChatGPT","claimed_at":"2026-08-13T08:12:00+09:00","comparison_axes":["シート装着","床への密着","すき間","シート互換性","レビュー"],"next_action":"verify current SKUs, official differences, review snapshots and affiliate relevance"}
+    {"id":"T017","topic":"クイックルワイパー通常型 vs マグネットワイパー","status":"PUBLISHED_INITIAL","article":"article-quickle-magnetic-wiper.html","research":"data/research/quickle-magnetic-vs-standard-2026-08-13.json","claimed_by":"ChatGPT","claimed_at":"2026-08-13T08:12:00+09:00","published_at":"2026-08-13T08:25:00+09:00","comparison_axes":["シート装着","床への密着","すき間","シート互換性","レビュー"],"fact_check_note":"花王の2023年発売資料と現行Q&Aでマグネット固定、通常型比126%の床接触面積、現行シート互換性を確認。レビュー評価は異なる楽天店舗・母数のため直接順位付けせず、原文大量保存・転載なし。外部商品画像は使用せず権利リスクを回避。"}
   ]
 }
