@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-09",
+  "updated_at": "2026-08-13",
   "published": [
     {"id":"T001","number":"01","category":"kitchen","title":"食洗機用洗剤","subtitle":"6商品の初回調査","axes":"手軽さ・洗浄力・量調整・母数","article":"article.html","research":"data/research/dishwasher-detergent-2026-08-09.json"},
     {"id":"T002","number":"02","category":"cleaning","title":"ドラム式洗濯槽クリーナー","subtitle":"N-W2・SK-750・ES-CD","axes":"塩素系・容量・ニオイ・レビュー","article":"article-washer-cleaner.html","research":"data/research/drum-washer-cleaner-2026-08-09.json"},
@@ -14,7 +14,8 @@
     {"id":"T011","number":"11","category":"cleaning","title":"こすらない浴室洗剤","subtitle":"ルックプラス vs バスマジックリン エアジェット","axes":"待ち時間・ミスト・香り・レビュー","article":"article-no-scrub-bath-cleaners.html","research":"data/research/no-scrub-bath-cleaners-2026-08-09.json"},
     {"id":"T013","number":"13","category":"cleaning","title":"フロア用ウェットシート","subtitle":"クイックル vs ウェーブ","axes":"水分保持・厚さ・広さ・レビュー","article":"article-floor-wet-sheets.html","research":"data/research/floor-wet-sheets-2026-08-09.json"},
     {"id":"T014","number":"14","category":"cleaning","title":"フロア用ドライシート","subtitle":"クイックル vs ウェーブ","axes":"髪・ホコリ・ペット毛・粒ゴミ","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json"},
-    {"id":"T015","number":"15","category":"cleaning","title":"ハンディモップ","subtitle":"クイックルハンディ vs ウェーブハンディ","axes":"毛束・ホコリ捕集・すき間・レビュー","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json"}
+    {"id":"T015","number":"15","category":"cleaning","title":"ハンディモップ","subtitle":"クイックルハンディ vs ウェーブハンディ","axes":"毛束・ホコリ捕集・すき間・レビュー","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json"},
+    {"id":"T017","number":"17","category":"cleaning","title":"クイックルワイパー本体","subtitle":"通常型 vs マグネットワイパー","axes":"シート装着・密着・ズレ・すき間・レビュー","article":"article-quickle-magnetic-wiper.html","research":"data/research/quickle-magnetic-vs-standard-2026-08-13.json"}
   ],
   "next": [
     {"id":"T012","number":"12","category":"cleaning","title":"流せるトイレ掃除シート","subtitle":"キレキラ！2026年10月リニューアル待ち","axes":"厚さ・破れ・除菌・流しやすさ","status":"2026-10-01再調査"},
