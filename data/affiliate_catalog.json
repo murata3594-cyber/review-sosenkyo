@@ -1,37 +1,73 @@
 {
   "updated_at": "2026-08-12",
-  "articles": {
-    "article.html": {
-      "theme": "食洗機用洗剤",
-      "offers": []
-    },
-    "article-washer-cleaner.html": {
-      "theme": "ドラム式洗濯槽クリーナー",
-      "offers": []
-    },
-    "article-cat-litter.html": {
-      "theme": "システムトイレ用猫砂",
-      "offers": []
-    },
-    "article-brita-maxtra-pro.html": {
-      "theme": "BRITA MAXTRA PRO",
-      "offers": []
-    },
-    "article-kitchen-sponge.html": {
-      "theme": "キッチンスポンジ",
-      "offers": []
-    },
-    "article-odor-proof-bags.html": {
-      "theme": "生ごみ用防臭袋",
-      "offers": []
-    }
+  "policy": {
+    "amazon": "ASINまたは公式ツールで生成したURLが確定した商品のみ有効化する。検索語だけでAmazon商品リンクを自動生成しない。",
+    "rakuten": "Rakuten Ichiba Item Search APIで現行在庫を検索し、must_include条件を満たす商品のみ採用する。",
+    "price": "価格は変動するため記事本文へ固定保存しない。"
   },
-  "offer_schema": {
-    "label": "読者に表示する商品名",
-    "provider": "amazon|rakuten|a8|valuecommerce",
-    "asin": "Amazonの場合のみ",
-    "rakuten_item_code": "楽天APIで正確な商品を引く場合のみ",
-    "stored_url": "A8/ValueCommerceや手動生成済みURLの場合のみ",
-    "note": "用途・選定理由"
+  "articles": {
+    "article.html": {"theme":"食洗機用洗剤","products":[
+      {"label":"フィニッシュ 凝縮パワーキューブ","note":"計量不要・レビュー母数重視","amazon":{"asin":""},"rakuten":{"query":"フィニッシュ 凝縮パワーキューブ","must_include":["フィニッシュ","パワーキューブ"]}},
+      {"label":"ジョイ ジェルタブ","note":"手軽さ重視","amazon":{"asin":""},"rakuten":{"query":"ジョイ ジェルタブ 食洗機","must_include":["ジョイ","ジェルタブ"]}},
+      {"label":"フィニッシュ パウダー レモン","note":"量調整・コスト志向","amazon":{"asin":""},"rakuten":{"query":"フィニッシュ パウダー レモン 食洗機","must_include":["フィニッシュ","パウダー"]}},
+      {"label":"キュキュット 食洗機用 粉末","note":"粉末・くすみ対策","amazon":{"asin":""},"rakuten":{"query":"キュキュット 食洗機 粉末","must_include":["キュキュット","食洗機"]}},
+      {"label":"CHARMY クリスタ クリアEXジェル","note":"現行ジェル","amazon":{"asin":""},"rakuten":{"query":"CHARMY クリスタ クリアEXジェル","must_include":["クリスタ","クリアEX"]}}
+    ]},
+    "article-washer-cleaner.html": {"theme":"ドラム式洗濯槽クリーナー","products":[
+      {"label":"N-W2 洗濯槽クリーナー","note":"メーカー系塩素クリーナー","amazon":{"asin":""},"rakuten":{"query":"N-W2 洗濯槽クリーナー","must_include":["N-W2"]}},
+      {"label":"SK-750 洗濯槽クリーナー","note":"メーカー系塩素クリーナー","amazon":{"asin":""},"rakuten":{"query":"SK-750 洗濯槽クリーナー","must_include":["SK-750"]}},
+      {"label":"ES-CD 洗濯槽クリーナー","note":"メーカー系塩素クリーナー","amazon":{"asin":""},"rakuten":{"query":"ES-CD 洗濯槽クリーナー","must_include":["ES-CD"]}}
+    ]},
+    "article-cat-litter.html": {"theme":"システムトイレ用猫砂","products":[
+      {"label":"デオトイレ 消臭・抗菌サンド","note":"デオトイレ本体向け","amazon":{"asin":""},"rakuten":{"query":"デオトイレ 消臭 抗菌 サンド","must_include":["デオトイレ","サンド"]}},
+      {"label":"ニャンとも清潔トイレ 脱臭・抗菌チップ","note":"ニャンとも本体向け","amazon":{"asin":""},"rakuten":{"query":"ニャンとも清潔トイレ 脱臭 抗菌 チップ","must_include":["ニャンとも","チップ"]}}
+    ]},
+    "article-brita-maxtra-pro.html": {"theme":"BRITA MAXTRA PRO","products":[
+      {"label":"BRITA MAXTRA PRO ピュアパフォーマンス","note":"標準用途","amazon":{"asin":""},"rakuten":{"query":"BRITA MAXTRA PRO ピュアパフォーマンス","must_include":["MAXTRA","ピュア"]}},
+      {"label":"BRITA MAXTRA PRO ホットドリンク","note":"ホットドリンク用途","amazon":{"asin":""},"rakuten":{"query":"BRITA MAXTRA PRO ホットドリンク","must_include":["MAXTRA","ホット"]}}
+    ]},
+    "article-kitchen-sponge.html": {"theme":"キッチンスポンジ","products":[
+      {"label":"ダスキン 台所用スポンジ","note":"耐久性重視","amazon":{"asin":""},"rakuten":{"query":"ダスキン 台所用スポンジ","must_include":["ダスキン","スポンジ"]}},
+      {"label":"キクロンA","note":"研磨力・定番","amazon":{"asin":""},"rakuten":{"query":"キクロンA スポンジ","must_include":["キクロンA"]}},
+      {"label":"3M スコッチ・ブライト キッチンスポンジ","note":"用途別ラインが豊富","amazon":{"asin":""},"rakuten":{"query":"3M スコッチブライト キッチン スポンジ","must_include":["スコッチ","スポンジ"]}},
+      {"label":"マーナ おさかなスポンジ","note":"細長い形状","amazon":{"asin":""},"rakuten":{"query":"マーナ おさかなスポンジ","must_include":["マーナ","おさかな"]}}
+    ]},
+    "article-odor-proof-bags.html": {"theme":"生ごみ用防臭袋","products":[
+      {"label":"BOS 生ゴミが臭わない袋","note":"防臭袋の定番","amazon":{"asin":""},"rakuten":{"query":"BOS 生ゴミが臭わない袋","must_include":["BOS","臭わない"]}},
+      {"label":"においバイバイ袋","note":"ねじって閉じる防臭袋","amazon":{"asin":""},"rakuten":{"query":"においバイバイ袋 生ごみ","must_include":["においバイバイ"]}}
+    ]},
+    "article-system-toilet-sheets.html": {"theme":"システムトイレ用シート","products":[
+      {"label":"デオトイレ 消臭・抗菌シート","note":"デオトイレ向け","amazon":{"asin":""},"rakuten":{"query":"デオトイレ 消臭 抗菌 シート","must_include":["デオトイレ","シート"]}},
+      {"label":"ニャンとも清潔トイレ 脱臭・抗菌シート","note":"ニャンとも向け","amazon":{"asin":""},"rakuten":{"query":"ニャンとも清潔トイレ 脱臭 抗菌 シート","must_include":["ニャンとも","シート"]}}
+    ]},
+    "article-multi-cat-sheets.html": {"theme":"システムトイレ用シート 複数ねこ用","products":[
+      {"label":"デオトイレ 複数ねこ用 消臭・抗菌シート","note":"複数頭向け","amazon":{"asin":""},"rakuten":{"query":"デオトイレ 複数ねこ用 消臭 抗菌 シート","must_include":["デオトイレ","複数","シート"]}},
+      {"label":"ニャンとも清潔トイレ 複数ねこ用シート","note":"複数頭向け候補","amazon":{"asin":""},"rakuten":{"query":"ニャンとも清潔トイレ 複数ねこ用 シート","must_include":["ニャンとも","複数","シート"]}}
+    ]},
+    "article-pet-sheets-regular.html": {"theme":"高吸収ペットシーツ レギュラー","products":[
+      {"label":"デオシート しっかり超吸収 レギュラー","note":"高吸収重視","amazon":{"asin":""},"rakuten":{"query":"デオシート しっかり超吸収 レギュラー","must_include":["デオシート","レギュラー"]}},
+      {"label":"アイリス 超吸収・超速吸 ペットシーツ レギュラー","note":"吸収速度重視","amazon":{"asin":""},"rakuten":{"query":"アイリス 超吸収 超速吸 ペットシーツ レギュラー","must_include":["アイリス","ペットシーツ","レギュラー"]}}
+    ]},
+    "article-thin-pet-sheets-regular.html": {"theme":"薄型ペットシーツ レギュラー","products":[
+      {"label":"アイリス 超薄型ペットシーツ レギュラー","note":"こまめ交換向け","amazon":{"asin":""},"rakuten":{"query":"アイリス 超薄型 ペットシーツ レギュラー","must_include":["アイリス","薄型","レギュラー"]}},
+      {"label":"ASKUL 薄型ペットシーツ レギュラー","note":"大容量候補","amazon":{"asin":""},"rakuten":{"query":"ASKUL 薄型 ペットシーツ レギュラー","must_include":["ペットシーツ","レギュラー"]}},
+      {"label":"国産 薄型ペットシーツ レギュラー","note":"国産薄型候補","amazon":{"asin":""},"rakuten":{"query":"国産 薄型 ペットシーツ レギュラー","must_include":["薄型","ペットシーツ","レギュラー"]}}
+    ]},
+    "article-no-scrub-bath-cleaners.html": {"theme":"こすらない浴室洗剤","products":[
+      {"label":"ルックプラス バスタブクレンジング","note":"60秒待つタイプ","amazon":{"asin":""},"rakuten":{"query":"ルックプラス バスタブクレンジング","must_include":["バスタブクレンジング"]}},
+      {"label":"バスマジックリン エアジェット 除菌EX","note":"30秒待つタイプ","amazon":{"asin":""},"rakuten":{"query":"バスマジックリン エアジェット 除菌EX","must_include":["バスマジックリン","エアジェット"]}}
+    ]},
+    "article-floor-wet-sheets.html": {"theme":"フロア用ウェットシート","products":[
+      {"label":"クイックルワイパー 立体吸着ウェットシート","note":"水分保持・定番","amazon":{"asin":""},"rakuten":{"query":"クイックルワイパー 立体吸着ウェットシート","must_include":["クイックル","ウェット"]}},
+      {"label":"ウェーブ フロア用ウェットシート","note":"厚み・捕集性","amazon":{"asin":""},"rakuten":{"query":"ウェーブ フロア用 ウェットシート","must_include":["ウェーブ","ウェット"]}}
+    ]},
+    "article-floor-dry-sheets.html": {"theme":"フロア用ドライシート","products":[
+      {"label":"クイックルワイパー 立体吸着ドライシート","note":"髪・ホコリ・粒ゴミ","amazon":{"asin":""},"rakuten":{"query":"クイックルワイパー 立体吸着ドライシート","must_include":["クイックル","ドライ"]}},
+      {"label":"ウェーブ フロア用ドライシート","note":"毛・ホコリ捕集","amazon":{"asin":""},"rakuten":{"query":"ウェーブ フロア用 ドライシート","must_include":["ウェーブ","ドライ"]}}
+    ]},
+    "article-handy-dusters.html": {"theme":"ハンディモップ","products":[
+      {"label":"クイックルハンディ","note":"毛先・すき間掃除","amazon":{"asin":""},"rakuten":{"query":"クイックルハンディ","must_include":["クイックル","ハンディ"]}},
+      {"label":"ウェーブ ハンディワイパー","note":"毛束・ホコリ捕集","amazon":{"asin":""},"rakuten":{"query":"ウェーブ ハンディワイパー","must_include":["ウェーブ","ハンディ"]}}
+    ]}
   }
 }
