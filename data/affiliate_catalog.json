@@ -1,0 +1,37 @@
+{
+  "updated_at": "2026-08-12",
+  "articles": {
+    "article.html": {
+      "theme": "食洗機用洗剤",
+      "offers": []
+    },
+    "article-washer-cleaner.html": {
+      "theme": "ドラム式洗濯槽クリーナー",
+      "offers": []
+    },
+    "article-cat-litter.html": {
+      "theme": "システムトイレ用猫砂",
+      "offers": []
+    },
+    "article-brita-maxtra-pro.html": {
+      "theme": "BRITA MAXTRA PRO",
+      "offers": []
+    },
+    "article-kitchen-sponge.html": {
+      "theme": "キッチンスポンジ",
+      "offers": []
+    },
+    "article-odor-proof-bags.html": {
+      "theme": "生ごみ用防臭袋",
+      "offers": []
+    }
+  },
+  "offer_schema": {
+    "label": "読者に表示する商品名",
+    "provider": "amazon|rakuten|a8|valuecommerce",
+    "asin": "Amazonの場合のみ",
+    "rakuten_item_code": "楽天APIで正確な商品を引く場合のみ",
+    "stored_url": "A8/ValueCommerceや手動生成済みURLの場合のみ",
+    "note": "用途・選定理由"
+  }
+}
