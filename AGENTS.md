@@ -4,15 +4,16 @@
 レビュー総選挙 — corporate-style comparison/review website.
 
 ## Read first
-1. `AI_PUBLISH_CONTRACT.md`
-2. `data/automation_policy.json`
-3. `PRODUCTION_RUNBOOK.md`
-4. `WORKFLOW.md`
-5. `DESIGN_SYSTEM.md`
-6. `IMPLEMENTATION_HANDOFF.md`
-7. `data/content_manifest.json`
-8. `data/affiliate_catalog.json`
-9. `data/topic_queue.json`
+1. `AUTONOMOUS_PUBLISHING.md`
+2. `AI_PUBLISH_CONTRACT.md`
+3. `data/automation_policy.json`
+4. `PRODUCTION_RUNBOOK.md`
+5. `WORKFLOW.md`
+6. `DESIGN_SYSTEM.md`
+7. `IMPLEMENTATION_HANDOFF.md`
+8. `data/content_manifest.json`
+9. `data/affiliate_catalog.json`
+10. `data/topic_queue.json`
 
 ## Owner authorization
 Publishing mode is **AUTO_PUBLISH_POST_APPROVAL**.
@@ -37,7 +38,7 @@ A rough topic brief is enough. Resolve missing details by research instead of as
 
 ## Publishing workflow
 When publishing a new comparison article:
-1. Read `AI_PUBLISH_CONTRACT.md` and check for duplicates.
+1. Read `AUTONOMOUS_PUBLISHING.md` and check for duplicates.
 2. Register/claim the topic in `data/topic_queue.json` (`scripts/register_topic.py` is the local deterministic helper).
 3. Research current SKUs and official manufacturer sources.
 4. Create one evidence ledger under `data/research/<topic>-YYYY-MM-DD.json`.
