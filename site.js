@@ -1,4 +1,12 @@
 
+// Small cross-browser UI fixes that should apply to every page.
+const globalStyle=document.createElement('style');
+globalStyle.textContent=`
+.hot-inner{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
+.hot-inner::-webkit-scrollbar{display:none;width:0;height:0}
+`;
+document.head.appendChild(globalStyle);
+
 document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.choice').forEach(btn=>{
     btn.addEventListener('click',()=>{
