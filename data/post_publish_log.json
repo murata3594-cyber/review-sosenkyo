@@ -2,5 +2,16 @@
   "schema_version": 1,
   "site": "レビュー総選挙",
   "policy": "AUTO_PUBLISH_POST_APPROVAL",
-  "entries": []
+  "entries": [
+    {
+      "id": "T017",
+      "title": "クイックルワイパーはマグネット式に買い替えるべき？通常型との違いを比較",
+      "article": "article-quickle-magnetic-wiper.html",
+      "published_at": "2026-08-12T23:25:00Z",
+      "published_by": "ChatGPT",
+      "commit": "bf7da43926926686d4844b2c360ee57a960dcb38",
+      "status": "AWAITING_OWNER_REVIEW",
+      "notes": "花王公式の発売資料・現行Q&Aで主要差分を確認。レビュー動的数値は2026-08-13確認日付きで保存し、異なる店舗・母数の評価点を直接順位付けに使用せず。外部商品画像は転載せず、Amazon ASINは未推測。"
+    }
+  ]
 }
