@@ -1,0 +1,33 @@
+{
+  "enabled": false,
+  "disclosure_required": true,
+  "providers": {
+    "amazon": {
+      "enabled": false,
+      "associate_tag_env": "AMAZON_ASSOCIATE_TAG",
+      "link_mode": "asin"
+    },
+    "rakuten": {
+      "enabled": false,
+      "affiliate_id_env": "RAKUTEN_AFFILIATE_ID",
+      "application_id_env": "RAKUTEN_APPLICATION_ID",
+      "access_key_env": "RAKUTEN_ACCESS_KEY",
+      "api_version": "2026-07-01"
+    },
+    "a8": {
+      "enabled": false,
+      "mode": "stored_url_only"
+    },
+    "valuecommerce": {
+      "enabled": false,
+      "mode": "stored_url_only"
+    }
+  },
+  "rules": {
+    "no_fake_discount": true,
+    "no_unverified_price": true,
+    "no_auto_redirect": true,
+    "no_self_purchase_prompt": true,
+    "only_article_relevant_offers": true
+  }
+}
