@@ -1,0 +1,23 @@
+{
+  "analytics": {
+    "ga4": {
+      "enabled": true,
+      "measurement_id_env": "GA4_MEASUREMENT_ID"
+    }
+  },
+  "search_console": {
+    "google_site_verification_env": "GOOGLE_SITE_VERIFICATION"
+  },
+  "adsense": {
+    "enabled": true,
+    "publisher_id_env": "ADSENSE_PUBLISHER_ID",
+    "ads_txt_record_env": "ADSENSE_ADS_TXT_RECORD"
+  },
+  "contact": {
+    "email_env": "CONTACT_EMAIL"
+  },
+  "privacy": {
+    "analytics_only_when_configured": true,
+    "ads_only_when_configured": true
+  }
+}
