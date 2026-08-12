@@ -1,9 +1,10 @@
 {
-  "updated_at": "2026-08-09",
+  "updated_at": "2026-08-12",
   "rules": {
-    "approval_gate": "AI may research and publish evidence-backed initial comparisons automatically. Weak or conflicting evidence stays in RESEARCHING or NEEDS_REVIEW.",
+    "approval_gate": "AUTO_PUBLISH_POST_APPROVAL: AI may research and publish evidence-backed initial comparisons automatically. Weak or conflicting evidence stays in RESEARCHING or NEEDS_REVIEW.",
     "raw_reviews": "Do not store large volumes of raw review text in this public repository.",
-    "dynamic_data": "Review counts, ratings, price and stock require checked_at."
+    "dynamic_data": "Review counts, ratings, price and stock require checked_at.",
+    "claim_rule": "Before substantial work, set RESEARCHING with claimed_by and claimed_at; do not duplicate an existing claimed/published topic."
   },
   "topics": [
     {"id":"T001","topic":"食洗機用洗剤","status":"PUBLISHED_INITIAL","article":"article.html","research":"data/research/dishwasher-detergent-2026-08-09.json","next_action":"periodic SKU/review recheck"},
@@ -20,6 +21,7 @@
     {"id":"T012","topic":"流せるトイレ掃除シート","status":"HOLD_RENEWAL","research":"data/research/toilet-cleaning-sheets-2026-08-09.json","resume_after":"2026-10-01","next_action":"recheck renewed KireKira SKU, official specifications and reviews after launch"},
     {"id":"T013","topic":"フロア用ウェットシート","status":"PUBLISHED_INITIAL","article":"article-floor-wet-sheets.html","research":"data/research/floor-wet-sheets-2026-08-09.json","next_action":"periodic product/review recheck"},
     {"id":"T014","topic":"フロア用ドライシート","status":"PUBLISHED_INITIAL","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json","next_action":"periodic product/review recheck"},
-    {"id":"T015","topic":"ハンディモップ","status":"RESEARCHING","comparison_axes":["毛束・繊維構造","ホコリ捕集","すき間","取り替えシート","レビュー母数"],"candidate_products":["クイックルハンディ","ウェーブ ハンディワイパー"],"next_action":"verify current official SKU and current replacement-sheet review snapshots"}
+    {"id":"T015","topic":"ハンディモップ","status":"PUBLISHED_INITIAL","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json","next_action":"periodic official SKU and replacement-sheet review recheck"},
+    {"id":"T016","topic":"フリーザーバッグ Mサイズ","status":"RESEARCHING","comparison_axes":["厚さ","密閉","冷凍","書き込み","レビュー"],"next_action":"verify current same-size SKUs and comparable review evidence before publication"}
   ]
 }
