@@ -4,6 +4,8 @@ const globalStyle=document.createElement('style');
 globalStyle.textContent=`
 .hot-inner{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
 .hot-inner::-webkit-scrollbar{display:none;width:0;height:0}
+.legal-links{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
+.legal-links a{font-size:10px;color:#718596}.legal-links a:hover{color:#dce6ee}
 `;
 document.head.appendChild(globalStyle);
 
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         result.innerHTML='<b>診断：</b>'+map[type];
         result.classList.add('show');
       }
-    })
+    });
   });
 
   const buttons=[...document.querySelectorAll('.focus-btn')];
@@ -37,4 +39,19 @@ document.addEventListener('DOMContentLoaded',()=>{
     buttons.forEach(x=>x.classList.remove('active'));btn.classList.add('active');
     if(panel){const [h,p]=content[btn.dataset.focus];panel.innerHTML='<h3>'+h+'</h3><p>'+p+'</p>';}
   }));
+
+  const footer=document.querySelector('.footer .wrap');
+  if(footer && !footer.querySelector('.legal-links')){
+    const nav=document.createElement('nav');
+    nav.className='legal-links';
+    nav.setAttribute('aria-label','サイト情報');
+    nav.innerHTML=[
+      ['about.html','運営者情報'],
+      ['methodology.html','調査方法'],
+      ['disclosure.html','広告・アフィリエイト方針'],
+      ['privacy.html','プライバシーポリシー'],
+      ['contact.html','お問い合わせ']
+    ].map(([href,label])=>`<a href="${href}">${label}</a>`).join('');
+    footer.appendChild(nav);
+  }
 });
