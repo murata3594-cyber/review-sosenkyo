@@ -3,6 +3,7 @@
 Claude / Claude Code entrypoint for レビュー総選挙.
 
 Read first:
+- `AUTONOMOUS_PUBLISHING.md`
 - `AI_PUBLISH_CONTRACT.md`
 - `data/automation_policy.json`
 - `PRODUCTION_RUNBOOK.md`
@@ -18,7 +19,7 @@ Read first:
 Mode: **AUTO_PUBLISH_POST_APPROVAL**.
 For normal evidence-backed articles, do not stop for pre-approval. The owner may give only a rough topic, or Claude may discover an appropriate topic itself. Research missing details, claim the topic, create the article, run the full QA, publish to `main`, then add an `AWAITING_OWNER_REVIEW` entry to `data/post_publish_log.json`.
 
-Only stop before publishing when a hold condition in `AI_PUBLISH_CONTRACT.md` / `data/automation_policy.json` is met.
+Only stop before publishing when a hold condition in `AUTONOMOUS_PUBLISHING.md` / `data/automation_policy.json` is met.
 
 ## Content additions
 1. Dedupe and claim/register the topic. Local helper: `python scripts/register_topic.py --topic "..." --agent "Claude"`.
