@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-12",
+  "updated_at": "2026-08-13",
   "policy": {
     "amazon": "ASINまたは公式ツールで生成したURLが確定した商品のみ有効化する。検索語だけでAmazon商品リンクを自動生成しない。",
     "rakuten": "Rakuten Ichiba Item Search APIで現行在庫を検索し、must_include条件を満たす商品のみ採用する。",
@@ -68,6 +68,10 @@
     "article-handy-dusters.html": {"theme":"ハンディモップ","products":[
       {"label":"クイックルハンディ","note":"毛先・すき間掃除","amazon":{"asin":""},"rakuten":{"query":"クイックルハンディ","must_include":["クイックル","ハンディ"]}},
       {"label":"ウェーブ ハンディワイパー","note":"毛束・ホコリ捕集","amazon":{"asin":""},"rakuten":{"query":"ウェーブ ハンディワイパー","must_include":["ウェーブ","ハンディ"]}}
+    ]},
+    "article-quickle-magnetic-wiper.html": {"theme":"クイックルワイパー本体比較","products":[
+      {"label":"クイックルワイパー 通常型","note":"従来の差し込み式・定番本体","amazon":{"asin":""},"rakuten":{"query":"花王 クイックルワイパー 本体","must_include":["クイックルワイパー","本体"]}},
+      {"label":"クイックル マグネットワイパー","note":"シート装着・ズレにくさ重視","amazon":{"asin":""},"rakuten":{"query":"クイックル マグネットワイパー","must_include":["クイックル","マグネットワイパー"]}}
     ]}
   }
 }
