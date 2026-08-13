@@ -10,6 +10,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
+ASSET_VERSION = "20260813-pop-ai-1"
 ROOT_PUBLIC_FILES = [
     "styles.css", "site.js", "robots.txt", "sitemap.xml", "favicon.svg",
     "manifest.webmanifest", "_headers", "_redirects",
@@ -48,6 +49,14 @@ def main() -> None:
     for name in ROOT_PUBLIC_FILES:
         copy_if_exists(ROOT / name, DIST / name)
     copy_if_exists(ROOT / "assets", DIST / "assets")
+
+    # Shared assets are cached in production. Version their HTML references so
+    # visual releases appear immediately instead of waiting for an old cache.
+    for page in DIST.glob("*.html"):
+        text = page.read_text(encoding="utf-8")
+        text = text.replace('href="styles.css"', f'href="styles.css?v={ASSET_VERSION}"')
+        text = text.replace('src="site.js"', f'src="site.js?v={ASSET_VERSION}"')
+        page.write_text(text, encoding="utf-8")
 
     manifest_path = ROOT / "data" / "content_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
