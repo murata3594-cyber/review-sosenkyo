@@ -40,8 +40,11 @@ Recent build/QA state:
 - Typography is self-hosted Mochiy Pop One for display elements plus Kiwi Maru for body and supporting UI. Do not restore generic OS/system fonts or standard rounded-gothic stacks as the primary type system.
 - The visible masthead is the unified editorial wordmark at `assets/brand-review-sosenkyo-v16.webp`, replacing the generic round `選` badge plus ordinary type. It is an explicit accessible image in every header/footer. The first-view headline remains the generated Japanese title mark `どっち？ すっきり選ぼう！` at `assets/hero-title-choice-v15.webp`.
 - Cloudflare build false-positive secret scan against `node_modules/wrangler` was fixed by excluding vendor/build directories while keeping project-source secret scanning strict.
-- Site validation reached `PASSED: 24 HTML pages checked; 14 published item(s); 0 warning(s)`.
-- Content audit reached PASS; the legacy BRITA research ledger was updated with `raw_review_text_stored=false` to remove the compatibility warning.
+- `data/content_manifest.json` currently has 15 published topics; it is the production article allowlist.
+- Production build is manifest-gated: root `article*.html` files are never copied wholesale. Only article paths explicitly present in `data/content_manifest.json` are deployed. Build fails if an unexpected article appears in `dist`.
+- Published articles may link to their structured evidence ledger under `data/research/*.json`. Build copies only research JSON paths explicitly referenced by published manifest entries and fails if a referenced ledger is missing. Never copy the entire `data/` tree to production.
+- The orphan `article-food-wrap.html` page was removed because it was not present in the manifest or topic queue. Its structured research ledger remains source-only and is not deployed unless a future published manifest entry explicitly references it.
+- Content audit passes the no-bulk-raw-review policy; the BRITA legacy ledger includes `raw_review_text_stored=false`.
 
 Canonical monetization status is maintained in `AFFILIATE_SETUP.md`. If this handoff and `AFFILIATE_SETUP.md` ever conflict, re-check the latest code and update both rather than guessing.
 
