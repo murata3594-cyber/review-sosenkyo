@@ -10,7 +10,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-ASSET_VERSION = "20260813-professional-brand-v16-1"
+MANIFEST_PATH = ROOT / "data" / "content_manifest.json"
+ASSET_VERSION = "20260813-professional-brand-v16-2"
 ROOT_PUBLIC_FILES = [
     "styles.css", "site.js", "robots.txt", "sitemap.xml", "favicon.svg",
     "manifest.webmanifest", "_headers", "_redirects",
@@ -31,11 +32,41 @@ def copy_if_exists(src: Path, dst: Path) -> None:
         shutil.copy2(src, dst)
 
 
+def safe_research_path(value: object) -> Path | None:
+    """Return a safe public research-ledger path or fail closed."""
+    if not isinstance(value, str) or not value:
+        return None
+    rel = Path(value)
+    if rel.is_absolute() or ".." in rel.parts:
+        raise SystemExit(f"Unsafe research path in manifest: {value}")
+    if len(rel.parts) < 3 or rel.parts[0:2] != ("data", "research") or rel.suffix.lower() != ".json":
+        raise SystemExit(f"Research path must be data/research/*.json: {value}")
+    return rel
+
+
 def main() -> None:
     # Deterministic content and editorial QA come first.
     run("sync_content.py")
     run("validate_site.py")
     run("audit_content_quality.py")
+
+    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    published = manifest.get("published", [])
+    expected_articles: set[str] = set()
+    research_ledgers: set[Path] = set()
+
+    for item in published:
+        article = item.get("article")
+        if not isinstance(article, str) or not article:
+            raise SystemExit(f"Published manifest entry missing article path: {item.get('id', 'UNKNOWN')}")
+        article_path = Path(article)
+        if article_path.is_absolute() or ".." in article_path.parts or article_path.suffix.lower() != ".html":
+            raise SystemExit(f"Unsafe article path in manifest: {article}")
+        expected_articles.add(article_path.as_posix())
+
+        research_path = safe_research_path(item.get("research"))
+        if research_path is not None:
+            research_ledgers.add(research_path)
 
     # Resolve affiliate links. With no credentials this safely generates zero active links.
     run("build_affiliate_links.py")
@@ -44,29 +75,55 @@ def main() -> None:
         shutil.rmtree(DIST)
     DIST.mkdir(parents=True)
 
+    # Public utility pages are copied normally, but article*.html is manifest-gated.
+    # This prevents abandoned/draft article files from becoming indexable production pages.
     for page in ROOT.glob("*.html"):
+        if page.name.startswith("article"):
+            continue
         copy_if_exists(page, DIST / page.name)
+
+    for article in sorted(expected_articles):
+        src = ROOT / article
+        if not src.exists():
+            raise SystemExit(f"Published article source is missing: {article}")
+        copy_if_exists(src, DIST / article)
+
     for name in ROOT_PUBLIC_FILES:
         copy_if_exists(ROOT / name, DIST / name)
     copy_if_exists(ROOT / "assets", DIST / "assets")
 
+    # Publish only the structured evidence ledgers that are explicitly referenced
+    # by published manifest entries. Never copy the entire data/ tree.
+    for rel in sorted(research_ledgers):
+        src = ROOT / rel
+        if not src.exists():
+            raise SystemExit(f"Published research ledger is missing: {rel.as_posix()}")
+        copy_if_exists(src, DIST / rel)
+
     # Shared assets are cached in production. Version their HTML references so
     # visual releases appear immediately instead of waiting for an old cache.
-    for page in DIST.glob("*.html"):
+    for page in DIST.rglob("*.html"):
         text = page.read_text(encoding="utf-8")
         text = text.replace('href="styles.css"', f'href="styles.css?v={ASSET_VERSION}"')
         text = text.replace('src="site.js"', f'src="site.js?v={ASSET_VERSION}"')
         page.write_text(text, encoding="utf-8")
 
-    manifest_path = ROOT / "data" / "content_manifest.json"
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    missing = []
-    for item in manifest.get("published", []):
-        article = item.get("article")
-        if article and not (DIST / article).exists():
-            missing.append(article)
-    if missing:
-        raise SystemExit("Missing published article(s) in dist: " + ", ".join(missing))
+    missing_articles = [article for article in sorted(expected_articles) if not (DIST / article).exists()]
+    if missing_articles:
+        raise SystemExit("Missing published article(s) in dist: " + ", ".join(missing_articles))
+
+    deployed_articles = {
+        page.relative_to(DIST).as_posix()
+        for page in DIST.rglob("article*.html")
+    }
+    unexpected_articles = sorted(deployed_articles - expected_articles)
+    if unexpected_articles:
+        raise SystemExit("Unregistered article(s) leaked into dist: " + ", ".join(unexpected_articles))
+
+    missing_ledgers = [rel.as_posix() for rel in sorted(research_ledgers) if not (DIST / rel).exists()]
+    if missing_ledgers:
+        raise SystemExit("Missing public research ledger(s) in dist: " + ", ".join(missing_ledgers))
+
     if not (DIST / "index.html").exists():
         raise SystemExit("dist/index.html is missing")
 
@@ -75,9 +132,17 @@ def main() -> None:
     run("finalize_seo.py", str(DIST))
     run("inject_services.py", str(DIST))
 
+    source_orphans = sorted(
+        page.name for page in ROOT.glob("article*.html")
+        if page.relative_to(ROOT).as_posix() not in expected_articles
+    )
+    if source_orphans:
+        print("Excluded unregistered article source(s): " + ", ".join(source_orphans))
+
     print(f"Production dist built: {DIST}")
-    print(f"HTML pages: {len(list(DIST.glob('*.html')))}")
-    print(f"Published articles: {len(manifest.get('published', []))}")
+    print(f"HTML pages: {len(list(DIST.rglob('*.html')))}")
+    print(f"Published articles: {len(expected_articles)}")
+    print(f"Published research ledgers: {len(research_ledgers)}")
 
 
 if __name__ == "__main__":
