@@ -37,7 +37,7 @@ Affiliate/monetization state:
 
 Recent build/QA state:
 - The shared visual system is Pop Lifestyle Editorial v13: a bespoke AI-generated mixed-media homepage hero (not stock-photo styling), rounded Japanese typography, bright coral/lilac/mint/sky accents, clearer mobile navigation, and lighter comparison cards. `DESIGN_SYSTEM.md` and `IMPLEMENTATION_HANDOFF.md` are the visual source of truth; do not restore severe gothic, dark corporate-tech, generic stock imagery, or text-only hero styling.
-- Typography is self-hosted Zen Maru Gothic in 400, 700 and 900 weights. Do not restore generic OS/system font stacks as the primary type system.
+- Typography is self-hosted Mochiy Pop One for display elements plus Kiwi Maru for body and supporting UI. Do not restore generic OS/system fonts or standard rounded-gothic stacks as the primary type system.
 - Cloudflare build false-positive secret scan against `node_modules/wrangler` was fixed by excluding vendor/build directories while keeping project-source secret scanning strict.
 - Site validation reached `PASSED: 24 HTML pages checked; 14 published item(s); 0 warning(s)`.
 - Content audit reached PASS; the legacy BRITA research ledger was updated with `raw_review_text_stored=false` to remove the compatibility warning.
