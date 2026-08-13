@@ -43,3 +43,7 @@
 - Core colors are vivid coral, lavender, mint, sky blue, butter yellow and creamy white.
 - Cards use friendly color coding and soft shadows while comparison evidence remains calm and readable.
 - The generated hero image must remain free of text, logos and readable product branding.
+
+## v12 Self-hosted Pop Typography
+- Zen Maru Gothic is self-hosted in 400, 700 and 900 weights and is the primary typeface across body copy, headings, navigation, buttons and numeric UI.
+- Do not restore generic OS/system font stacks as the primary typography.
