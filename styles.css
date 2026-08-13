@@ -28,7 +28,7 @@ body{
     radial-gradient(circle at 8% 2%,rgba(239,107,123,.10),transparent 24rem),
     radial-gradient(circle at 92% 18%,rgba(121,102,217,.08),transparent 28rem),
     var(--paper);
-  font-family:"Zen Pop",sans-serif;
+  font-family:"Kiwi Editorial",serif;
   line-height:1.8;
   letter-spacing:.015em;
   overflow-x:hidden;
@@ -248,7 +248,11 @@ body{
     radial-gradient(circle at 94% 14%,rgba(97,183,244,.16),transparent 28rem),
     radial-gradient(circle at 60% 40%,rgba(52,191,166,.08),transparent 24rem),
     var(--paper);
-  font-family:"Zen Pop",sans-serif;
+  font-family:"Kiwi Editorial",serif;
+}
+h1,h2,h3,.logo,.big,.signal strong,button,.search-box button,.header-search button{
+  font-family:"Pop Display","Kiwi Editorial",sans-serif;
+  font-weight:400;
 }
 body::before{
   opacity:.32;
@@ -358,23 +362,28 @@ body::before{
   .footer{border-top-width:6px}
 }
 @font-face{
-  font-family:"Zen Pop";
-  src:url("assets/fonts/zen-maru-gothic-400.woff2") format("woff2");
+  font-family:"Kiwi Editorial";
+  src:url("assets/fonts/kiwi-maru-400.woff2") format("woff2");
   font-style:normal;
-  font-weight:400 600;
+  font-weight:400;
   font-display:swap;
 }
 @font-face{
-  font-family:"Zen Pop";
-  src:url("assets/fonts/zen-maru-gothic-700.woff2") format("woff2");
+  font-family:"Kiwi Editorial";
+  src:url("assets/fonts/kiwi-maru-500.woff2") format("woff2");
   font-style:normal;
-  font-weight:700 800;
+  font-weight:500 900;
   font-display:swap;
 }
 @font-face{
-  font-family:"Zen Pop";
-  src:url("assets/fonts/zen-maru-gothic-900.woff2") format("woff2");
+  font-family:"Pop Display";
+  src:url("assets/fonts/mochiy-pop-one-400.woff2") format("woff2");
   font-style:normal;
-  font-weight:900;
+  font-weight:400;
   font-display:swap;
+}
+.logo,.hero h1,.sec-head h1,.sec-head h2,.story h3,.rank-head h1,.article-hero h1,.article h1,.article h2,.cat h3,.big,.signal strong,button,.search-box button,.header-search button{
+  font-family:"Pop Display","Kiwi Editorial",sans-serif;
+  font-weight:400;
+  letter-spacing:-.018em;
 }

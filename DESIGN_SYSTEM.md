@@ -45,8 +45,8 @@
 - The generated hero image must remain free of text, logos and readable product branding.
 
 ## v12 Self-hosted Pop Typography
-- Zen Maru Gothic is self-hosted in 400, 700 and 900 weights and is the primary typeface across body copy, headings, navigation, buttons and numeric UI.
-- Do not restore generic OS/system font stacks as the primary typography.
+- Mochiy Pop One is self-hosted for logos, headings, buttons and major numeric UI; Kiwi Maru is self-hosted for body copy, navigation and supporting text.
+- Do not restore generic OS/system fonts or standard rounded-gothic stacks as the primary typography.
 
 ## v13 Original Pop Editorial Hero
 - The homepage uses an original AI-generated mixed-media editorial set, not stock-photo styling: coral/lavender arches, mint furniture, paper-flower motifs and two people comparing unbranded everyday objects.

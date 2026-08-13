@@ -23,8 +23,8 @@
 - `scripts/build_dist.py` versions shared CSS/JS references with `20260813-pop-ai-1` to bypass production caches.
 
 ## v12 typography note (2026-08-13)
-- `styles.css` self-hosts Zen Maru Gothic in 400, 700 and 900 weights from `assets/fonts/`.
-- Shared CSS/JS references use `20260813-zen-pop-type-1`.
+- `styles.css` self-hosts Mochiy Pop One for display type and Kiwi Maru for body type from `assets/fonts/`.
+- Shared CSS/JS references use `20260813-signature-pop-type-1`.
 
 ## v13 hero note (2026-08-13)
 - The top image is a bespoke pop editorial set with tactile paper motifs and no readable brands or labels.
