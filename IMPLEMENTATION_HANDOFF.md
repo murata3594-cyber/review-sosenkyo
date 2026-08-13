@@ -18,10 +18,14 @@
 
 ## v11 implementation note (2026-08-13)
 - `styles.css` now contains the Pop Lifestyle refresh after the v10 base rules.
-- `assets/hero-lifestyle-ai-v2.webp` is the generated homepage hero asset and is referenced from `.hero-visual`.
+- `assets/hero-pop-editorial-v3.webp` is the original mixed-media homepage hero asset and is referenced from `.hero-visual`.
 - The desktop hero uses an image-backed card with copy over its light negative space; tablet/mobile stack the image above the copy.
 - `scripts/build_dist.py` versions shared CSS/JS references with `20260813-pop-ai-1` to bypass production caches.
 
 ## v12 typography note (2026-08-13)
 - `styles.css` self-hosts Zen Maru Gothic in 400, 700 and 900 weights from `assets/fonts/`.
 - Shared CSS/JS references use `20260813-zen-pop-type-1`.
+
+## v13 hero note (2026-08-13)
+- The top image is a bespoke pop editorial set with tactile paper motifs and no readable brands or labels.
+- Shared CSS/JS references use `20260813-pop-editorial-hero-1`.
