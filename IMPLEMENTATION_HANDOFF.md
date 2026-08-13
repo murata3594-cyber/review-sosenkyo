@@ -29,3 +29,7 @@
 ## v13 hero note (2026-08-13)
 - The top image is a bespoke pop editorial set with tactile paper motifs and no readable brands or labels.
 - Shared CSS/JS references use `20260813-pop-editorial-hero-1`.
+
+## v14 title-mark note (2026-08-13)
+- `assets/hero-title-choice-v4.webp` is the generated transparent first-view title mark.
+- Shared CSS/JS references use `20260813-generated-titlemark-1`.
