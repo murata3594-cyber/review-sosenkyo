@@ -3,7 +3,9 @@
   "topic": "BRITA MAXTRA PRO ピュアパフォーマンス vs ホットドリンク",
   "researched_at": "2026-08-09",
   "status": "verified_initial_research",
-  "raw_review_text_stored": false,
+  "policy": {
+    "raw_review_text_stored": false
+  },
   "compatibility": "両製品ともBRITAのポット型/タンク型浄水器の全モデルに使用可能（クラシックタイプ除く）",
   "products": [
     {

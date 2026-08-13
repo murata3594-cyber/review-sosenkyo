@@ -27,7 +27,7 @@ Normal evidence-backed content is pre-authorized by the owner. Do not ask for ap
 A rough topic brief is enough. Resolve missing details by research instead of asking follow-up questions unless the ambiguity cannot be safely resolved. AI-discovered topics are also allowed.
 
 ## Rules
-1. Visual direction: corporate / premium tech. Do not revert to a flashy affiliate-ranking look.
+1. Visual direction: warm lifestyle editorial. Keep the experience bright, calm, inclusive and easy to scan on mobile; do not revert to a dark corporate-tech or flashy affiliate-ranking look.
 2. Cloudflare Worker Static Assets is production. GitHub Pages is noindex backup only.
 3. Never commit credentials, API keys, cookies, tokens, real `.env`, or private raw review dumps.
 4. Preserve article flow: conclusion -> comparison -> usage analysis -> negative/review-disagreement analysis -> use-case verdict -> sources.
