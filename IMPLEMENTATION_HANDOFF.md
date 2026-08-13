@@ -15,3 +15,9 @@
 2. 新規ページも既存のヘッダー、カード、記事、モバイルナビのクラスを再利用する。
 3. CTAは関連性とプロバイダ接続条件を満たした場合だけ表示する。
 4. 色だけで状態を伝えず、必ずテキストも併記する。
+
+## v11 implementation note (2026-08-13)
+- `styles.css` now contains the Pop Lifestyle refresh after the v10 base rules.
+- `assets/hero-lifestyle-ai-v2.webp` is the generated homepage hero asset and is referenced from `.hero-visual`.
+- The desktop hero uses an image-backed card with copy over its light negative space; tablet/mobile stack the image above the copy.
+- `scripts/build_dist.py` versions shared CSS/JS references with `20260813-pop-ai-1` to bypass production caches.

@@ -36,3 +36,10 @@
 - 画像拡大はごく弱くする。
 - 点滅、バウンス、強いパララックスは禁止。
 - `prefers-reduced-motion` を尊重する。
+
+## v11 Pop Lifestyle Image-led Refresh
+- Homepage hero is led by an original AI-generated editorial lifestyle image rather than a product diagram or text-only panel.
+- Use rounded Japanese system typography, softer weight, playful spacing and large radii; avoid severe gothic/corporate styling.
+- Core colors are vivid coral, lavender, mint, sky blue, butter yellow and creamy white.
+- Cards use friendly color coding and soft shadows while comparison evidence remains calm and readable.
+- The generated hero image must remain free of text, logos and readable product branding.

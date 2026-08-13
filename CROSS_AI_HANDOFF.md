@@ -36,7 +36,7 @@ Affiliate/monetization state:
 - Never commit A8/ValueCommerce tags, Rakuten keys, Amazon tags, or other credentials.
 
 Recent build/QA state:
-- The shared visual system was refreshed to Warm Lifestyle Editorial v10: bright ivory surfaces, coral/lilac/mint accents, clearer mobile navigation, and lighter article/comparison cards. `DESIGN_SYSTEM.md` and `IMPLEMENTATION_HANDOFF.md` are the visual source of truth; do not restore the former dark corporate-tech theme.
+- The shared visual system is Pop Lifestyle Editorial v11: an AI-generated people-led homepage hero, rounded Japanese typography, bright coral/lilac/mint/sky accents, clearer mobile navigation, and lighter comparison cards. `DESIGN_SYSTEM.md` and `IMPLEMENTATION_HANDOFF.md` are the visual source of truth; do not restore severe gothic, dark corporate-tech, or text-only hero styling.
 - Cloudflare build false-positive secret scan against `node_modules/wrangler` was fixed by excluding vendor/build directories while keeping project-source secret scanning strict.
 - Site validation reached `PASSED: 24 HTML pages checked; 14 published item(s); 0 warning(s)`.
 - Content audit reached PASS; the legacy BRITA research ledger was updated with `raw_review_text_stored=false` to remove the compatibility warning.
