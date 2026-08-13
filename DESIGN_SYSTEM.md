@@ -47,3 +47,7 @@
 ## v12 Self-hosted Pop Typography
 - Zen Maru Gothic is self-hosted in 400, 700 and 900 weights and is the primary typeface across body copy, headings, navigation, buttons and numeric UI.
 - Do not restore generic OS/system font stacks as the primary typography.
+
+## v13 Original Pop Editorial Hero
+- The homepage uses an original AI-generated mixed-media editorial set, not stock-photo styling: coral/lavender arches, mint furniture, paper-flower motifs and two people comparing unbranded everyday objects.
+- Preserve the airy cream copy space on the left and the subjects on the right. Do not replace it with a generic white-kitchen, shopping-bag or influencer-photo scene.
