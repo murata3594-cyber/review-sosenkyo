@@ -390,20 +390,15 @@ body::before{
 .hero-copy>h1{width:min(620px,100%);max-width:none;aspect-ratio:3/1;margin:8px 0 16px;background:url('assets/hero-title-choice-v15.webp') left center/contain no-repeat;font-size:0!important;line-height:0;text-indent:-9999px}
 .hero-copy>h1 br,.hero-copy>h1 span{display:none}
 
-/* v15 generated graphic identity. Visible brand and headline are original
-   title artwork; semantic text remains in the document for accessibility. */
+/* v16 editorial identity: the image is now part of the markup, eliminating
+   the generic seal-and-type fallback that previously flashed before CSS. */
 .logo{
-  position:relative;width:clamp(205px,21vw,285px);height:70px;display:block;flex:0 0 auto;
-  background:url('assets/brand-review-sosenkyo-v15.webp') center/contain no-repeat;
+  position:relative;width:clamp(205px,20vw,248px);height:70px;display:flex;align-items:center;flex:0 0 auto;
+  background:none;
   font-size:0!important;letter-spacing:0!important;
 }
-.logo>.logo-seal,.logo>em,.logo:not(:has(*)){
-  color:transparent!important;
-}
-.logo>.logo-seal,.logo>em{
-  position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
-  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;background:none!important;
-}
+.logo img{width:100%;height:100%;object-fit:contain;object-position:left center}
+.footer .logo{width:230px;height:72px;padding:5px 10px;border-radius:14px;background:rgba(255,255,255,.94)}
 .hero-kicker,.sec-kicker{
   display:inline-flex;align-items:center;padding:7px 12px;border-radius:7px 15px 9px 13px;
   background:#2d2933;color:#fff;box-shadow:4px 4px 0 #ffd75f;transform:rotate(-1deg);
@@ -421,4 +416,4 @@ body::before{
   content:"";position:absolute;right:12px;top:50%;width:36px;height:9px;border-radius:999px;
   background:linear-gradient(90deg,#ff6f8f,#7b68d9,#34bfa6);transform:translateY(-50%) rotate(-4deg);
 }
-@media(max-width:650px){.logo{width:205px;height:56px}.hero-copy>h1{width:100%}}
+@media(max-width:650px){.logo{width:190px;height:58px}.footer .logo{width:210px;height:68px}.hero-copy>h1{width:100%}}

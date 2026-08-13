@@ -57,7 +57,8 @@
 - Keep the Japanese proposition in the semantic H1 so assistive technology and search retain the original meaning.
 
 ## v15 Generated Graphic Identity
-- The visible masthead is the original cut-paper `assets/brand-review-sosenkyo-v15.webp` artwork rather than ordinary live-font branding.
+- The visible masthead is the unified editorial wordmark `assets/brand-review-sosenkyo-v16.webp`. It replaces the generic round `選` badge plus live text with one custom-drawn lockup and an integrated vote-check gesture.
+- The logo is an explicit `<img>` in every header and footer, so no generic fallback mark flashes while the stylesheet loads.
 - The first-view headline is the original Japanese cut-paper title mark `assets/hero-title-choice-v15.webp`, reading `どっち？ すっきり選ぼう！`.
 - Kicker labels and small banner headings use irregular paper-ticket framing, offset color shadows and collage-rule accents so the supporting text does not fall back to flat generic labels.
 - Keep the semantic Japanese text in the HTML even when title artwork is used visually.
