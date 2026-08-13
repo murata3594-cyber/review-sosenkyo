@@ -387,3 +387,5 @@ body::before{
   font-weight:400;
   letter-spacing:-.018em;
 }
+.hero-copy>h1{width:min(560px,100%);max-width:none;aspect-ratio:3/1;margin:8px 0 16px;background:url('assets/hero-title-choice-v4.webp') center/contain no-repeat;font-size:0!important;line-height:0;text-indent:-9999px}
+.hero-copy>h1 br,.hero-copy>h1 span{display:none}

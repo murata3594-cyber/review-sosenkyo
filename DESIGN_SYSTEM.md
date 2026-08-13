@@ -51,3 +51,7 @@
 ## v13 Original Pop Editorial Hero
 - The homepage uses an original AI-generated mixed-media editorial set, not stock-photo styling: coral/lavender arches, mint furniture, paper-flower motifs and two people comparing unbranded everyday objects.
 - Preserve the airy cream copy space on the left and the subjects on the right. Do not replace it with a generic white-kitchen, shopping-bag or influencer-photo scene.
+
+## v14 Generated Hero Title Mark
+- The first-view headline is the generated transparent `CHOICE!` paper-craft title mark, not live text styled with an ordinary font.
+- Keep the Japanese proposition in the semantic H1 so assistive technology and search retain the original meaning.
