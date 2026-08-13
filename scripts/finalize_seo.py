@@ -64,7 +64,7 @@ def ensure_shared_assets(source: str) -> str:
         head_bits.append('<meta name="theme-color" content="#07111d">')
     if head_bits and "</head>" in source:
         source = source.replace("</head>", "".join(head_bits) + "</head>", 1)
-    if not re.search(r'<script\s+[^>]*src=["\']site\.js["\']', source, flags=re.I) and "</body>" in source:
+    if not re.search(r'<script\s+[^>]*src=["\']site\.js(?:\?[^"\']*)?["\']', source, flags=re.I) and "</body>" in source:
         source = source.replace("</body>", '<script src="site.js"></script></body>', 1)
     return source
 

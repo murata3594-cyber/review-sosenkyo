@@ -387,5 +387,38 @@ body::before{
   font-weight:400;
   letter-spacing:-.018em;
 }
-.hero-copy>h1{width:min(560px,100%);max-width:none;aspect-ratio:3/1;margin:8px 0 16px;background:url('assets/hero-title-choice-v4.webp') center/contain no-repeat;font-size:0!important;line-height:0;text-indent:-9999px}
+.hero-copy>h1{width:min(620px,100%);max-width:none;aspect-ratio:3/1;margin:8px 0 16px;background:url('assets/hero-title-choice-v15.webp') left center/contain no-repeat;font-size:0!important;line-height:0;text-indent:-9999px}
 .hero-copy>h1 br,.hero-copy>h1 span{display:none}
+
+/* v15 generated graphic identity. Visible brand and headline are original
+   title artwork; semantic text remains in the document for accessibility. */
+.logo{
+  position:relative;width:clamp(205px,21vw,285px);height:70px;display:block;flex:0 0 auto;
+  background:url('assets/brand-review-sosenkyo-v15.webp') center/contain no-repeat;
+  font-size:0!important;letter-spacing:0!important;
+}
+.logo>.logo-seal,.logo>em,.logo:not(:has(*)){
+  color:transparent!important;
+}
+.logo>.logo-seal,.logo>em{
+  position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;background:none!important;
+}
+.hero-kicker,.sec-kicker{
+  display:inline-flex;align-items:center;padding:7px 12px;border-radius:7px 15px 9px 13px;
+  background:#2d2933;color:#fff;box-shadow:4px 4px 0 #ffd75f;transform:rotate(-1deg);
+  letter-spacing:.12em;
+}
+.hot-label{
+  padding:6px 11px!important;border-radius:6px!important;background:#fff!important;color:#c94d62!important;
+  box-shadow:3px 3px 0 #7b68d9;transform:rotate(-2deg);
+}
+.vote-panel-head,.board-title{
+  position:relative;overflow:hidden;letter-spacing:.08em;
+  background:linear-gradient(90deg,#fff0f5,#f2efff 55%,#e7faf5)!important;
+}
+.vote-panel-head::after,.board-title::after{
+  content:"";position:absolute;right:12px;top:50%;width:36px;height:9px;border-radius:999px;
+  background:linear-gradient(90deg,#ff6f8f,#7b68d9,#34bfa6);transform:translateY(-50%) rotate(-4deg);
+}
+@media(max-width:650px){.logo{width:205px;height:56px}.hero-copy>h1{width:100%}}

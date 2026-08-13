@@ -55,3 +55,9 @@
 ## v14 Generated Hero Title Mark
 - The first-view headline is the generated transparent `CHOICE!` paper-craft title mark, not live text styled with an ordinary font.
 - Keep the Japanese proposition in the semantic H1 so assistive technology and search retain the original meaning.
+
+## v15 Generated Graphic Identity
+- The visible masthead is the original cut-paper `assets/brand-review-sosenkyo-v15.webp` artwork rather than ordinary live-font branding.
+- The first-view headline is the original Japanese cut-paper title mark `assets/hero-title-choice-v15.webp`, reading `どっち？ すっきり選ぼう！`.
+- Kicker labels and small banner headings use irregular paper-ticket framing, offset color shadows and collage-rule accents so the supporting text does not fall back to flat generic labels.
+- Keep the semantic Japanese text in the HTML even when title artwork is used visually.

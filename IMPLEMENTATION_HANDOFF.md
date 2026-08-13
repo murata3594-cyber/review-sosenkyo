@@ -33,3 +33,9 @@
 ## v14 title-mark note (2026-08-13)
 - `assets/hero-title-choice-v4.webp` is the generated transparent first-view title mark.
 - Shared CSS/JS references use `20260813-generated-titlemark-1`.
+
+## v15 graphic-identity note (2026-08-13)
+- `assets/brand-review-sosenkyo-v15.webp` is the generated transparent masthead used by every `.logo` link.
+- `assets/hero-title-choice-v15.webp` is the generated transparent Japanese first-view title mark.
+- Small kicker/banner labels use the v15 paper-ticket styling in `styles.css`.
+- Shared CSS/JS references use `20260813-graphic-identity-v15-1`.
