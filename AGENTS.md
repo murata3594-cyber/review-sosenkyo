@@ -11,9 +11,10 @@
 5. `WORKFLOW.md`
 6. `DESIGN_SYSTEM.md`
 7. `IMPLEMENTATION_HANDOFF.md`
-8. `data/content_manifest.json`
-9. `data/affiliate_catalog.json`
-10. `data/topic_queue.json`
+8. `AFFILIATE_SETUP.md`
+9. `data/content_manifest.json`
+10. `data/affiliate_catalog.json`
+11. `data/topic_queue.json`
 
 ## Owner authorization
 Publishing mode is **AUTO_PUBLISH_POST_APPROVAL**.
@@ -35,6 +36,7 @@ A rough topic brief is enough. Resolve missing details by research instead of as
 11. Affiliate links must be directly relevant to the article. Never guess an Amazon ASIN. Rakuten auto-resolution must pass catalog `must_include` checks.
 12. Do not manually put GA4, AdSense, affiliate credentials or contact addresses into public source files. Use the environment-variable gates documented in `.env.example`.
 13. Claim a new topic before substantial work. Re-fetch the queue before writing to avoid two AI agents publishing the same topic.
+14. Current affiliate state and automation rules are canonical in `AFFILIATE_SETUP.md`. A8 Link Manager and ValueCommerce LinkSwitch tags are supplied only through Cloudflare Build variables; never copy their real values into Git.
 
 ## Publishing workflow
 When publishing a new comparison article:
