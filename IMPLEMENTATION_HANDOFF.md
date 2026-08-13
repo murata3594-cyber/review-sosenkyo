@@ -35,7 +35,8 @@
 - Shared CSS/JS references use `20260813-generated-titlemark-1`.
 
 ## v15 graphic-identity note (2026-08-13)
-- `assets/brand-review-sosenkyo-v15.webp` is the generated transparent masthead used by every `.logo` link.
+- `assets/brand-review-sosenkyo-v16.webp` is the generated, palette-flattened editorial masthead used as an explicit image by every `.logo` link.
+- Do not restore the old `.logo-seal` plus live-text construction; it is intentionally absent from the HTML to prevent fallback flashes and generic branding.
 - `assets/hero-title-choice-v15.webp` is the generated transparent Japanese first-view title mark.
 - Small kicker/banner labels use the v15 paper-ticket styling in `styles.css`.
 - Shared CSS/JS references use `20260813-graphic-identity-v15-1`.

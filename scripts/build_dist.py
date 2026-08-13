@@ -10,7 +10,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-ASSET_VERSION = "20260813-graphic-identity-v15-1"
+ASSET_VERSION = "20260813-professional-brand-v16-1"
 ROOT_PUBLIC_FILES = [
     "styles.css", "site.js", "robots.txt", "sitemap.xml", "favicon.svg",
     "manifest.webmanifest", "_headers", "_redirects",
