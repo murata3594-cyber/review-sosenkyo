@@ -3,18 +3,22 @@
 ## Project
 レビュー総選挙 — corporate-style comparison/review website.
 
+## One-shot handoff
+If the owner gives only a short continuation instruction such as `引き継いで`, `続けて`, `作業再開`, or `このプロジェクトを進めて`, do not ask them to restate prior ChatGPT/Codex/Claude history. Immediately read `CROSS_AI_HANDOFF.md`, refresh the latest `main`, read the canonical files below, inspect current code/state, and continue the highest-priority incomplete safe work.
+
 ## Read first
-1. `AUTONOMOUS_PUBLISHING.md`
-2. `AI_PUBLISH_CONTRACT.md`
-3. `data/automation_policy.json`
-4. `PRODUCTION_RUNBOOK.md`
-5. `WORKFLOW.md`
-6. `DESIGN_SYSTEM.md`
-7. `IMPLEMENTATION_HANDOFF.md`
-8. `AFFILIATE_SETUP.md`
-9. `data/content_manifest.json`
-10. `data/affiliate_catalog.json`
-11. `data/topic_queue.json`
+1. `CROSS_AI_HANDOFF.md`
+2. `AUTONOMOUS_PUBLISHING.md`
+3. `AI_PUBLISH_CONTRACT.md`
+4. `data/automation_policy.json`
+5. `PRODUCTION_RUNBOOK.md`
+6. `WORKFLOW.md`
+7. `DESIGN_SYSTEM.md`
+8. `IMPLEMENTATION_HANDOFF.md`
+9. `AFFILIATE_SETUP.md`
+10. `data/content_manifest.json`
+11. `data/affiliate_catalog.json`
+12. `data/topic_queue.json`
 
 ## Owner authorization
 Publishing mode is **AUTO_PUBLISH_POST_APPROVAL**.
@@ -37,6 +41,7 @@ A rough topic brief is enough. Resolve missing details by research instead of as
 12. Do not manually put GA4, AdSense, affiliate credentials or contact addresses into public source files. Use the environment-variable gates documented in `.env.example`.
 13. Claim a new topic before substantial work. Re-fetch the queue before writing to avoid two AI agents publishing the same topic.
 14. Current affiliate state and automation rules are canonical in `AFFILIATE_SETUP.md`. A8 Link Manager and ValueCommerce LinkSwitch tags are supplied only through Cloudflare Build variables; never copy their real values into Git.
+15. `CROSS_AI_HANDOFF.md` is the durable ChatGPT/Codex/Claude handoff. Keep it current when an external setup step materially changes project state.
 
 ## Publishing workflow
 When publishing a new comparison article:
