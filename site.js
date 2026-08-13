@@ -4,16 +4,16 @@ const globalStyle=document.createElement('style');
 globalStyle.textContent=`
 .hot-inner{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
 .hot-inner::-webkit-scrollbar{display:none;width:0;height:0}
-.legal-links{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
-.legal-links a{font-size:10px;color:#718596}.legal-links a:hover{color:#dce6ee}
-.affiliate-kicker{font-size:9px;font-weight:900;letter-spacing:.14em;color:#8ccfff;margin-bottom:6px}
-.affiliate-note{font-size:11px;color:#8296a7}
-.affiliate-product{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0;border-top:1px solid rgba(255,255,255,.08)}
-.affiliate-product b{display:block;font-size:13px}.affiliate-product small{display:block;margin-top:3px;color:#748797;font-size:9px}
+.legal-links{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+.legal-links a{font-size:10px;color:#c2b7bd}.legal-links a:hover{color:#fff}
+.affiliate-kicker{font-size:9px;font-weight:900;letter-spacing:.14em;color:#c94d62;margin-bottom:6px}
+.affiliate-note{font-size:11px;color:#716b78}
+.affiliate-product{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0;border-top:1px solid #e9e2e3}
+.affiliate-product b{display:block;font-size:13px}.affiliate-product small{display:block;margin-top:3px;color:#716b78;font-size:9px}
 .affiliate-buttons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
-.affiliate-btn{display:inline-flex;align-items:center;justify-content:center;min-width:116px;padding:9px 12px;border-radius:9px;font-size:10px;font-weight:900}
+.affiliate-btn{display:inline-flex;align-items:center;justify-content:center;min-width:116px;padding:9px 12px;border-radius:10px;font-size:10px;font-weight:900}
 .affiliate-amazon{background:#ffb84d;color:#15100a}.affiliate-rakuten{background:#bf0000;color:#fff}
-.amazon-disclosure{max-width:1180px;margin:18px auto 0;padding:0 20px;color:#718596;font-size:9px}
+.amazon-disclosure{max-width:1180px;margin:18px auto 0;padding:0 20px;color:#716b78;font-size:9px}
 @media(max-width:650px){.affiliate-product{align-items:flex-start;flex-direction:column}.affiliate-buttons{width:100%;justify-content:flex-start}.affiliate-btn{flex:1}.legal-links{gap:10px 14px}}
 `;
 document.head.appendChild(globalStyle);
@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded',()=>{
       if(result){
         const type=btn.dataset.choice;
         const map={
-          easy:'あなたは「手軽さ重視」。タブレット系を最初に比較すると選びやすいです。',
-          cost:'あなたは「コスパ重視」。粉末系を基準に1回あたり費用を比べるのがおすすめです。',
-          power:'あなたは「洗浄力重視」。油汚れ・茶渋など、汚れ別の評価を優先して見てください。'
+          easy:'「ラクに続く」を重視。交換・装着・お手入れなど、毎回の小さな手間から比べてみましょう。',
+          cost:'「ムダなく使える」を重視。価格だけでなく、使用量・交換回数・買い替え頻度まで確認しましょう。',
+          power:'「しっかり役立つ」を重視。目的に合う機能と、使った人の評価が分かれた理由を先に見ましょう。'
         };
         result.innerHTML='<b>診断：</b>'+map[type];
         result.classList.add('show');
