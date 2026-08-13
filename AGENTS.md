@@ -42,6 +42,8 @@ A rough topic brief is enough. Resolve missing details by research instead of as
 13. Claim a new topic before substantial work. Re-fetch the queue before writing to avoid two AI agents publishing the same topic.
 14. Current affiliate state and automation rules are canonical in `AFFILIATE_SETUP.md`. A8 Link Manager and ValueCommerce LinkSwitch tags are supplied only through Cloudflare Build variables; never copy their real values into Git.
 15. `CROSS_AI_HANDOFF.md` is the durable ChatGPT/Codex/Claude handoff. Keep it current when an external setup step materially changes project state.
+16. `data/content_manifest.json` is the production article allowlist. Do not deploy orphan `article*.html` files merely because they exist in the repository. Production build must copy only manifest-published article paths and fail if an unexpected article leaks into `dist`.
+17. Public research JSON is allowlisted the same way: deploy only `data/research/*.json` paths explicitly referenced by published manifest entries. Never copy the whole `data/` tree to production.
 
 ## Publishing workflow
 When publishing a new comparison article:
@@ -60,7 +62,7 @@ Do **not** manually maintain generated production SEO, affiliate CTA blocks, `ra
 
 ## Production build
 `python scripts/build_dist.py` performs:
-manifest sync -> site validation -> editorial/evidence audit -> affiliate resolution -> dist build -> affiliate CTA rendering -> SEO/JSON-LD -> analytics/search/ads/contact injection.
+manifest sync -> site validation -> editorial/evidence audit -> affiliate resolution -> manifest-gated article/research copy -> dist build -> affiliate CTA rendering -> SEO/JSON-LD -> analytics/search/ads/contact injection.
 
 ## Branch policy
 - `main` = production source and triggers Cloudflare deployment.
