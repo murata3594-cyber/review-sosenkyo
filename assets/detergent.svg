@@ -1,15 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420">
-<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#16324F"/><stop offset="1" stop-color="#C8443A"/></linearGradient></defs>
-<rect width="640" height="420" rx="34" fill="#F4F1E8"/>
-<circle cx="505" cy="95" r="80" fill="#E6D39A" opacity=".75"/>
+<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#8067e8"/><stop offset="1" stop-color="#ff5f8f"/></linearGradient></defs>
+<rect width="640" height="420" rx="34" fill="#fff1f6"/>
+<circle cx="505" cy="95" r="80" fill="#ffd75f" opacity=".55"/>
 <rect x="126" y="80" width="180" height="260" rx="28" fill="url(#g)"/>
 <rect x="156" y="128" width="120" height="118" rx="18" fill="#fff" opacity=".93"/>
-<text x="216" y="176" text-anchor="middle" font-family="Arial" font-size="26" font-weight="700" fill="#16324F">DISH</text>
-<text x="216" y="208" text-anchor="middle" font-family="Arial" font-size="19" fill="#C8443A">TABLET</text>
 <g transform="translate(340 145)">
-<rect x="0" y="0" width="92" height="66" rx="18" fill="#fff" stroke="#D6D3C8" stroke-width="5"/>
-<circle cx="30" cy="33" r="18" fill="#C8443A"/><circle cx="62" cy="33" r="18" fill="#16324F"/>
-<rect x="100" y="58" width="92" height="66" rx="18" fill="#fff" stroke="#D6D3C8" stroke-width="5"/>
-<circle cx="130" cy="91" r="18" fill="#C69A2B"/><circle cx="162" cy="91" r="18" fill="#16324F"/>
+<rect x="0" y="0" width="92" height="66" rx="18" fill="#fff" stroke="#ead0e0" stroke-width="5"/>
+<circle cx="30" cy="33" r="18" fill="#ff5f8f"/><circle cx="62" cy="33" r="18" fill="#8067e8"/>
+<rect x="100" y="58" width="92" height="66" rx="18" fill="#fff" stroke="#ead0e0" stroke-width="5"/>
+<circle cx="130" cy="91" r="18" fill="#34bfa6"/><circle cx="162" cy="91" r="18" fill="#8067e8"/>
 </g>
 </svg>
