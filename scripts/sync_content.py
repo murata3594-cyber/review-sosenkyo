@@ -39,13 +39,13 @@ def render_rankings(data: dict) -> str:
         )
     rows_html = "\n".join(rows)
     return f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>調査テーマ一覧｜レビュー総選挙</title><meta name="description" content="レビュー総選挙の公開済み・調査中・候補テーマ一覧。"><link rel="stylesheet" href="styles.css"></head><body>
-<header class="header"><div class="wrap header-row"><a class="logo" href="index.html"><span class="logo-seal">選</span>レビュー<em>総選挙</em></a><nav class="nav"><a href="index.html">トップ</a><a href="category.html">カテゴリー</a><a href="methodology.html">調査方法</a></nav></div></header>
-<section class="section"><div class="wrap"><div class="sec-kicker">RESEARCH INDEX</div><h1 style="font-size:44px;margin-top:5px">調査テーマ一覧</h1><p>公開済み、調査中、次に調べる候補を同じ一覧で管理しています。</p>
+<header class="header"><div class="wrap header-row"><a class="logo" href="index.html" aria-label="レビュー総選挙 ホーム"><img src="assets/brand-review-sosenkyo-v16.webp" alt="レビュー総選挙"></a><nav class="nav"><a href="index.html">トップ</a><a href="index.html#latest">新着レビュー</a><a href="rankings.html">調査一覧</a><a href="category.html">カテゴリー</a><a href="methodology.html">調査方法</a></nav></div></header>
+<section class="section"><div class="wrap"><div class="sec-kicker">RESEARCH INDEX</div><h1 class="page-head-title" style="margin-top:5px">調査テーマ一覧</h1><p>公開済み、調査中、次に調べる候補を同じ一覧で管理しています。</p>
 <div class="rank-list" style="margin-top:22px"><div class="rank-list-head"><span>No.</span><span>テーマ</span><span>比較軸</span><span>状態</span><span></span></div>
 {rows_html}
 </div></div></section>
-<footer class="footer"><div class="wrap"><a class="logo" href="index.html"><span class="logo-seal">選</span>レビュー<em>総選挙</em></a></div></footer>
-<nav class="mobile-nav"><a href="index.html"><span>⌂</span>ホーム</a><a href="rankings.html"><span>◎</span>調査一覧</a><a href="category.html"><span>□</span>カテゴリ</a><a href="methodology.html"><span>i</span>調査方法</a></nav><script src="site.js"></script></body></html>'''
+<footer class="footer"><div class="wrap"><a class="logo" href="index.html" aria-label="レビュー総選挙 ホーム"><img src="assets/brand-review-sosenkyo-v16.webp" alt="レビュー総選挙"></a></div></footer>
+<nav class="mobile-nav"><a href="index.html"><span aria-hidden="true">⌂</span>トップ</a><a href="index.html#latest"><span aria-hidden="true">◎</span>新着レビュー</a><a href="rankings.html"><span aria-hidden="true">□</span>調査一覧</a><a href="methodology.html"><span aria-hidden="true">i</span>調査方法</a></nav><script src="site.js"></script></body></html>'''
 
 
 def render_sitemap(data: dict) -> str:
