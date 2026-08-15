@@ -1,0 +1,26 @@
+# Gemini CLI token/noise exclusions
+.git/
+node_modules/
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+dist/
+build/
+coverage/
+*.pyc
+*.pyo
+*.log
+*.tmp
+*.bak
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*_b64.txt
+*.base64
