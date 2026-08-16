@@ -44,6 +44,22 @@ def safe_research_path(value: object) -> Path | None:
     return rel
 
 
+def clear_dist() -> None:
+    """dist を空にする。ディレクトリ自体は消さない。
+
+    Windows では、そのフォルダを作業ディレクトリにしているプロセスが1つでも
+    あると `os.rmdir(dist)` が WinError 32 で失敗する（中身の削除は成功する）。
+    ローカルでプレビューサーバやエクスプローラを開いたままにするとビルドが
+    丸ごと落ちるため、トップ階層は残して中身だけを作り直す。
+    """
+    DIST.mkdir(parents=True, exist_ok=True)
+    for entry in DIST.iterdir():
+        if entry.is_dir() and not entry.is_symlink():
+            shutil.rmtree(entry)
+        else:
+            entry.unlink()
+
+
 def main() -> None:
     # Deterministic content and editorial QA come first.
     run("sync_content.py")
@@ -71,9 +87,7 @@ def main() -> None:
     # Resolve affiliate links. With no credentials this safely generates zero active links.
     run("build_affiliate_links.py")
 
-    if DIST.exists():
-        shutil.rmtree(DIST)
-    DIST.mkdir(parents=True)
+    clear_dist()
 
     # Public utility pages are copied normally, but article*.html is manifest-gated.
     # This prevents abandoned/draft article files from becoming indexable production pages.
