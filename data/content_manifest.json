@@ -1,7 +1,7 @@
 {
   "updated_at": "2026-08-13",
   "published": [
-    {"id":"T001","number":"01","category":"kitchen","title":"食洗機用洗剤","subtitle":"6商品の初回調査","axes":"手軽さ・洗浄力・量調整・母数","published":"2026-08-09","article":"article.html","research":"data/research/dishwasher-detergent-2026-08-09.json"},
+    {"id":"T001","number":"01","category":"kitchen","title":"食洗機用洗剤","subtitle":"6商品の初回調査","axes":"手軽さ・洗浄力・量調整・母数","published":"2026-08-09","article":"article-dishwasher-detergent.html","research":"data/research/dishwasher-detergent-2026-08-09.json"},
     {"id":"T002","number":"02","category":"cleaning","title":"ドラム式洗濯槽クリーナー","subtitle":"N-W2・SK-750・ES-CD","axes":"塩素系・容量・ニオイ・レビュー","published":"2026-08-09","article":"article-washer-cleaner.html","research":"data/research/drum-washer-cleaner-2026-08-09.json"},
     {"id":"T003","number":"03","category":"pet","title":"システムトイレ用猫砂","subtitle":"デオトイレ／ニャンとも天然木チップ","axes":"粒サイズ・飛び散り・交換目安","published":"2026-08-09","article":"article-cat-litter.html","research":"data/research/system-toilet-cat-litter-2026-08-09.json"},
     {"id":"T004","number":"04","category":"kitchen","title":"BRITA MAXTRA PRO","subtitle":"ピュアパフォーマンス vs ホットドリンク","axes":"用途・硬度・交換周期・レビュー","published":"2026-08-09","article":"article-brita-maxtra-pro.html","research":"data/research/brita-maxtra-pro-2026-08-09.json"},

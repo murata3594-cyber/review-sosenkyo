@@ -7,7 +7,7 @@
     "claim_rule": "Before substantial work, set RESEARCHING with claimed_by and claimed_at; do not duplicate an existing claimed/published topic."
   },
   "topics": [
-    {"id":"T001","topic":"食洗機用洗剤","status":"PUBLISHED_INITIAL","article":"article.html","research":"data/research/dishwasher-detergent-2026-08-09.json","next_action":"periodic SKU/review recheck"},
+    {"id":"T001","topic":"食洗機用洗剤","status":"PUBLISHED_INITIAL","article":"article-dishwasher-detergent.html","research":"data/research/dishwasher-detergent-2026-08-09.json","next_action":"periodic SKU/review recheck"},
     {"id":"T002","topic":"ドラム式洗濯槽クリーナー","status":"PUBLISHED_INITIAL","article":"article-washer-cleaner.html","research":"data/research/drum-washer-cleaner-2026-08-09.json","next_action":"periodic manufacturer guidance/review recheck"},
     {"id":"T003","topic":"システムトイレ用猫砂・チップ","status":"PUBLISHED_INITIAL","article":"article-cat-litter.html","research":"data/research/system-toilet-cat-litter-2026-08-09.json","next_action":"add variants only when review volume is sufficient"},
     {"id":"T004","topic":"BRITA MAXTRA PRO交換カートリッジ","status":"PUBLISHED_INITIAL","article":"article-brita-maxtra-pro.html","research":"data/research/brita-maxtra-pro-2026-08-09.json","next_action":"periodic filtration/review recheck"},

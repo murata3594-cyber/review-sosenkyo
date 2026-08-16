@@ -3,3 +3,7 @@
 
 # canonical は「/」なので、/index.html への直リンクを1本化する（重複URL防止）。
 /index.html / 301
+
+# 主力記事だけ汎用URL(/article.html)でキーワードを含まず、他15本の
+# article-<slug>.html 形式からも外れていた。改名して旧URLを1本化する。
+/article.html /article-dishwasher-detergent.html 301

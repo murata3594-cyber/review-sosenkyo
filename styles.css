@@ -614,3 +614,9 @@ h1,h2,h3{letter-spacing:-.005em;line-height:1.5}
   .sticky-cta.sticky-cta-bar.is-visible{transform:translateY(0);visibility:visible}
   .lt-row{grid-template-columns:76px minmax(0,1fr) 92px;gap:7px}
 }
+
+/* --- v21 追補: <small> の下限 ---------------------------------------
+   クラスの付かない <small> はブラウザ既定(親の0.83倍)で 11.67px になる。
+   .signal small などCSSで明示している箇所だけが13pxで、本文中の素の
+   <small> は20ページで下限を割っていた。要素側で下限を保証する。 */
+small{font-size:var(--fs-micro)}

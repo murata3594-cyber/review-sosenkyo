@@ -6,7 +6,7 @@
     "price": "価格は変動するため記事本文へ固定保存しない。"
   },
   "articles": {
-    "article.html": {"theme":"食洗機用洗剤","products":[
+    "article-dishwasher-detergent.html": {"theme":"食洗機用洗剤","products":[
       {"label":"フィニッシュ 凝縮パワーキューブ","note":"計量不要・レビュー母数重視","amazon":{"asin":""},"rakuten":{"query":"フィニッシュ 凝縮パワーキューブ","must_include":["フィニッシュ","パワーキューブ"]}},
       {"label":"ジョイ ジェルタブ","note":"手軽さ重視","amazon":{"asin":""},"rakuten":{"query":"ジョイ ジェルタブ 食洗機","must_include":["ジョイ","ジェルタブ"]}},
       {"label":"フィニッシュ パウダー レモン","note":"量調整・コスト志向","amazon":{"asin":""},"rakuten":{"query":"フィニッシュ パウダー レモン 食洗機","must_include":["フィニッシュ","パウダー"]}},
