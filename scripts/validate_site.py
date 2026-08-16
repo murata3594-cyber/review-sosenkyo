@@ -10,6 +10,8 @@ BASE_REQUIRED = [
     "index.html", "rankings.html", "category.html", "methodology.html",
     "about.html", "disclosure.html", "privacy.html", "contact.html",
     "styles.css", "site.js", "robots.txt", "sitemap.xml",
+    # finalize_seo.py links these from every page; missing files meant 24 x 404.
+    "favicon.svg", "manifest.webmanifest",
     "data/content_manifest.json", "data/topic_queue.json", "data/affiliate_catalog.json",
     "config/site.json", "config/affiliate.json", "config/services.json",
     "scripts/build_dist.py", "scripts/finalize_seo.py", "scripts/build_affiliate_links.py",
@@ -89,7 +91,17 @@ for page in html_pages:
     if page.name != "404.html" and parser.h1 != 1: errors.append(f"{page.name}: exactly one h1 required, found {parser.h1}")
     for dup in sorted({x for x in parser.ids if parser.ids.count(x)>1}): errors.append(f"{page.name}: duplicate id -> #{dup}")
     for image in parser.images:
-        if not image.get("alt", "").strip(): warnings.append(f"{page.name}: image missing alt -> {image.get('src', '(no src)')}")
+        src=image.get("src", "(no src)")
+        alt=image.get("alt")
+        # A decorative image must opt out explicitly (alt="" + aria-hidden/role=presentation).
+        # A missing alt attribute is still an accessibility defect.
+        decorative=alt is not None and not alt.strip() and (image.get("aria-hidden")=="true" or image.get("role")=="presentation")
+        if alt is None: warnings.append(f"{page.name}: image missing alt attribute -> {src}")
+        elif not alt.strip() and not decorative: warnings.append(f"{page.name}: image has empty alt without aria-hidden/role=presentation -> {src}")
+        # Layout-shift guard for the 1-9 image attribute pass.
+        if not image.get("width") or not image.get("height"): warnings.append(f"{page.name}: image missing width/height -> {src}")
+        if not image.get("decoding"): warnings.append(f"{page.name}: image missing decoding -> {src}")
+        if not image.get("loading") and not image.get("fetchpriority"): warnings.append(f"{page.name}: image missing loading/fetchpriority -> {src}")
     ids=set(parser.ids)
     for value in re.findall(r'(?:href|src)="([^"]+)"', text):
         if value.startswith(IGNORED_PREFIXES): continue

@@ -1,23 +1,9 @@
 
-// Small cross-browser UI fixes that should apply to every page.
-const globalStyle=document.createElement('style');
-globalStyle.textContent=`
-.hot-inner{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
-.hot-inner::-webkit-scrollbar{display:none;width:0;height:0}
-.legal-links{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
-.legal-links a{font-size:11px;color:#c2b7bd}.legal-links a:hover{color:#fff}
-.affiliate-kicker{font-size:11px;font-weight:900;letter-spacing:.14em;color:#c94d62;margin-bottom:6px}
-.affiliate-note{font-size:11px;color:#716b78}
-.affiliate-product{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0;border-top:1px solid #e9e2e3}
-.affiliate-product b{display:block;font-size:13px}.affiliate-product small{display:block;margin-top:3px;color:#716b78;font-size:11px}
-.affiliate-buttons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
-.affiliate-btn{display:inline-flex;align-items:center;justify-content:center;min-width:116px;padding:9px 12px;border-radius:10px;font-size:11px;font-weight:900}
-.affiliate-amazon{background:#ffb84d;color:#15100a}.affiliate-rakuten{background:#bf0000;color:#fff}
-.amazon-disclosure{max-width:1180px;margin:18px auto 0;padding:0 20px;color:#716b78;font-size:11px}
-@media(max-width:650px){.affiliate-product{align-items:flex-start;flex-direction:column}.affiliate-buttons{width:100%;justify-content:flex-start}.affiliate-btn{flex:1}.legal-links{gap:10px 14px}}
-`;
-document.head.appendChild(globalStyle);
-
+// v21 / 1-6: the runtime <style> injection and the runtime footer-link injection
+// were removed. The ~20 CSS rules now live at the end of styles.css (no FOUC /
+// layout shift on the affiliate blocks) and the 運営者情報・調査方法・広告方針・
+// プライバシー・お問い合わせ links are written statically into every page, so ASP
+// reviewers see them without executing JavaScript.
 document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.choice').forEach(btn=>{
     btn.addEventListener('click',()=>{
@@ -48,19 +34,4 @@ document.addEventListener('DOMContentLoaded',()=>{
     buttons.forEach(x=>x.classList.remove('active'));btn.classList.add('active');
     if(panel){const [h,p]=content[btn.dataset.focus];panel.innerHTML='<h3>'+h+'</h3><p>'+p+'</p>';}
   }));
-
-  const footer=document.querySelector('.footer .wrap');
-  if(footer && !footer.querySelector('.legal-links')){
-    const nav=document.createElement('nav');
-    nav.className='legal-links';
-    nav.setAttribute('aria-label','サイト情報');
-    nav.innerHTML=[
-      ['about.html','運営者情報'],
-      ['methodology.html','調査方法'],
-      ['disclosure.html','広告・アフィリエイト方針'],
-      ['privacy.html','プライバシーポリシー'],
-      ['contact.html','お問い合わせ']
-    ].map(([href,label])=>`<a href="${href}">${label}</a>`).join('');
-    footer.appendChild(nav);
-  }
 });

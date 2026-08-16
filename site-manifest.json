@@ -1,6 +1,6 @@
 {
   "site_name": "レビュー総選挙",
-  "version": "v9-corporate",
+  "version": "v21-legibility-seo",
   "entry": "index.html",
   "pages": {
     "home": "index.html",
@@ -10,18 +10,34 @@
     "methodology": "methodology.html",
     "about": "about.html",
     "disclosure": "disclosure.html",
-    "privacy": "privacy.html"
+    "privacy": "privacy.html",
+    "contact": "contact.html",
+    "not_found": "404.html"
   },
   "brand": {
-    "navy": "#132C45",
-    "red": "#D64036",
-    "gold": "#D4A72C"
+    "paper": "#FFFEFD",
+    "paper_warm": "#FFF1F6",
+    "ink": "#2B2839",
+    "coral": "#FF5F8F",
+    "coral_deep": "#D63368",
+    "lilac": "#6B51DB",
+    "mint": "#1F8A76",
+    "butter": "#FFD75F",
+    "sky": "#3F94D8",
+    "theme_color": "#FFF7F4"
   },
-  "next_integration": [
-    "replace demo article data with researched products",
-    "connect generated article data",
-    "connect WordPress after hosting setup",
-    "add affiliate links after account setup"
+  "generated_files": [
+    "index.html (research library block only)",
+    "rankings.html",
+    "category.html",
+    "sitemap.xml",
+    "robots.txt"
   ],
-  "design_direction": "corporate / premium tech / dark glass / subtle motion"
+  "next_integration": [
+    "phase 2: purchase-completion verdict box, mobile sticky CTA, longterm review chart, product figure slot",
+    "phase 3: type-A firsthand-use article template and observation ledger",
+    "connect affiliate IDs after ASP approval (scripts/build_affiliate_links.py placeholders)",
+    "lift indexing_enabled and remove the X-Robots-Tag line in _headers when the owner approves"
+  ],
+  "design_direction": "pop lifestyle editorial / light warm paper base / high legibility (min 13px, WCAG AA) / coral + lilac + mint accents"
 }

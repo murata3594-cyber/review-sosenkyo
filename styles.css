@@ -509,3 +509,32 @@ h1,h2,h3{letter-spacing:-.005em;line-height:1.5}
   .mobile-nav a:nth-child(4) span{background:var(--sky)}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* =========================================================================
+   v21 / 1-6: site.js が実行時に document.head へ差し込んでいた約20ルールを
+   ここへ移設した。アフィリエイトブロックがJS実行後に初めてスタイルされる
+   状態（FOUC / CLS の原因）を解消するのが目的。
+   移設にあたり v21 の可読性ルールへ合わせ、11px 固定だった文字は
+   --fs-micro(13px) へ、フッター上の淡いリンク色は AA を満たす明度へ変更した。
+   ========================================================================= */
+.hot-inner{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
+.hot-inner::-webkit-scrollbar{display:none;width:0;height:0}
+.legal-links{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+.legal-links a{font-size:var(--fs-micro);color:#ded2e6}
+.legal-links a:hover{color:#fff}
+.affiliate-kicker{font-size:var(--fs-micro);font-weight:900;letter-spacing:.14em;color:var(--coral-deep);margin-bottom:6px}
+.affiliate-note{font-size:var(--fs-micro);color:var(--muted)}
+.affiliate-product{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0;border-top:1px solid var(--line)}
+.affiliate-product b{display:block;font-size:var(--fs-small)}
+.affiliate-product small{display:block;margin-top:3px;color:var(--muted);font-size:var(--fs-micro)}
+.affiliate-buttons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.affiliate-btn{display:inline-flex;align-items:center;justify-content:center;min-width:116px;min-height:44px;padding:9px 12px;border-radius:10px;font-size:var(--fs-micro);font-weight:900}
+.affiliate-amazon{background:#ffb84d;color:#15100a}
+.affiliate-rakuten{background:#bf0000;color:#fff}
+.amazon-disclosure{max-width:1180px;margin:18px auto 0;padding:0 20px;color:var(--muted);font-size:var(--fs-micro)}
+@media(max-width:650px){
+  .affiliate-product{align-items:flex-start;flex-direction:column}
+  .affiliate-buttons{width:100%;justify-content:flex-start}
+  .affiliate-btn{flex:1}
+  .legal-links{gap:10px 14px}
+}

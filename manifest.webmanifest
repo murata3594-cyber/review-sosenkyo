@@ -1,0 +1,28 @@
+{
+  "name": "レビュー総選挙",
+  "short_name": "レビュー総選挙",
+  "description": "メーカー公式情報と公開レビューの傾向を整理して、暮らしの「どっち？」を短時間で選べるようにする比較メディアです。",
+  "lang": "ja",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fffefd",
+  "theme_color": "#fff7f4",
+  "categories": ["shopping", "lifestyle", "news"],
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
