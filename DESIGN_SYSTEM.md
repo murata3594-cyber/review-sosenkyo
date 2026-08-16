@@ -5,7 +5,8 @@
 値を変えたときは `styles.css` と本ファイルを同じコミットで更新する。
 
 - 正本: `styles.css`（v21で v16 / v20 の三重上書きを1本へ統合済み）
-- 追記可能な例外: ファイル末尾の「site.js から移設したルール」ブロックのみ
+- 追記可能な例外: ファイル末尾の「site.js から移設したルール」ブロックと
+  「v21 フェーズ2: 収益モジュール」ブロックのみ（どちらも既存ルールを書き換えず末尾追記）
 
 ---
 
@@ -107,3 +108,70 @@
 運営者情報 / 調査方法 / 広告・アフィリエイト方針 / プライバシー / お問い合わせ
 の5リンクは **静的HTMLに必ず含める**（ASP審査がJS実行なしで確認するため。
 v21以前は site.js が実行時に生成しており、24ページ中21ページで欠落していた）。
+
+## 9. 収益モジュール（v21 フェーズ2）
+
+CSSは `styles.css` 末尾の「v21 フェーズ2: 収益モジュール」ブロック。
+HTMLは **ビルド時に `scripts/render_result_modules.py` が dist へ描画する**。
+編集元のHTMLに購入ボタンを直接書かない（IDが未投入なら1つも出力しないため）。
+
+### 9-1. 結論ボックスの購入導線（2-1）
+
+記事側で用意するのは `.verdict` カードの2属性だけ。
+
+```html
+<div class="verdict" data-product="quickle-handy-replacement-8" data-offer="クイックルハンディ">
+  <span class="vlabel">家電・本棚・小物の間</span><b>クイックルハンディ</b>
+  <span class="why">両面もふもふ＋吸着センイで凸凹・すき間へ。</span>
+</div>
+```
+
+- `data-product` = `data/research/*.json` の `products[].id`。
+  ここから `review_snapshot` の実値だけを `.verdict-basis` として描画する。
+  評価・母数・確認日のどれかが欠けていれば **何も出さない**。
+- `data-offer` = `data/affiliate_catalog.json` の `products[].label`（完全一致）。
+  存在しないラベルはビルドエラー。有効オファーが無ければボタンは出ない。
+- ボタンは **Amazon / 楽天の2択まで**。`rel="sponsored nofollow noopener"`。
+  出典リンクの `rel="noopener noreferrer"` と混同しない。
+- 商品を特定できないカード（「両方対応」「両ブランド」など）は属性を付けない。
+
+### 9-2. モバイル固定CTAバー（2-2）
+
+- 出力条件: その記事に有効な購入リンクが1つ以上あること。
+- 表示条件: 比較表 `#comparison` を **通過スクロールした後**（`site.js` の
+  IntersectionObserver が `.is-visible` を付ける）。結論より前には出さない。
+- バーを出力したページは `<body class="has-sticky-cta">` になり、
+  650px以下で `padding-bottom:150px`（`.mobile-nav` 66px + バー実測78px + 余白）を先に予約する。
+  バー内のテキストは1行/2行でクランプするので、この高さを超えない。
+  バーは `bottom:66px` でモバイルナビの上へ重ねる。
+
+### 9-3. 初期レビュー vs 数か月後（2-3）
+
+依存ライブラリ禁止。`div` と CSS だけの水平バー2本（`.longterm-chart`）。
+台帳の受け口は商品ごとの次の2フィールドで、**両方そろったときだけ描画**する。
+
+```json
+"review_snapshot_initial":  {"rating":4.6,"count":120,"checked_at":"2026-08-09","window":"購入直後〜1か月"},
+"review_snapshot_longterm": {"rating":4.1,"count":48,"checked_at":"2026-08-09","window":"3か月以上"}
+```
+
+`rating` 0-5 / `count` 1以上 / `checked_at` は YYYY-MM-DD / `window` 必須。
+検証は `scripts/audit_content_quality.py`（正本）と `scripts/validate_site.py`（二重化）、
+形式は `schemas/research-ledger.schema.json` の `periodReviewSnapshot`。
+**データの収集はオーナー承認後。実データが無い記事には1文字も描画しない。**
+
+### 9-4. 商品画像枠（2-4）
+
+```html
+<figure class="product-figure">
+  <img src="assets/products/xxx.webp" alt="（何が写っているかを説明する）"
+       width="1200" height="900" loading="lazy" decoding="async">
+  <figcaption><b>キャプション見出し</b>補足説明。
+    <span class="figure-credit">撮影: レビュー総選挙編集部 / 2026-09-01</span></figcaption>
+</figure>
+```
+
+- `width` / `height` 必須（`aspect-ratio` が効き、読込前から高さが確定する）。
+- `.figure-credit` に出典または撮影者を必ず書く。
+- **メーカーサイト等からの無断転載は禁止**。実物撮影が原則で、
+  実投入はフェーズ3のタイプA記事から。

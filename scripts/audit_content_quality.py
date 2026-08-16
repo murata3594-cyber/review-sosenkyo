@@ -39,6 +39,31 @@ def valid_date(value: str) -> bool:
     try: datetime.strptime(value[:10], "%Y-%m-%d"); return True
     except Exception: return False
 
+# v21 / 2-3: 初期レビュー vs 数か月後チャートのデータ受け口。
+# 片方しか無い台帳は「期間で分けた」と言えないのでビルドを落とす。
+LONGTERM_FIELDS = ("review_snapshot_initial", "review_snapshot_longterm")
+
+def audit_longterm_snapshots(label: str, product: dict, errors: list[str]) -> None:
+    present=[field for field in LONGTERM_FIELDS if product.get(field) is not None]
+    if not present: return
+    if len(present) != len(LONGTERM_FIELDS):
+        errors.append(f"{label}: {present[0]} requires both review_snapshot_initial and review_snapshot_longterm")
+        return
+    for field in LONGTERM_FIELDS:
+        snap=product.get(field)
+        if not isinstance(snap, dict):
+            errors.append(f"{label}: {field} must be an object"); continue
+        count=snap.get("count"); rating=snap.get("rating"); checked=str(snap.get("checked_at", ""))
+        # 期間別チャートは母数0では描けない。既存 review_snapshot と同じ厳しさ＋非ゼロ。
+        if not isinstance(count, int) or isinstance(count, bool) or count < 1:
+            errors.append(f"{label}: {field} invalid review count {count}")
+        if not isinstance(rating, (int,float)) or isinstance(rating, bool) or not (0 <= float(rating) <= 5):
+            errors.append(f"{label}: {field} invalid rating {rating}")
+        if not checked or not valid_date(checked):
+            errors.append(f"{label}: {field} invalid checked_at {checked or '(missing)'}")
+        if not str(snap.get("window", "")).strip():
+            errors.append(f"{label}: {field} requires a window label (集計期間)")
+
 def audit_research(path: Path, errors: list[str], warnings: list[str]) -> None:
     data=load(path, errors)
     policy=data.get("policy", {})
@@ -54,6 +79,7 @@ def audit_research(path: Path, errors: list[str], warnings: list[str]) -> None:
         warnings.append(f"{path.relative_to(ROOT)}: no product records"); return
     for product in products:
         name=str(product.get("name", "unnamed")); snap=product.get("review_snapshot")
+        audit_longterm_snapshots(f"{path.relative_to(ROOT)} / {name}", product, errors)
         if not isinstance(snap, dict): continue
         count=snap.get("count"); rating=snap.get("rating"); checked=str(snap.get("checked_at", ""))
         count_valid=isinstance(count, int) and not isinstance(count, bool) and count >= 0

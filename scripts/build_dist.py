@@ -129,6 +129,9 @@ def main() -> None:
 
     # Build-time transformations only affect deploy files, not editorial source HTML.
     run("render_affiliate_blocks.py", str(DIST))
+    # v21 / フェーズ2: 結論ボックスの購入導線・根拠表示・固定CTA・長期レビュー比較。
+    # アフィリエイトブロックの後に走らせる（同じ affiliate_links.json を読む）。
+    run("render_result_modules.py", str(DIST))
     run("finalize_seo.py", str(DIST))
     run("inject_services.py", str(DIST))
 

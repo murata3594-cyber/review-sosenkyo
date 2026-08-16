@@ -9,7 +9,24 @@
     "topic": {"type": "string", "minLength": 1},
     "researched_at": {"type": "string", "format": "date"},
     "status": {"type": "string", "minLength": 1},
-    "products": {"type": "array"},
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "name": {"type": "string", "minLength": 1},
+          "review_snapshot": {"$ref": "#/$defs/reviewSnapshot"},
+          "review_snapshot_initial": {"$ref": "#/$defs/periodReviewSnapshot"},
+          "review_snapshot_longterm": {"$ref": "#/$defs/periodReviewSnapshot"}
+        },
+        "dependentRequired": {
+          "review_snapshot_initial": ["review_snapshot_longterm"],
+          "review_snapshot_longterm": ["review_snapshot_initial"]
+        },
+        "additionalProperties": true
+      }
+    },
     "editorial_conclusion": {"type": "object"},
     "policy": {"type": "object"}
   },
@@ -23,6 +40,20 @@
         "count": {"type": ["integer", "null"], "minimum": 0},
         "checked_at": {"type": "string", "format": "date"},
         "scope": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "periodReviewSnapshot": {
+      "description": "v21 / 2-3: 投稿時期で分けたレビュー集計。初期と長期の両方がそろって初めて .longterm-chart を描画する。母数0では期間比較にならないため count は1以上。",
+      "type": "object",
+      "required": ["rating", "count", "checked_at", "window"],
+      "properties": {
+        "rating": {"type": "number", "minimum": 0, "maximum": 5},
+        "count": {"type": "integer", "minimum": 1},
+        "checked_at": {"type": "string", "format": "date"},
+        "window": {"type": "string", "minLength": 1, "description": "集計期間のラベル。例: 購入直後〜1か月 / 3か月以上"},
+        "scope": {"type": "string"},
+        "source": {"type": "string", "format": "uri"}
       },
       "additionalProperties": true
     }

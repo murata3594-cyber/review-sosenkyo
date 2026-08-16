@@ -34,4 +34,25 @@ document.addEventListener('DOMContentLoaded',()=>{
     buttons.forEach(x=>x.classList.remove('active'));btn.classList.add('active');
     if(panel){const [h,p]=content[btn.dataset.focus];panel.innerHTML='<h3>'+h+'</h3><p>'+p+'</p>';}
   }));
+
+  // v21 / 2-2: モバイル固定CTAバー。
+  // 比較表(#comparison)を通過スクロールした後だけ出す。結論を読む前にCTAを
+  // 出すと不信を買うため、位置ではなく「読み終えたか」で判定する。
+  // バー自体は dist ビルド時（scripts/render_result_modules.py）に、有効な
+  // アフィリエイトリンクがある記事へだけ挿入される。無ければここは何もしない。
+  const stickyBar=document.querySelector('.sticky-cta-bar');
+  const passMarker=document.querySelector('#comparison');
+  if(stickyBar&&passMarker&&typeof IntersectionObserver==='function'){
+    const toggle=passed=>{
+      stickyBar.classList.toggle('is-visible',passed);
+      stickyBar.setAttribute('aria-hidden',passed?'false':'true');
+    };
+    toggle(false);
+    new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        // 上へ抜けた（= 比較表を読み終えた）ときだけ true。
+        toggle(!entry.isIntersecting&&entry.boundingClientRect.top<0);
+      });
+    },{threshold:0}).observe(passMarker);
+  }
 });

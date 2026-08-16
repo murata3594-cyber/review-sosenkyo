@@ -15,7 +15,8 @@ BASE_REQUIRED = [
     "data/content_manifest.json", "data/topic_queue.json", "data/affiliate_catalog.json",
     "config/site.json", "config/affiliate.json", "config/services.json",
     "scripts/build_dist.py", "scripts/finalize_seo.py", "scripts/build_affiliate_links.py",
-    "scripts/render_affiliate_blocks.py", "scripts/inject_services.py", "scripts/audit_content_quality.py",
+    "scripts/render_affiliate_blocks.py", "scripts/render_result_modules.py",
+    "scripts/inject_services.py", "scripts/audit_content_quality.py",
     "package.json", "wrangler.jsonc"
 ]
 IGNORED_PREFIXES = ("http://", "https://", "mailto:", "tel:", "javascript:", "data:")
@@ -73,9 +74,36 @@ for name in dict.fromkeys(required):
 for config_name in ("config/site.json","config/affiliate.json","config/services.json","data/affiliate_catalog.json"):
     path=ROOT/config_name
     if path.exists(): load_json(path, errors)
+# v21 / 2-3: 初期 vs 数か月後スナップショットの構造チェック。
+# 値の妥当性（rating 0-5 / count非ゼロ / checked_at / window）の正本は
+# scripts/audit_content_quality.py。ここは形が壊れた台帳を早期に落とすための二重化。
+LONGTERM_SNAPSHOT_FIELDS=("review_snapshot_initial","review_snapshot_longterm")
+
+def check_longterm_snapshots(label: str, data: dict) -> None:
+    for product in data.get("products", []) if isinstance(data.get("products"), list) else []:
+        if not isinstance(product, dict): continue
+        name=str(product.get("name", "unnamed"))
+        present=[f for f in LONGTERM_SNAPSHOT_FIELDS if product.get(f) is not None]
+        if not present: continue
+        if len(present)!=len(LONGTERM_SNAPSHOT_FIELDS):
+            errors.append(f"{label} / {name}: {present[0]} requires both initial and longterm snapshots"); continue
+        for field in LONGTERM_SNAPSHOT_FIELDS:
+            snap=product.get(field)
+            if not isinstance(snap, dict):
+                errors.append(f"{label} / {name}: {field} must be an object"); continue
+            rating=snap.get("rating"); count=snap.get("count")
+            if not isinstance(rating,(int,float)) or isinstance(rating,bool) or not (0<=float(rating)<=5):
+                errors.append(f"{label} / {name}: {field} rating must be a number in 0-5")
+            if not isinstance(count,int) or isinstance(count,bool) or count<1:
+                errors.append(f"{label} / {name}: {field} count must be a positive integer")
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(snap.get("checked_at",""))):
+                errors.append(f"{label} / {name}: {field} checked_at must be YYYY-MM-DD")
+            if not str(snap.get("window","")).strip():
+                errors.append(f"{label} / {name}: {field} requires a window label")
+
 for research in [item.get("research") for item in manifest.get("published", []) if item.get("research")]:
     path=ROOT/research
-    if path.exists(): load_json(path, errors)
+    if path.exists(): check_longterm_snapshots(research, load_json(path, errors))
 
 all_files={
     str(p.relative_to(ROOT)).replace("\\", "/")

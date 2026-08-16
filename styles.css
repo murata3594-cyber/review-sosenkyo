@@ -538,3 +538,79 @@ h1,h2,h3{letter-spacing:-.005em;line-height:1.5}
   .affiliate-btn{flex:1}
   .legal-links{gap:10px 14px}
 }
+
+/* =========================================================================
+   v21 フェーズ2: 収益モジュール（2026-08-16）
+
+   ここから下は「検索1回で購買判断を終わらせる」ための4モジュール。
+   既存ルールは1行も書き換えていない。すべて末尾追記で、必要な箇所だけ
+   詳細度を上げて上書きしている（例: .result-hero a より .verdict-cta a）。
+
+   共通の前提
+   - font-size は必ず既存トークン（--fs-micro:13px 〜 --fs-body:17px）を使う。
+     13px 未満は書かない。
+   - タップ領域は 44px 以上。
+   - 実際のHTMLは dist ビルド時に scripts/render_result_modules.py が描画する。
+     アフィリエイトIDが未投入なら購入ボタンは1つも出力されない（fail-closed）。
+   ========================================================================= */
+
+/* --- 2-1 購買完結型の結論ボックス ---------------------------------------
+   .result-hero 内の .verdict カードへ、購入ボタン（Amazon / 楽天の2択まで）と
+   判断根拠（レビュー母数と取得日）を足す。根拠は data/research/*.json の
+   review_snapshot の実値だけを描画する。 */
+.verdict-cta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.verdict-cta a{display:inline-flex;flex:1 1 132px;align-items:center;justify-content:center;min-height:44px;padding:10px 12px;border-radius:10px;font-size:var(--fs-micro);font-weight:900;line-height:1.4;text-align:center;text-decoration:none}
+.verdict-cta .cta-amazon{background:#ffb84d;color:#15100a}
+.verdict-cta .cta-rakuten{background:#bf0000;color:#fff}
+.verdict-cta a:hover{filter:brightness(.95);text-decoration:none}
+.verdict .verdict-basis{display:block;margin-top:9px;color:var(--muted);font-size:var(--fs-micro);line-height:1.7}
+.result-hero .verdict-ad-note{margin:12px 0 0;color:var(--muted);font-size:var(--fs-micro);line-height:1.7}
+
+/* --- 2-2 モバイル固定CTAバー --------------------------------------------
+   既存 .sticky-cta を流用し、モバイルだけ下部固定バーにする。
+   表示条件は比較表(#comparison)の通過スクロール後（site.js の
+   IntersectionObserver が .is-visible を付ける）。結論より前には出さない。
+   バーを出力したページだけ body に .has-sticky-cta が付き、その分の
+   padding-bottom を先に予約するのでCLSは発生しない。 */
+.sticky-cta.sticky-cta-bar{display:none}
+.sticky-cta-bar .sticky-cta-inner{display:flex;align-items:center;gap:10px}
+.sticky-cta-bar .sticky-cta-label{flex:1 1 auto;min-width:0}
+.sticky-cta-bar .sticky-cta-label b{display:-webkit-box;overflow:hidden;-webkit-line-clamp:1;-webkit-box-orient:vertical;color:var(--ink);font-size:var(--fs-micro);font-weight:900;line-height:1.45}
+.sticky-cta-bar .sticky-cta-label small{display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;color:var(--muted);font-size:var(--fs-micro);line-height:1.45}
+.sticky-cta-bar .sticky-cta-buttons{display:flex;flex:0 0 auto;gap:7px}
+.sticky-cta-bar .sticky-cta-buttons a{display:inline-flex;align-items:center;justify-content:center;min-width:92px;min-height:44px;padding:8px 10px;border-radius:10px;font-size:var(--fs-micro);font-weight:900;line-height:1.3;text-align:center;text-decoration:none}
+.sticky-cta-bar .cta-amazon{background:#ffb84d;color:#15100a}
+.sticky-cta-bar .cta-rakuten{background:#bf0000;color:#fff}
+
+/* --- 2-3 初期レビュー vs 数か月後 ----------------------------------------
+   依存ライブラリなし。div と CSS だけの水平バー2本。
+   data/research/*.json に review_snapshot_initial / review_snapshot_longterm
+   が揃っている商品だけ描画する（データが無い記事には何も出さない）。 */
+.longterm-chart{display:grid;gap:14px;margin-top:16px}
+.lt-item{padding:16px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.lt-name{font-size:var(--fs-small);font-weight:800;line-height:1.6;color:var(--ink)}
+.lt-row{display:grid;grid-template-columns:104px minmax(0,1fr) 118px;gap:10px;align-items:center;margin-top:10px}
+.lt-label{color:var(--muted);font-size:var(--fs-micro);line-height:1.5}
+.lt-track{height:14px;border-radius:999px;background:#f1eaf4;overflow:hidden}
+.lt-fill{display:block;height:100%;border-radius:999px;background:var(--coral)}
+.lt-row-longterm .lt-fill{background:var(--lilac)}
+.lt-value{color:var(--ink);font-size:var(--fs-micro);font-weight:800;line-height:1.5;text-align:right}
+.lt-item .lt-basis{margin:11px 0 0;color:var(--muted);font-size:var(--fs-micro);line-height:1.7}
+.lt-item .lt-delta{margin:8px 0 0;color:var(--ink);font-size:var(--fs-micro);font-weight:800;line-height:1.6}
+
+/* --- 2-4 商品画像枠 ------------------------------------------------------
+   figure + figcaption。width / height 属性を必ず持たせる前提のCSS
+   （aspect-ratio が効くので画像読込前でも高さが確定しCLSが出ない）。
+   画像の実投入はフェーズ3のタイプA記事から。転載素材は使わない。 */
+.product-figure{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.product-figure img{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;border-radius:12px;background:#faf7fb}
+.product-figure figcaption{margin-top:10px;color:var(--muted);font-size:var(--fs-micro);line-height:1.75}
+.product-figure figcaption b{display:block;margin-bottom:3px;color:var(--ink);font-size:var(--fs-small);line-height:1.6}
+.product-figure .figure-credit{display:block;margin-top:5px;color:var(--soft);font-size:var(--fs-micro);line-height:1.6}
+
+@media(max-width:650px){
+  body.has-sticky-cta{padding-bottom:150px} /* .mobile-nav 66px + バー実測78px + 余白 */
+  .sticky-cta.sticky-cta-bar{display:block;position:fixed;left:0;right:0;bottom:66px;z-index:80;margin:0;padding:10px 12px;border:0;border-top:1px solid var(--line-strong);border-radius:0;background:rgba(255,255,255,.98);box-shadow:0 -10px 26px rgba(60,42,49,.12);transform:translateY(130%);visibility:hidden;transition:transform .22s ease}
+  .sticky-cta.sticky-cta-bar.is-visible{transform:translateY(0);visibility:visible}
+  .lt-row{grid-template-columns:76px minmax(0,1fr) 92px;gap:7px}
+}
