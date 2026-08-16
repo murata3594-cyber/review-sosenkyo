@@ -45,7 +45,21 @@ def load_manifest() -> dict:
 
 
 def canonical_url(base: str, filename: str) -> str:
-    return base + "/" if filename == "index.html" else f"{base}/{filename}"
+    """実際に配信されるURLを返す（拡張子なし）。
+
+    wrangler.jsonc の assets.html_handling は "auto-trailing-slash" で、
+    Cloudflare は /foo.html を /foo へ 307 で転送する。canonical と sitemap を
+    .html のままにすると「正規URLがリダイレクト先を指す」状態になり、
+    2026-08-16 の実測では sitemap 23件中22件が 307 を返していた。
+    クロールバジェットの無駄であり、Search Console でも警告対象になる。
+
+    canonical・og:url・sitemap・JSON-LD の url はすべてこの関数を通るので、
+    ここを直せば全体が実配信URLに揃う。
+    """
+    if filename == "index.html":
+        return base + "/"
+    stem = filename[:-5] if filename.endswith(".html") else filename
+    return f"{base}/{stem}"
 
 
 def absolute(base: str, href: str) -> str:
@@ -206,7 +220,7 @@ def schema_for(filename: str, source: str, title: str, description: str, url: st
             "@type": "SearchAction",
             "target": {
                 "@type": "EntryPoint",
-                "urlTemplate": f"{base}/rankings.html?q={{search_term_string}}",
+                "urlTemplate": f"{base}/rankings?q={{search_term_string}}",
             },
             "query-input": "required name=search_term_string",
         }
@@ -336,7 +350,10 @@ def render_sitemap(base: str, deploy_dir: Path, manifest: dict) -> str:
         unique.append(path)
     rows = []
     for path in unique:
-        loc = f"{base}/{path}" if path else f"{base}/"
+        # 存在確認はファイル名(path)で行い、出力は canonical と同じ実配信URLに揃える。
+        # ここを f"{base}/{path}" のままにすると sitemap だけ .html が残り、
+        # 全エントリが 307 を返す状態に戻る。
+        loc = canonical_url(base, path) if path else f"{base}/"
         item = published.get(path)
         lastmod = article_date(item) if item else site_updated
         rows.append(f"  <url><loc>{loc}</loc><lastmod>{lastmod}</lastmod></url>")
