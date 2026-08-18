@@ -72,6 +72,11 @@
     "article-quickle-magnetic-wiper.html": {"theme":"クイックルワイパー本体比較","products":[
       {"label":"クイックルワイパー 通常型","note":"従来の差し込み式・定番本体","amazon":{"asin":""},"rakuten":{"query":"花王 クイックルワイパー 本体","must_include":["クイックルワイパー","本体"]}},
       {"label":"クイックル マグネットワイパー","note":"シート装着・ズレにくさ重視","amazon":{"asin":""},"rakuten":{"query":"クイックル マグネットワイパー","must_include":["クイックル","マグネットワイパー"]}}
+    ]},
+    "article-roomdry-laundry-detergent.html": {"theme":"部屋干し用洗濯洗剤","products":[
+      {"label":"アリエールジェル 部屋干しプラス","note":"香り・仕上がり重視","amazon":{"asin":""},"rakuten":{"query":"アリエール 部屋干しプラス ジェル","must_include":["アリエール","部屋干し"]}},
+      {"label":"アタックZERO 部屋干し","note":"ワンプッシュ・洗浄力重視","amazon":{"asin":""},"rakuten":{"query":"アタックZERO 部屋干し","must_include":["アタックZERO","部屋干し"]}},
+      {"label":"NANOX one ニオイ専用","note":"消臭最優先","amazon":{"asin":""},"rakuten":{"query":"NANOX one ニオイ専用","must_include":["NANOX","ニオイ専用"]}}
     ]}
   }
 }

@@ -1,0 +1,96 @@
+{
+  "topic_id": "roomdry-laundry-detergent-2026-08-18",
+  "topic": "部屋干し用洗濯洗剤",
+  "researched_at": "2026-08-18",
+  "status": "verified_initial_research",
+  "policy": {"raw_review_text_stored": false},
+  "products": [
+    {
+      "id": "ariel-gel-heyaboshi-plus",
+      "name": "アリエールジェル 部屋干しプラス（P&G）",
+      "official_source": "https://ariel.jp/ja-jp/shop/type/liquid/ariel-living-dry-ion-power-gel",
+      "official_facts": [
+        "99%抗菌+防カビ(衣類・洗濯水・洗濯槽の防カビ)を謳う",
+        "自社液体洗剤と酸素系漂白剤併用時との比較で「漂白剤レベル消臭」を標榜",
+        "「天日干し級にさわやかな香り」を謳う",
+        "長持ち濃縮タイプの液体洗剤、すすぎ1回・まとめ洗い対応",
+        "タテ型・ドラム式・自動投入式洗濯機に対応、つけ置き洗いにも対応",
+        "詰め替え用は625g/1kg/1.4kg/1.72kgの複数容量展開"
+      ],
+      "review_source": "https://shareview.jp/item/detail/55063",
+      "review_snapshot": {"rating": 4.38, "count": 79, "checked_at": "2026-08-18"},
+      "usage_trends": [
+        "部屋干しの生乾き臭が効果的に抑えられるという評価が最多",
+        "香りが爽やかで控えめ、心地よいと好評",
+        "汚れ落ちが良く仕上がりがふわふわになるとの評価",
+        "少量で効果が出るためコスパが良いという声"
+      ],
+      "tradeoffs": [
+        "大きな欠点を指摘するレビューは少ない",
+        "通常品(無印アリエール)との違いが分かりにくいという声がある"
+      ],
+      "evidence_strength": "medium"
+    },
+    {
+      "id": "attack-zero-heyaboshi",
+      "name": "アタックZERO 部屋干し（花王）",
+      "official_source": "https://www.kao.com/jp/newsroom/news/release/2026/20260311-001/",
+      "official_facts": [
+        "2026年3月28日、アタックZEROシリーズ改良新発売の一環として全国発売",
+        "衣類から洗たく槽まで消臭を訴求。洗浄成分バイオIOS配合",
+        "洗たく槽内バイオフィルム中の菌への除菌効果を謳い、通常の洗濯だけで槽メンテナンスフリーを訴求",
+        "「24時間、部屋干し臭を防ぐ」を標榜",
+        "香りはサンシャインブリーズの微香タイプ",
+        "液性は中性、蛍光増白剤無配合、綿・麻・合成繊維用",
+        "内容量はワンハンドプッシュ本体380g、ボトル本体570g、つめかえ用760g/1,070g/1,460gの複数展開"
+      ],
+      "review_source": "https://shareview.jp/item/detail/44612",
+      "review_snapshot": {"rating": 4.28, "count": 60, "checked_at": "2026-08-18"},
+      "usage_trends": [
+        "生乾き臭がしなくなるなど消臭効果への評価が中心",
+        "汗じみ・皮脂汚れなど頑固な汚れへの洗浄力を評価する声",
+        "ワンプッシュで計量不要な使いやすさが好評",
+        "濃縮タイプで少量使用のためコスパが良いという声"
+      ],
+      "tradeoffs": [
+        "香りが控えめで物足りないという指摘があり、香り重視のユーザーには不向き",
+        "香り付けのため柔軟剤等と併用しているユーザーが一定数いる"
+      ],
+      "evidence_strength": "medium"
+    },
+    {
+      "id": "nanox-one-nioi-senyo",
+      "name": "NANOX one ニオイ専用（ライオン）",
+      "official_source": "https://nanox.lion.co.jp/",
+      "official_facts": [
+        "新酵素配合を謳い、汚れ・ニオイの形成に関与する菌由来DNAの分解による無臭化洗浄を訴求",
+        "部屋干し臭・汗臭・タオルの雑菌臭・枕カバーの加齢臭への対応を謳う",
+        "徹底抗菌、ウイルス除去、洗濯槽のニオイ抑制機能も搭載と記載",
+        "容量は本体600g、詰め替え用765g/1080g/1530gの複数展開",
+        "NANOX oneシリーズは「洗浄プラス」「ニオイ専用」「PRO」の3ラインで構成"
+      ],
+      "review_source": "https://shareview.jp/item/detail/50138",
+      "review_snapshot": {"rating": 4.20, "count": 168, "checked_at": "2026-08-18"},
+      "usage_trends": [
+        "部屋干しの生乾き臭がしない、汗臭に効果があるとの評価が多い",
+        "清潔感のある香りと好評",
+        "洗浄力が十分で衣類の清潔感を保てるとの評価",
+        "ボトルのパープルカラーなど外観デザインを評価する声"
+      ],
+      "tradeoffs": [
+        "香りが強すぎたという指摘がある",
+        "少数だが使用1回で断念という否定的なレビューも存在"
+      ],
+      "evidence_strength": "medium"
+    }
+  ],
+  "editorial_conclusion": {
+    "overall_winner": null,
+    "reason": "3商品とも部屋干し臭抑制を主目的とした液体洗剤だが、強みの方向性が異なるため用途別に選ぶのが妥当。評価点はアリエールが最も高い(4.38)がレビュー母数は79件と3商品中最少。NANOX oneはレビュー母数168件と最も多く、消臭訴求への言及が最多。アタックZEROはワンプッシュの手軽さと洗浄力への評価が目立つ。",
+    "use_case_winners": [
+      {"label": "香りの心地よさ・仕上がりの柔らかさを重視", "product_id": "ariel-gel-heyaboshi-plus"},
+      {"label": "頑固な部屋干し臭・生乾き臭対策を最優先", "product_id": "nanox-one-nioi-senyo"},
+      {"label": "計量の手間を省きたい・洗浄力も両立したい", "product_id": "attack-zero-heyaboshi"}
+    ]
+  }
+}

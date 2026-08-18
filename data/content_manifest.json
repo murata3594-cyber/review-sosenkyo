@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13",
+  "updated_at": "2026-08-18",
   "published": [
     {"id":"T001","number":"01","category":"kitchen","title":"食洗機用洗剤","subtitle":"6商品の初回調査","axes":"手軽さ・洗浄力・量調整・母数","published":"2026-08-09","article":"article-dishwasher-detergent.html","research":"data/research/dishwasher-detergent-2026-08-09.json"},
     {"id":"T002","number":"02","category":"cleaning","title":"ドラム式洗濯槽クリーナー","subtitle":"N-W2・SK-750・ES-CD","axes":"塩素系・容量・ニオイ・レビュー","published":"2026-08-09","article":"article-washer-cleaner.html","research":"data/research/drum-washer-cleaner-2026-08-09.json"},
@@ -15,7 +15,8 @@
     {"id":"T013","number":"13","category":"cleaning","title":"フロア用ウェットシート","subtitle":"クイックル vs ウェーブ","axes":"水分保持・厚さ・広さ・レビュー","published":"2026-08-09","article":"article-floor-wet-sheets.html","research":"data/research/floor-wet-sheets-2026-08-09.json"},
     {"id":"T014","number":"14","category":"cleaning","title":"フロア用ドライシート","subtitle":"クイックル vs ウェーブ","axes":"髪・ホコリ・ペット毛・粒ゴミ","published":"2026-08-09","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json"},
     {"id":"T015","number":"15","category":"cleaning","title":"ハンディモップ","subtitle":"クイックルハンディ vs ウェーブハンディ","axes":"毛束・ホコリ捕集・すき間・レビュー","published":"2026-08-09","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json"},
-    {"id":"T017","number":"17","category":"cleaning","title":"クイックルワイパー本体","subtitle":"通常型 vs マグネットワイパー","axes":"シート装着・密着・ズレ・すき間・レビュー","published":"2026-08-13","article":"article-quickle-magnetic-wiper.html","research":"data/research/quickle-magnetic-vs-standard-2026-08-13.json"}
+    {"id":"T017","number":"17","category":"cleaning","title":"クイックルワイパー本体","subtitle":"通常型 vs マグネットワイパー","axes":"シート装着・密着・ズレ・すき間・レビュー","published":"2026-08-13","article":"article-quickle-magnetic-wiper.html","research":"data/research/quickle-magnetic-vs-standard-2026-08-13.json"},
+    {"id":"T018","number":"18","category":"cleaning","title":"部屋干し用洗濯洗剤","subtitle":"アリエール・アタックZERO・NANOX one","axes":"香り・消臭・洗浄力・レビュー","published":"2026-08-18","article":"article-roomdry-laundry-detergent.html","research":"data/research/roomdry-laundry-detergent-2026-08-18.json"}
   ],
   "next": [
     {"id":"T012","number":"12","category":"cleaning","title":"流せるトイレ掃除シート","subtitle":"キレキラ！2026年10月リニューアル待ち","axes":"厚さ・破れ・除菌・流しやすさ","status":"2026-10-01再調査"},

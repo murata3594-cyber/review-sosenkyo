@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13",
+  "updated_at": "2026-08-18",
   "rules": {
     "approval_gate": "AUTO_PUBLISH_POST_APPROVAL: AI may research and publish evidence-backed initial comparisons automatically. Weak or conflicting evidence stays in RESEARCHING or NEEDS_REVIEW.",
     "raw_reviews": "Do not store large volumes of raw review text in this public repository.",
@@ -7,22 +7,169 @@
     "claim_rule": "Before substantial work, set RESEARCHING with claimed_by and claimed_at; do not duplicate an existing claimed/published topic."
   },
   "topics": [
-    {"id":"T001","topic":"食洗機用洗剤","status":"PUBLISHED_INITIAL","article":"article-dishwasher-detergent.html","research":"data/research/dishwasher-detergent-2026-08-09.json","next_action":"periodic SKU/review recheck"},
-    {"id":"T002","topic":"ドラム式洗濯槽クリーナー","status":"PUBLISHED_INITIAL","article":"article-washer-cleaner.html","research":"data/research/drum-washer-cleaner-2026-08-09.json","next_action":"periodic manufacturer guidance/review recheck"},
-    {"id":"T003","topic":"システムトイレ用猫砂・チップ","status":"PUBLISHED_INITIAL","article":"article-cat-litter.html","research":"data/research/system-toilet-cat-litter-2026-08-09.json","next_action":"add variants only when review volume is sufficient"},
-    {"id":"T004","topic":"BRITA MAXTRA PRO交換カートリッジ","status":"PUBLISHED_INITIAL","article":"article-brita-maxtra-pro.html","research":"data/research/brita-maxtra-pro-2026-08-09.json","next_action":"periodic filtration/review recheck"},
-    {"id":"T005","topic":"キッチンスポンジ","status":"PUBLISHED_INITIAL","article":"article-kitchen-sponge.html","research":"data/research/kitchen-sponge-2026-08-09.json","next_action":"recheck product revisions and review counts"},
-    {"id":"T006","topic":"生ごみ用防臭袋","status":"PUBLISHED_INITIAL","article":"article-odor-proof-bags.html","research":"data/research/odor-proof-food-waste-bags-2026-08-09.json","next_action":"add direct-comparison evidence only if comparable test conditions become available"},
-    {"id":"T007","topic":"システムトイレ用シート","status":"PUBLISHED_INITIAL","article":"article-system-toilet-sheets.html","research":"data/research/system-toilet-sheets-2026-08-09.json","next_action":"periodic official specification and review recheck"},
-    {"id":"T008","topic":"システムトイレ用シート 複数ねこ用","status":"PUBLISHED_INITIAL","article":"article-multi-cat-sheets.html","research":"data/research/multi-cat-system-toilet-sheets-2026-08-09.json","next_action":"periodic review recheck and compare new multi-cat products"},
-    {"id":"T009","topic":"高吸収ペットシーツ レギュラー","status":"PUBLISHED_INITIAL","article":"article-pet-sheets-regular.html","research":"data/research/pet-sheets-regular-2026-08-09.json","next_action":"periodic review and SKU recheck"},
-    {"id":"T010","topic":"薄型ペットシーツ レギュラー","status":"PUBLISHED_INITIAL","article":"article-thin-pet-sheets-regular.html","research":"data/research/thin-pet-sheets-regular-2026-08-09.json","next_action":"periodic review and SKU recheck"},
-    {"id":"T011","topic":"こすらない浴室洗剤","status":"PUBLISHED_INITIAL","article":"article-no-scrub-bath-cleaners.html","research":"data/research/no-scrub-bath-cleaners-2026-08-09.json","next_action":"periodic reformulation and review recheck"},
-    {"id":"T012","topic":"流せるトイレ掃除シート","status":"HOLD_RENEWAL","research":"data/research/toilet-cleaning-sheets-2026-08-09.json","resume_after":"2026-10-01","next_action":"recheck renewed KireKira SKU, official specifications and reviews after launch"},
-    {"id":"T013","topic":"フロア用ウェットシート","status":"PUBLISHED_INITIAL","article":"article-floor-wet-sheets.html","research":"data/research/floor-wet-sheets-2026-08-09.json","next_action":"periodic product/review recheck"},
-    {"id":"T014","topic":"フロア用ドライシート","status":"PUBLISHED_INITIAL","article":"article-floor-dry-sheets.html","research":"data/research/floor-dry-sheets-2026-08-09.json","next_action":"periodic product/review recheck"},
-    {"id":"T015","topic":"ハンディモップ","status":"PUBLISHED_INITIAL","article":"article-handy-dusters.html","research":"data/research/handy-dusters-2026-08-09.json","next_action":"periodic official SKU and replacement-sheet review recheck"},
-    {"id":"T016","topic":"フリーザーバッグ Mサイズ","status":"RESEARCHING","comparison_axes":["厚さ","密閉","冷凍","書き込み","レビュー"],"next_action":"verify current same-size SKUs and comparable review evidence before publication"},
-    {"id":"T017","topic":"クイックルワイパー通常型 vs マグネットワイパー","status":"PUBLISHED_INITIAL","article":"article-quickle-magnetic-wiper.html","research":"data/research/quickle-magnetic-vs-standard-2026-08-13.json","claimed_by":"ChatGPT","claimed_at":"2026-08-13T08:12:00+09:00","published_at":"2026-08-13T08:25:00+09:00","comparison_axes":["シート装着","床への密着","すき間","シート互換性","レビュー"],"fact_check_note":"花王の2023年発売資料と現行Q&Aでマグネット固定、通常型比126%の床接触面積、現行シート互換性を確認。レビュー評価は異なる楽天店舗・母数のため直接順位付けせず、原文大量保存・転載なし。外部商品画像は使用せず権利リスクを回避。"}
+    {
+      "id": "T001",
+      "topic": "食洗機用洗剤",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-dishwasher-detergent.html",
+      "research": "data/research/dishwasher-detergent-2026-08-09.json",
+      "next_action": "periodic SKU/review recheck"
+    },
+    {
+      "id": "T002",
+      "topic": "ドラム式洗濯槽クリーナー",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-washer-cleaner.html",
+      "research": "data/research/drum-washer-cleaner-2026-08-09.json",
+      "next_action": "periodic manufacturer guidance/review recheck"
+    },
+    {
+      "id": "T003",
+      "topic": "システムトイレ用猫砂・チップ",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-cat-litter.html",
+      "research": "data/research/system-toilet-cat-litter-2026-08-09.json",
+      "next_action": "add variants only when review volume is sufficient"
+    },
+    {
+      "id": "T004",
+      "topic": "BRITA MAXTRA PRO交換カートリッジ",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-brita-maxtra-pro.html",
+      "research": "data/research/brita-maxtra-pro-2026-08-09.json",
+      "next_action": "periodic filtration/review recheck"
+    },
+    {
+      "id": "T005",
+      "topic": "キッチンスポンジ",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-kitchen-sponge.html",
+      "research": "data/research/kitchen-sponge-2026-08-09.json",
+      "next_action": "recheck product revisions and review counts"
+    },
+    {
+      "id": "T006",
+      "topic": "生ごみ用防臭袋",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-odor-proof-bags.html",
+      "research": "data/research/odor-proof-food-waste-bags-2026-08-09.json",
+      "next_action": "add direct-comparison evidence only if comparable test conditions become available"
+    },
+    {
+      "id": "T007",
+      "topic": "システムトイレ用シート",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-system-toilet-sheets.html",
+      "research": "data/research/system-toilet-sheets-2026-08-09.json",
+      "next_action": "periodic official specification and review recheck"
+    },
+    {
+      "id": "T008",
+      "topic": "システムトイレ用シート 複数ねこ用",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-multi-cat-sheets.html",
+      "research": "data/research/multi-cat-system-toilet-sheets-2026-08-09.json",
+      "next_action": "periodic review recheck and compare new multi-cat products"
+    },
+    {
+      "id": "T009",
+      "topic": "高吸収ペットシーツ レギュラー",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-pet-sheets-regular.html",
+      "research": "data/research/pet-sheets-regular-2026-08-09.json",
+      "next_action": "periodic review and SKU recheck"
+    },
+    {
+      "id": "T010",
+      "topic": "薄型ペットシーツ レギュラー",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-thin-pet-sheets-regular.html",
+      "research": "data/research/thin-pet-sheets-regular-2026-08-09.json",
+      "next_action": "periodic review and SKU recheck"
+    },
+    {
+      "id": "T011",
+      "topic": "こすらない浴室洗剤",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-no-scrub-bath-cleaners.html",
+      "research": "data/research/no-scrub-bath-cleaners-2026-08-09.json",
+      "next_action": "periodic reformulation and review recheck"
+    },
+    {
+      "id": "T012",
+      "topic": "流せるトイレ掃除シート",
+      "status": "HOLD_RENEWAL",
+      "research": "data/research/toilet-cleaning-sheets-2026-08-09.json",
+      "resume_after": "2026-10-01",
+      "next_action": "recheck renewed KireKira SKU, official specifications and reviews after launch"
+    },
+    {
+      "id": "T013",
+      "topic": "フロア用ウェットシート",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-floor-wet-sheets.html",
+      "research": "data/research/floor-wet-sheets-2026-08-09.json",
+      "next_action": "periodic product/review recheck"
+    },
+    {
+      "id": "T014",
+      "topic": "フロア用ドライシート",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-floor-dry-sheets.html",
+      "research": "data/research/floor-dry-sheets-2026-08-09.json",
+      "next_action": "periodic product/review recheck"
+    },
+    {
+      "id": "T015",
+      "topic": "ハンディモップ",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-handy-dusters.html",
+      "research": "data/research/handy-dusters-2026-08-09.json",
+      "next_action": "periodic official SKU and replacement-sheet review recheck"
+    },
+    {
+      "id": "T016",
+      "topic": "フリーザーバッグ Mサイズ",
+      "status": "RESEARCHING",
+      "comparison_axes": [
+        "厚さ",
+        "密閉",
+        "冷凍",
+        "書き込み",
+        "レビュー"
+      ],
+      "next_action": "verify current same-size SKUs and comparable review evidence before publication"
+    },
+    {
+      "id": "T017",
+      "topic": "クイックルワイパー通常型 vs マグネットワイパー",
+      "status": "PUBLISHED_INITIAL",
+      "article": "article-quickle-magnetic-wiper.html",
+      "research": "data/research/quickle-magnetic-vs-standard-2026-08-13.json",
+      "claimed_by": "ChatGPT",
+      "claimed_at": "2026-08-13T08:12:00+09:00",
+      "published_at": "2026-08-13T08:25:00+09:00",
+      "comparison_axes": [
+        "シート装着",
+        "床への密着",
+        "すき間",
+        "シート互換性",
+        "レビュー"
+      ],
+      "fact_check_note": "花王の2023年発売資料と現行Q&Aでマグネット固定、通常型比126%の床接触面積、現行シート互換性を確認。レビュー評価は異なる楽天店舗・母数のため直接順位付けせず、原文大量保存・転載なし。外部商品画像は使用せず権利リスクを回避。"
+    },
+    {
+      "id": "T018",
+      "topic": "部屋干し用洗濯洗剤",
+      "status": "PUBLISHED_INITIAL",
+      "source": "ai_discovery",
+      "summary": "共働き・部屋干し需要の高い読者層向け。花王/P&G/ライオンの部屋干し用液体洗剤を比較候補。",
+      "claimed_by": "Claude Code",
+      "claimed_at": "2026-08-18T03:15:43Z",
+      "article": "article-roomdry-laundry-detergent.html",
+      "research": "data/research/roomdry-laundry-detergent-2026-08-18.json",
+      "published_at": "2026-08-18",
+      "next_action": "periodic review and SKU recheck"
+    }
   ]
 }
