@@ -3,9 +3,9 @@
   "tagline": "○○人の口コミで決めた、本当に選ばれている商品",
   "production_url": "https://review-sosenkyo.murata3594.workers.dev",
   "canonical_host": "cloudflare-workers",
-  "indexing_enabled": false,
+  "indexing_enabled": true,
   "planned_domain": "https://review-sosenkyo.com",
   "locale": "ja_JP",
   "publisher_name": "レビュー総選挙編集部",
-  "updated_at": "2026-08-12"
+  "updated_at": "2026-08-18"
 }

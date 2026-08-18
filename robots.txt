@@ -1,2 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://review-sosenkyo.murata3594.workers.dev/sitemap.xml

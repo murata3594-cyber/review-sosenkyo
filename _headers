@@ -5,14 +5,8 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-# ★★★ 公開（インデックス解禁）時に必ず削除すること ★★★
-# 下の X-Robots-Tag: noindex は現本番ホスト
-# https://review-sosenkyo.murata3594.workers.dev/ に実際に効いている。
-# config/site.json の indexing_enabled を true にしても、この2行が残っている限り
-# 全ページがクロール対象外のままになる。削除はオーナー判断（解禁時期）に従う。
+# インデックス解禁済み(2026-08-18オーナー承認)。X-Robots-Tag: noindex ブロックは削除済み。
 # preload 付き HSTS は独自ドメイン取得後に検討する（workers.dev では申請不可）。
-https://review-sosenkyo.murata3594.workers.dev/*
-  X-Robots-Tag: noindex
 
 # 画像・フォントはファイル名にバージョンを含むため長期キャッシュで安全。
 /assets/*
