@@ -91,7 +91,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[t
 img{display:block;max-width:100%}
 button,input{font:inherit}
 button{touch-action:manipulation}
-h1,h2,h3{letter-spacing:-.005em;line-height:1.5}
+h1,h2,h3{letter-spacing:normal;line-height:1.5}
 .wrap{width:min(1160px,calc(100% - 40px));margin-inline:auto}
 .topbar{display:none}
 .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
@@ -173,7 +173,7 @@ h1,h2,h3{letter-spacing:-.005em;line-height:1.5}
    （aria-hidden の装飾要素）へ分離した。 */
 .hero h1{
   max-width:640px;margin:14px 0 16px;
-  font-size:clamp(32px,4.4vw,54px);line-height:1.35;letter-spacing:-.02em;font-weight:800;
+  font-size:clamp(32px,4.4vw,54px);line-height:1.35;letter-spacing:normal;font-weight:800;
 }
 /* 文節を inline-block で束ね、「口／コミ」のような語中改行を防ぐ。
    幅が足りない場合だけブロック内部で通常のCJK折返しに戻る。 */
@@ -359,7 +359,7 @@ h1,h2,h3{letter-spacing:-.005em;line-height:1.5}
 .breadcrumb a{color:var(--coral-deep);text-decoration:underline;text-decoration-color:rgba(214,51,104,.35);text-underline-offset:3px}
 .breadcrumb a:hover{text-decoration-color:var(--coral-deep)}
 .breadcrumb [aria-current="page"]{color:#5d5470}
-.article-title{max-width:980px;margin:14px 0;font-size:clamp(28px,4vw,48px);line-height:1.42;letter-spacing:-.015em}
+.article-title{max-width:980px;margin:14px 0;font-size:clamp(28px,4vw,48px);line-height:1.42;letter-spacing:normal}
 .article-hero p{color:#4f4763;font-size:var(--fs-body);line-height:1.9}
 .article-meta{display:flex;flex-wrap:wrap;gap:7px}
 .notice{padding:14px 16px;border:1px solid #eddbaf;border-radius:12px;background:#fff9e9;color:#65542f;font-size:var(--fs-small);line-height:1.8}
