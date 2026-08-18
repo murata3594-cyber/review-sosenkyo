@@ -19,6 +19,7 @@
 <a class="rank-list-row" data-search="フロア用ドライシート クイックル vs ウェーブ 髪・ホコリ・ペット毛・粒ゴミ 14 公開済み 掃除・洗濯・バス" href="article-floor-dry-sheets.html"><span class="num">14</span><span class="topic"><b>フロア用ドライシート</b><br><small>クイックル vs ウェーブ</small></span><span class="subcat">髪・ホコリ・ペット毛・粒ゴミ</span><span class="reviews"><span class="status">公開済み</span></span><span class="readmore">読む →</span></a>
 <a class="rank-list-row" data-search="ハンディモップ クイックルハンディ vs ウェーブハンディ 毛束・ホコリ捕集・すき間・レビュー 15 公開済み 掃除・洗濯・バス" href="article-handy-dusters.html"><span class="num">15</span><span class="topic"><b>ハンディモップ</b><br><small>クイックルハンディ vs ウェーブハンディ</small></span><span class="subcat">毛束・ホコリ捕集・すき間・レビュー</span><span class="reviews"><span class="status">公開済み</span></span><span class="readmore">読む →</span></a>
 <a class="rank-list-row" data-search="クイックルワイパー本体 通常型 vs マグネットワイパー シート装着・密着・ズレ・すき間・レビュー 17 公開済み 掃除・洗濯・バス" href="article-quickle-magnetic-wiper.html"><span class="num">17</span><span class="topic"><b>クイックルワイパー本体</b><br><small>通常型 vs マグネットワイパー</small></span><span class="subcat">シート装着・密着・ズレ・すき間・レビュー</span><span class="reviews"><span class="status">公開済み</span></span><span class="readmore">読む →</span></a>
+<div class="rank-list-divider" role="presentation">次回調査予定（公開待ち）</div>
 <div class="rank-list-row" data-search="流せるトイレ掃除シート キレキラ！2026年10月リニューアル待ち 厚さ・破れ・除菌・流しやすさ 12 2026-10-01再調査 掃除・洗濯・バス"><span class="num">12</span><span class="topic"><b>流せるトイレ掃除シート</b><br><small>キレキラ！2026年10月リニューアル待ち</small></span><span class="subcat">厚さ・破れ・除菌・流しやすさ</span><span class="reviews"><span class="status wait">2026-10-01再調査</span></span><span class="readmore">準備中</span></div>
 <div class="rank-list-row" data-search="フリーザーバッグ Mサイズ 定番ブランドを同サイズで比較 厚さ・密閉・冷凍・書き込み・レビュー 16 調査中 キッチン・家事"><span class="num">16</span><span class="topic"><b>フリーザーバッグ Mサイズ</b><br><small>定番ブランドを同サイズで比較</small></span><span class="subcat">厚さ・密閉・冷凍・書き込み・レビュー</span><span class="reviews"><span class="status wait">調査中</span></span><span class="readmore">準備中</span></div>
 </div></div></section>
@@ -41,6 +42,8 @@
       row.style.display=hit?'':'none';
       if(hit)shown++;
     });
+    var divider=document.querySelector('.rank-list-divider');
+    if(divider)divider.style.display=needle?'none':'';
     if(!needle){status.textContent='';return;}
     status.textContent=shown?('「'+query+'」に一致するテーマ '+shown+'件'):('「'+query+'」に一致するテーマはありません。キーワードを短くしてお試しください。');
   }

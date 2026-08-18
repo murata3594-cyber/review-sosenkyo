@@ -216,10 +216,26 @@ h1,h2,h3{letter-spacing:normal;line-height:1.5}
 .hero-visual{
   width:100%;height:100%;padding:0;border:0;border-radius:0;
   background:url('assets/hero-pop-editorial-v3.webp') center/cover no-repeat;
+  background-size:112%;
   box-shadow:none;transform:none;
+  animation:hero-visual-drift 18s ease-in-out infinite alternate;
 }
+@keyframes hero-visual-drift{0%{background-position:center 30%;background-size:112%}100%{background-position:center 46%;background-size:120%}}
+@media(prefers-reduced-motion:reduce){.hero-visual{animation:none}}
 .hero-visual img{width:100%;height:100%;opacity:0}
 .vote-panel{display:none}
+.hero-live-badge{
+  position:absolute;left:20px;bottom:20px;z-index:2;
+  display:flex;align-items:center;gap:9px;
+  padding:10px 16px;border-radius:999px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(6px);
+  box-shadow:0 10px 26px rgba(60,30,60,.18);
+  font-size:13px;font-weight:800;color:#3a3049;
+}
+.hero-live-badge .dot{width:9px;height:9px;border-radius:50%;background:#1f8a76;animation:hero-live-dot-pulse 1.6s ease-in-out infinite}
+@keyframes hero-live-dot-pulse{0%,100%{box-shadow:0 0 0 0 rgba(31,138,118,.5)}50%{box-shadow:0 0 0 7px rgba(31,138,118,0)}}
+@media(prefers-reduced-motion:reduce){.hero-live-badge .dot{animation:none}}
+@media(max-width:650px){.hero-live-badge{left:14px;bottom:14px;padding:8px 13px;font-size:12px}}
 
 /* =========================== sections =================================== */
 .section{padding:74px 0}
@@ -301,6 +317,7 @@ h1,h2,h3{letter-spacing:normal;line-height:1.5}
 .rank-list{border:0;border-radius:28px;background:#fff;overflow:hidden;box-shadow:var(--shadow-sm)}
 .rank-list-head,.rank-list-row{display:grid;grid-template-columns:70px 1.5fr 1fr 110px 90px;gap:12px;align-items:center}
 .rank-list-head{padding:13px 18px;background:linear-gradient(90deg,#fff0f5,#f3f0ff);color:var(--soft);font-size:var(--fs-micro);text-transform:uppercase;letter-spacing:.06em}
+.rank-list-divider{padding:11px 18px;border-top:1px solid #eee6e8;background:#faf7fb;color:var(--soft);font-size:var(--fs-micro);font-weight:800;letter-spacing:.06em}
 .rank-list-row{padding:17px 18px;border-top:1px solid #eee6e8;font-size:var(--fs-small);transition:.2s}
 .rank-list-row:hover{background:#fff3f7}
 .rank-list-row .num{color:var(--coral-deep);font-size:20px;font-weight:800}
@@ -418,11 +435,21 @@ h1,h2,h3{letter-spacing:normal;line-height:1.5}
 .good b{color:#177063}
 .bad b{color:var(--coral-deep)}
 
-.article-verdict{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.verdict{padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.article-verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:9px}
+.verdict{position:relative;padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .verdict .vlabel{color:#5d5470;font-size:var(--fs-micro)}
 .verdict b{display:block;margin-top:4px;font-size:16px}
 .verdict .why{color:var(--muted);font-size:var(--fs-small);line-height:1.8}
+/* 用途別ベストバイ形式: 「総合1位」を捏造せず、各カード自身のvlabel(用途)を
+   雑誌の部門賞のように見せる。総合1位を決めない記事の誠実性方針と矛盾しない。 */
+.article-verdict .verdict{border-width:2px}
+.article-verdict .verdict .vlabel{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;margin-bottom:2px;border-radius:999px;
+  background:linear-gradient(135deg,#fff6df,#ffe9b8);color:#6b4e06;
+  font-size:11px;font-weight:900;letter-spacing:.02em;
+}
+.article-verdict .verdict .vlabel::before{content:"🏆";font-size:10px}
 .article-checks{display:grid;gap:8px}
 .check{padding:13px 15px;border-left:4px solid var(--mint);border-radius:8px;background:#f0f9f6;font-size:var(--fs-small);line-height:1.8}
 
@@ -489,7 +516,8 @@ h1,h2,h3{letter-spacing:normal;line-height:1.5}
   .editor-pick{grid-template-columns:1fr 1fr}
   .rank-list-head{display:none}
   .rank-list-row{grid-template-columns:42px 1fr auto;gap:9px}
-  .rank-list-row .subcat,.rank-list-row .reviews{display:none}
+  .rank-list-row .reviews{display:none}
+  .rank-list-row .subcat{display:block;grid-column:2/-1;margin:2px 0 0;font-size:12px;line-height:1.5;color:var(--soft);white-space:normal}
   .article-title{font-size:26px;line-height:1.45}
   .article-title br{display:none}
   .article-summary-grid,.article-verdict,.goodbad{grid-template-columns:1fr}
@@ -564,6 +592,9 @@ h1,h2,h3{letter-spacing:normal;line-height:1.5}
 .verdict-cta .cta-rakuten{background:#bf0000;color:#fff}
 .verdict-cta a:hover{filter:brightness(.95);text-decoration:none}
 .verdict .verdict-basis{display:block;margin-top:9px;color:var(--muted);font-size:var(--fs-micro);line-height:1.7}
+.verdict-official-link{margin-top:12px}
+.verdict-official-link a{display:inline-flex;min-height:44px;align-items:center;padding:10px 14px;border:1px solid var(--line-strong);border-radius:10px;color:var(--coral-deep);font-size:var(--fs-micro);font-weight:800;text-decoration:none}
+.verdict-official-link a:hover{background:#fff6f8}
 .result-hero .verdict-ad-note{margin:12px 0 0;color:var(--muted);font-size:var(--fs-micro);line-height:1.7}
 
 /* --- 2-2 モバイル固定CTAバー --------------------------------------------

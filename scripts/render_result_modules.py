@@ -161,7 +161,7 @@ def render_page(text: str, ledger: dict, offers: dict, catalog_labels: set[str],
         attrs = dict(ATTR_RE.findall(match.group(1)))
         body = match.group(2)
         # 二重描画の保険。dist は毎回作り直すが、単体実行を重ねても増殖させない。
-        if "verdict-cta" in body or "verdict-basis" in body:
+        if "verdict-cta" in body or "verdict-basis" in body or "verdict-official-link" in body:
             return match.group(0)
         product_id = attrs.get("data-product", "")
         offer_label = attrs.get("data-offer", "")
@@ -184,6 +184,16 @@ def render_page(text: str, ledger: dict, offers: dict, catalog_labels: set[str],
                     if name_match:
                         name = re.sub(r"<[^>]+>", "", name_match.group(1)).strip()
                     sticky.append((name or offer_label, basis, offers.get(offer_label, {})))
+            elif product_id:
+                # 購入ボタンが1つも出せない(アフィリエイトID未設定)場合、読者が迷子にならないよう
+                # 研究台帳のofficial_source(メーカー公式ページ)への導線だけは必ず残す。捏造リンクは作らない。
+                official = str(products[product_id].get("official_source", "")).strip()
+                if official.startswith("https://"):
+                    extra += (
+                        '<div class="verdict-official-link">'
+                        f'<a href="{esc(official)}" target="_blank" rel="noopener noreferrer">'
+                        "メーカー公式サイトで詳細を見る →</a></div>"
+                    )
         if basis:
             extra += f'<small class="verdict-basis">{esc(basis)}</small>'
         return f'<div class="verdict"{match.group(1)}>{body}{extra}</div>'

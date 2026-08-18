@@ -102,6 +102,8 @@ RANKINGS_FILTER_SCRIPT = """<script>
       row.style.display=hit?'':'none';
       if(hit)shown++;
     });
+    var divider=document.querySelector('.rank-list-divider');
+    if(divider)divider.style.display=needle?'none':'';
     if(!needle){status.textContent='';return;}
     status.textContent=shown?('「'+query+'」に一致するテーマ '+shown+'件'):('「'+query+'」に一致するテーマはありません。キーワードを短くしてお試しください。');
   }
@@ -125,7 +127,10 @@ def render_rankings(data: dict) -> str:
         rows.append(item_row(item).replace(
             '<a class="rank-list-row"',
             f'<a class="rank-list-row" data-search="{search_key(item, "公開済み")}"', 1))
-    for item in data.get("next", []):
+    next_items = data.get("next", [])
+    if next_items:
+        rows.append('<div class="rank-list-divider" role="presentation">次回調査予定（公開待ち）</div>')
+    for item in next_items:
         rows.append(
             f'<div class="rank-list-row" data-search="{search_key(item, item["status"])}"><span class="num">{item["number"]}</span>'
             f'<span class="topic"><b>{item["title"]}</b><br><small>{item["subtitle"]}</small></span>'
