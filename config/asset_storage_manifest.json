@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "storage_policy": "drive_first_with_deployment_exception",
+  "drive_project_folder_id": "11R3HSowEWnplcueTDRrHfOEtrPKixIcl",
+  "drive_project_folder_url": "https://drive.google.com/drive/folders/11R3HSowEWnplcueTDRrHfOEtrPKixIcl",
+  "folders": {"source_media":"01_SOURCE_MEDIA","generated_media":"02_GENERATED_MEDIA","deliverables":"03_DELIVERABLES"},
+  "github_keeps": ["code","scripts","prompts","rules","manifests","deployment_required_static_assets"],
+  "legacy_tracked_binaries": "review_before_migration"
+}
