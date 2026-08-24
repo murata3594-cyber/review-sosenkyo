@@ -11,7 +11,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 MANIFEST_PATH = ROOT / "data" / "content_manifest.json"
-ASSET_VERSION = "20260813-professional-brand-v16-2"
+ASSET_VERSION = "20260824-premium-teaser-v22"
 ROOT_PUBLIC_FILES = [
     "styles.css", "site.js", "robots.txt", "sitemap.xml", "favicon.svg",
     "manifest.webmanifest", "_headers", "_redirects",

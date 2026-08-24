@@ -48,6 +48,7 @@ def render(article: dict) -> tuple[str, bool]:
         START
         + '<section class="sectionbox affiliate-block" id="buy"><div class="affiliate-kicker">PR / AFFILIATE</div>'
         + '<h2>販売ページを確認する</h2><p class="affiliate-note">購入先によって価格・在庫・ポイントは変動します。最新情報はリンク先で確認してください。広告リンクの有無は記事の評価・順位に影響しません。</p>'
+        + '<div class="affiliate-assurance" aria-label="広告掲載方針"><span>評価は広告と独立</span><span>掲載先を明示</span><span>価格は遷移先で確認</span></div>'
         + ''.join(cards)
         + '</section>'
         + END

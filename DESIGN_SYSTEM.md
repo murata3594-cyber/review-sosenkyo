@@ -1,5 +1,13 @@
 # レビュー総選挙 Design System v21 — Legibility Rebuild（2026-08-16）
 
+## v22 Premium Editorial Teaser（2026-08-24）
+
+- v21の明るい生活情報誌identity、文字下限、AA、44px、650/1080px breakpointは維持する。
+- トップだけを8秒の無音編集映像と半透明コピー面で構成し、企業ティザー級の第一印象を作る。映像は既存の権利管理済みhero assetから決定論的に作ったloopで、新しい商品事実を表現しない。
+- 映像はwindow load後に読み込み、`prefers-reduced-motion`と利用者の停止選択を優先する。停止状態をlocalStorageへ保存する。
+- `commerce-spotlight`は購買意図の高い比較記事への内部導線。希少性・値引き・最安値を捏造せず、根拠、弱点、広告独立性を先に提示する。
+- 実アフィリエイトボタンは従来どおりbuild時のfail-closed生成だけ。v22は見た目を変えるが、未承認URLを作らない。
+
 このファイルは **`styles.css` の実装に一致させて記述する**。
 自律エージェントの必読文書なので、CSSと食い違った記述を残さない。
 値を変えたときは `styles.css` と本ファイルを同じコミットで更新する。

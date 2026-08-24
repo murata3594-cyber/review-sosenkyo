@@ -55,4 +55,34 @@ document.addEventListener('DOMContentLoaded',()=>{
       });
     },{threshold:0}).observe(passMarker);
   }
+
+  // v22: トップの映像はload後に開始し、低モーション設定と利用者の停止選択を優先する。
+  const reviewHeroVideo=document.getElementById('reviewHeroVideo');
+  const reviewMotionToggle=document.getElementById('reviewMotionToggle');
+  const reviewHero=document.querySelector('.hero');
+  let reviewMotionOn=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+  try{if(localStorage.getItem('review-motion')==='off')reviewMotionOn=false;}catch{}
+  const setReviewMotion=(on,{remember=true}={})=>{
+    reviewMotionOn=on;
+    reviewHero?.classList.toggle('motion-paused',!on);
+    if(reviewMotionToggle){
+      reviewMotionToggle.setAttribute('aria-pressed',String(on));
+      reviewMotionToggle.innerHTML='<span aria-hidden="true"></span>'+(on?'映像 ON':'映像 OFF');
+    }
+    if(reviewHeroVideo){
+      if(on){
+        if(reviewHeroVideo.preload==='none'){reviewHeroVideo.preload='metadata';reviewHeroVideo.load();}
+        reviewHeroVideo.play().then(()=>reviewHero?.classList.add('video-ready')).catch(()=>reviewHero?.classList.remove('video-ready'));
+      }else reviewHeroVideo.pause();
+    }
+    if(remember){try{localStorage.setItem('review-motion',on?'on':'off');}catch{}}
+  };
+  if(reviewHeroVideo){
+    const startReviewHero=()=>setReviewMotion(reviewMotionOn,{remember:false});
+    if(document.readyState==='complete')startReviewHero();
+    else addEventListener('load',startReviewHero,{once:true});
+    reviewHeroVideo.addEventListener('playing',()=>reviewHero?.classList.add('video-ready'));
+    reviewHeroVideo.addEventListener('error',()=>reviewHero?.classList.add('video-failed'));
+  }
+  reviewMotionToggle?.addEventListener('click',()=>setReviewMotion(!reviewMotionOn));
 });

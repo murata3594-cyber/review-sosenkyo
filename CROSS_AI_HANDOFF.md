@@ -1,6 +1,6 @@
 # CROSS_AI_HANDOFF.md
 
-Updated: 2026-08-13 JST
+Updated: 2026-08-24 JST
 
 ## Purpose
 This file is the durable handoff between ChatGPT, Codex, Claude/Claude Code, and future agents. Chat history is not the source of truth. The latest GitHub `main` plus the canonical files listed in `AGENTS.md` are the source of truth.
@@ -22,6 +22,13 @@ Repository: `murata3594-cyber/review-sosenkyo`
 Production: Cloudflare Workers Static Assets.
 Current temporary production origin: `https://review-sosenkyo.murata3594.workers.dev`
 Planned custom domain: `https://review-sosenkyo.com` (purchase/activation deferred by owner).
+
+2026-08-24 premium redesign state:
+- The homepage is now the v22 Premium Editorial Teaser while preserving the approved bright Pop Lifestyle identity. The first view uses the rights-managed `assets/hero-review-teaser-v1.mp4` loop with a static poster fallback, delayed loading, a visible motion control, and `prefers-reduced-motion` support.
+- The new `commerce-spotlight` is an editorial decision path to high-intent comparison articles. It is not a substitute for an affiliate disclosure and does not invent product links, prices, rankings, or availability.
+- Active affiliate buttons remain fail-closed. When valid offers exist, the purchase module shows three trust conditions: editorial independence, merchant clarity, and destination-price confirmation.
+- `scripts/build_dist.py` uses asset version `20260824-premium-teaser-v22`; bump it for later design changes.
+- Visual QA captures are under `reports/premium-redesign-20260824/`. No deployment or push was performed in this redesign pass.
 
 Affiliate/monetization state:
 - A8.net site registration completed by owner.
