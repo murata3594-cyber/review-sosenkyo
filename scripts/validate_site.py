@@ -16,6 +16,7 @@ BASE_REQUIRED = [
     "config/site.json", "config/affiliate.json", "config/services.json",
     "scripts/build_dist.py", "scripts/finalize_seo.py", "scripts/build_affiliate_links.py",
     "scripts/render_affiliate_blocks.py", "scripts/render_result_modules.py",
+    "scripts/render_related_articles.py",
     "scripts/inject_services.py", "scripts/audit_content_quality.py",
     "package.json", "wrangler.jsonc"
 ]

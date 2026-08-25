@@ -146,6 +146,9 @@ def main() -> None:
     # v21 / フェーズ2: 結論ボックスの購入導線・根拠表示・固定CTA・長期レビュー比較。
     # アフィリエイトブロックの後に走らせる（同じ affiliate_links.json を読む）。
     run("render_result_modules.py", str(DIST))
+    # v23: 記事末の関連比較spotlight（ホームv22と同じ視覚言語）。content_manifest.json
+    # 掲載順から機械的に選ぶだけなので、新規記事を manifest へ登録すれば自動で対象になる。
+    run("render_related_articles.py", str(DIST))
     run("finalize_seo.py", str(DIST))
     run("inject_services.py", str(DIST))
 

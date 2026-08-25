@@ -731,3 +731,60 @@ small{font-size:var(--fs-micro)}
 
 .affiliate-assurance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0 20px}.affiliate-assurance span{display:flex;align-items:center;justify-content:center;min-height:42px;padding:8px 10px;border:1px solid rgba(88,38,75,.16);background:rgba(255,255,255,.72);color:#5d2d50;font-size:11px;font-weight:800;text-align:center}.affiliate-assurance span::before{content:"✓";margin-right:7px;color:#b3447c}
 @media(max-width:620px){.affiliate-assurance{grid-template-columns:1fr}.affiliate-assurance span{justify-content:flex-start}}
+
+/* =========================================================================
+   v23 / Article premium refinement + related-articles spotlight (2026-08-25)
+   ホームのv22で導入したガラス質感・柔らかい影・エディトリアル余白を、
+   記事テンプレートの実要素（結論ボックス・比較表・長期チャート・商品画像・
+   関連記事導線）へそのまま適用する。構造・データは変更せず見た目だけを揃える。
+   ========================================================================= */
+.article-hero{position:relative;overflow:hidden}
+.article-hero::before{content:"";position:absolute;width:440px;height:440px;right:-180px;top:-240px;border-radius:50%;background:radial-gradient(circle,rgba(255,95,143,.12),transparent 68%);pointer-events:none}
+.article-hero .wrap{position:relative;z-index:1}
+.article-summary-grid .sumcard{box-shadow:0 12px 28px rgba(87,54,90,.08);transition:transform .25s ease,box-shadow .25s ease}
+.article-summary-grid .sumcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(87,54,90,.13)}
+
+.result-hero{border-color:rgba(234,223,240,.9);box-shadow:0 20px 50px rgba(95,55,90,.1)}
+.article-verdict .verdict{background:linear-gradient(150deg,#fff,#fdfbff);box-shadow:0 10px 26px rgba(80,50,90,.07);transition:transform .22s ease,box-shadow .22s ease}
+.article-verdict .verdict:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(80,50,90,.12)}
+
+.compare-wrap{border-radius:16px;box-shadow:0 14px 34px rgba(80,50,90,.07)}
+.compare{border-radius:16px;overflow:hidden}
+
+.longterm-chart .lt-item{box-shadow:0 12px 28px rgba(80,50,90,.07);transition:box-shadow .25s ease}
+.longterm-chart .lt-item:hover{box-shadow:0 16px 34px rgba(80,50,90,.11)}
+
+.product-figure{box-shadow:0 14px 32px rgba(80,50,90,.08)}
+.product-figure img{box-shadow:0 6px 18px rgba(80,50,90,.1)}
+
+/* 関連記事スポットライト。ホームの .commerce-spotlight と同じ視覚言語（暗色地・
+   放射グラデーション・グラスカード）を、記事末の内部導線として再利用する。
+   商品情報は持たない=data/content_manifest.json に既に登録済みの記事リンクのみ。 */
+.related-spotlight{position:relative;overflow:hidden;margin-top:26px;padding:56px 0;background:#34263e;color:#fff;border-radius:30px}
+.related-spotlight::before{content:"";position:absolute;width:380px;height:380px;right:-140px;top:-200px;border-radius:50%;background:radial-gradient(circle,rgba(255,95,143,.28),transparent 66%);pointer-events:none}
+.related-spotlight::after{content:"";position:absolute;width:340px;height:340px;left:-180px;bottom:-220px;border-radius:50%;background:radial-gradient(circle,rgba(107,81,219,.26),transparent 68%);pointer-events:none}
+.related-spotlight .wrap{position:relative;z-index:1}
+.related-kicker{display:block;margin-bottom:8px;color:#ffd75f;font-size:var(--fs-micro);font-weight:900;letter-spacing:.16em}
+.related-spotlight h2{margin:0 0 10px;font-size:clamp(24px,3vw,32px);line-height:1.4;letter-spacing:normal;color:#fff}
+.related-lede{margin:0 0 26px;max-width:64ch;color:#e1d8e7;font-size:var(--fs-base);line-height:1.85}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.related-card{position:relative;display:flex;flex-direction:column;overflow:hidden;padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.05));color:#fff;text-decoration:none;transition:transform .25s ease,border-color .25s ease,background .25s ease}
+.related-card::after{content:"";position:absolute;width:150px;height:150px;right:-70px;bottom:-80px;border-radius:50%;background:rgba(255,255,255,.07);transition:transform .3s ease}
+.related-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.4);background-color:rgba(255,255,255,.12)}
+.related-card:hover::after{transform:scale(1.25)}
+.related-card__tag{align-self:flex-start;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.13);font-size:var(--fs-micro);font-weight:800}
+.related-card strong{display:block;margin:14px 0 8px;font-size:19px;line-height:1.5;color:#fff}
+.related-card>span:not(.related-card__tag){color:#e7deeb;font-size:var(--fs-small);line-height:1.7}
+.related-card em{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-top:auto;padding-top:16px;font-style:normal;font-weight:900;font-size:var(--fs-small)}
+
+@media(max-width:1080px){
+  .related-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:650px){
+  .related-spotlight{padding:38px 0;border-radius:22px}
+  .related-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .related-card,.article-summary-grid .sumcard,.article-verdict .verdict,.longterm-chart .lt-item{transition:none}
+  .related-card:hover,.article-summary-grid .sumcard:hover,.article-verdict .verdict:hover{transform:none}
+}

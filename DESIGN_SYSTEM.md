@@ -8,6 +8,14 @@
 - `commerce-spotlight`は購買意図の高い比較記事への内部導線。希少性・値引き・最安値を捏造せず、根拠、弱点、広告独立性を先に提示する。
 - 実アフィリエイトボタンは従来どおりbuild時のfail-closed生成だけ。v22は見た目を変えるが、未承認URLを作らない。
 
+## v23 Article Premium Rollout（2026-08-25）
+
+- v22でホームだけに入れたガラス質感・柔らかい影・エディトリアル余白を、16本の記事ページ（`article-*.html`）へ拡張した。ホームの映像ヒーローは記事側には作らない（ホーム専用の判断は維持）。
+- 既存の実要素（`.article-hero`、`.result-hero`/`.verdict`、`.compare-wrap`/`.compare`、`.longterm-chart`、`.product-figure`）は構造・データを変えず、影・角丸・hover演出だけを`styles.css`の共有ルールで底上げした。ソースHTMLは無改修。すべての記事は同じ`styles.css`を読み込んでいるため、この部分は**CSSカスケードだけで自動適用**される。
+- 記事末に `related-spotlight`（ホームの`commerce-spotlight`と同じ暗色地・放射グラデーション・グラスカードの視覚言語）を追加。中身は`data/content_manifest.json`に**既に登録済みの公開記事へのリンクのみ**（同一カテゴリ優先・最大3件、商品名/価格/ランキングは作らない）。
+- 描画は `scripts/render_related_articles.py` が dist ビルド時に行う（`scripts/build_dist.py` から `render_result_modules.py` の直後に実行）。新しい記事を `data/content_manifest.json` へ登録するだけで、次のビルドから自動的に対象になる（手動での複製・配線追加は不要）。
+- 一部記事に既存の地の文リンク集`#related`（`.sectionbox`）がある場合はそのまま残し、`related-spotlight`のidと衝突しないよう`related-spotlight-title`を使う。
+
 このファイルは **`styles.css` の実装に一致させて記述する**。
 自律エージェントの必読文書なので、CSSと食い違った記述を残さない。
 値を変えたときは `styles.css` と本ファイルを同じコミットで更新する。
