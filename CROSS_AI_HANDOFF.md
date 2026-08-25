@@ -30,6 +30,13 @@ Planned custom domain: `https://review-sosenkyo.com` (purchase/activation deferr
 - `scripts/build_dist.py` uses asset version `20260824-premium-teaser-v22`; bump it for later design changes.
 - Visual QA captures are under `reports/premium-redesign-20260824/`. No deployment or push was performed in this redesign pass.
 
+2026-08-25 article rollout state:
+- The v22 glass/editorial visual language (soft shadows, rounded glass panels, dark radial-gradient editorial bands) was extended from the homepage to all 16 `article-*.html` pages, per owner instruction. No hero video on articles — that stays homepage-only.
+- Mechanism: (1) shared `styles.css` rules refine existing article elements (`.article-hero`, `.result-hero`/`.verdict`, `.compare-wrap`/`.compare`, `.longterm-chart`, `.product-figure`) automatically for every page that already links `styles.css` — no per-article HTML edits needed; (2) a new build-time injector `scripts/render_related_articles.py` (wired into `scripts/build_dist.py` right after `render_result_modules.py`) adds a `.related-spotlight` module near the footer of each `dist/article-*.html`, linking to up to 3 real related articles pulled from `data/content_manifest.json` (same category preferred). This is DRY: any new article added to `content_manifest.json` automatically gets the module on its next build with no manual wiring.
+- Two pre-existing articles (`article-multi-cat-sheets.html`, `article-system-toilet-sheets.html`) already had a legacy plain-text `#related` links section; the new spotlight uses a different id (`related-spotlight-title`) and coexists without collision.
+- Verified: `build_dist.py` / `validate_site.py` / `audit_content_quality.py` all exit 0 with zero warnings; JSON-LD still parses on sampled dist pages; Playwright screenshots at 1280px/390px (`reports/premium-article-rollout-20260825/`) show no layout regression and no horizontal scroll on the homepage plus 4 article pages.
+- Commit `f36bc5a` on `main`.
+
 Affiliate/monetization state:
 - A8.net site registration completed by owner.
 - A8 Link Manager tag is stored in Cloudflare Build variables as `A8_LINK_MANAGER_TAG`.
