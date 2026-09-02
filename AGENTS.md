@@ -1,5 +1,13 @@
 # review-sosenkyo — Universal Agent Entry Point
 
+## Unified Production Feedback OS v2
+
+レビュー総選挙固有の公開・比較・根拠・デザイン規約は維持し、共通の学習・完了契約だけを `murata3594-cyber/military-v3` のUPFOS v2へ接続する。ルートの `UNIFIED_PRODUCTION_SYSTEM.json` は `generic_production` adapterであり、軍事・ゆっくり・他ジャンルの内容規則を継承しない。
+
+制作・更新・公開では、下記の正本と既存QAを選んだ後、canonical kernelの `scripts/unified_feedback_gate.py preflight` をrequest fingerprint／method fingerprint付きで通す。既存の公開QAが完了したら、その結果を `repository_local_release` の証拠として、activeなglobal feedback invariantの証拠と最終成果物SHA256とともにUPFOS `release` へ渡す。preflight PASSだけでは完成・公開扱いしない。
+
+オーナーから将来品質に影響する修正・差し戻しを受けた場合は、次回制作前にcanonical kernelの `record-feedback` でmachine-readable invariantへ書き戻す。同一request・同一methodで2回FAILした後の3回目は禁止し、再試行は直前FAIL run IDと具体的deltaを必須とする。
+
 レビュー総選挙の正本はGitHub `main` です。ChatGPT / Codex / Claude Code / Gemini は、作業種別に必要な規約だけを読み、ルート文書・data全件を起動時に一括読込しないでください。
 
 ## 最小起動
@@ -22,6 +30,7 @@
 - 新規トピックは substantial work 前にclaimし、重複公開を避ける。
 - `data/content_manifest.json` の公開allowlistと既存CI/QAを破壊しない。
 - Amazon ASIN等を推測で作らない。
+- UPFOS release PASSと最終成果物SHA256が無い状態で、完成・公開・同期済みと報告しない。
 
 ## Token discipline
 
