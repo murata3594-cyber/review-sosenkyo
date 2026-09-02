@@ -7,21 +7,15 @@
   "runtime_expected": true,
   "runtime_owner": "github_actions",
   "max_silence_hours": 36,
-  "status": "RUNNING",
+  "status": "IDLE",
   "paused_reason": null,
   "heartbeat": {
-    "last_seen_at": "2026-09-02T21:27:07Z",
-    "source": "local",
+    "last_seen_at": null,
+    "source": null,
     "run_url": null
   },
-  "stages": {
-    "bootstrap": {
-      "status": "ok",
-      "at": "2026-09-02T21:27:07Z",
-      "detail": "runtime installed"
-    }
-  },
-  "last_success_at": "2026-09-02T21:27:07Z",
+  "stages": {},
+  "last_success_at": null,
   "last_failure_at": null,
   "last_failure_stage": null,
   "last_publish_commit": null,
