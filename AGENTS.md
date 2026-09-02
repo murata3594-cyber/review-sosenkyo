@@ -1,5 +1,9 @@
 # review-sosenkyo — Universal Agent Entry Point
 
+## Unified Production Feedback OS v2
+
+記事制作・比較ロジック・公開・改稿では最初に `UNIFIED_PRODUCTION_SYSTEM.json` を読み、Global Governance Kernel `murata3594-cyber/military-v3` の `docs/UNIFIED_PRODUCTION_FEEDBACK_OS.md` と `data/owner_feedback_events/` を `review_media` profileで適用する。比較条件、evidence audit、affiliate safety等のローカル契約は維持するが、オーナー修正は会話内だけに残さず中央event logへ追記する。同一failure signature・同一method fingerprintで2回OWNER_REJECTEDになった方式は3回目を実行しない。公開判定は中央context/invariant証拠とこのrepo固有QAの両方を必須とし、中央 `scripts/unified_repository_release.py` が最終artifact SHA-256とlocal gate結果を照合したPASS receiptなしに完成・公開を宣言しない。Global Kernelをこのrepoへ複製・分岐させない。
+
 レビュー総選挙の正本はGitHub `main` です。ChatGPT / Codex / Claude Code / Gemini は、作業種別に必要な規約だけを読み、ルート文書・data全件を起動時に一括読込しないでください。
 
 ## 最小起動
@@ -28,7 +32,7 @@
 - ルートMarkdown、`data/`、記事を全件一括読込しない。
 - 大きいJSONはキー・対象ID・該当範囲だけ読む。
 - 8KB超の文書は検索・見出し確認後、必要範囲だけ読む。
-- 同一セッションで未変更の既読ファイルを再読込しない。
+- 同一セッションで未変更の既読ファイルは再読込しない。
 - build、依存物、キャッシュ、アーカイブ、生成物を探索目的で大量読込しない。
 
 軽量化前の詳細 `AGENTS.md` はGit blob `2bbbabba510b49aeb60ea5c44bae33eb2f7c158b` に保持されています。旧記述が必要な場合だけ `git show 2bbbabba510b49aeb60ea5c44bae33eb2f7c158b` で参照してください。
