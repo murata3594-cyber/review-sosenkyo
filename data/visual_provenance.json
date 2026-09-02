@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "medium": "review_media",
+  "policy": "no_unverified_external_product_imagery",
+  "autonomous_agent_may_add_image_files": false,
+  "current_visual_sources": [
+    "repository-owned SVG/category icons",
+    "HTML/CSS comparison modules",
+    "previously reviewed repository assets"
+  ],
+  "rule": "An unattended comparison cycle may not introduce a new image binary or external product-image dependency. If a future article requires new product photography, that requires a separate provenance record with source, licence/permission and exact-product identity before the image can enter an autonomous release bundle.",
+  "reason": "The review medium's evidence contract is exact product identity and non-fabricated review data. Reusing controlled site visuals is safer than allowing an unattended writer to introduce an unverified product image."
+}

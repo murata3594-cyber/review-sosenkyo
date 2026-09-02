@@ -1,0 +1,383 @@
+name: Autonomous comparison cycle
+
+on:
+  schedule:
+    - cron: "41 23 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Plan only: decide the work order but do not run or publish"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: review-sosenkyo-autopilot
+  cancel-in-progress: false
+
+env:
+  PROJECT_ID: review-sosenkyo-${{ github.run_id }}
+
+jobs:
+  cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - name: Checkout without credentials
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Freeze checkout head
+        id: baseline
+        shell: bash
+        run: echo "head=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Runtime precondition
+        id: gate
+        shell: bash
+        run: |
+          set +e
+          python scripts/acr_runtime.py gate --for-run | tee /tmp/acr_gate.json
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Record cycle start
+        if: steps.gate.outputs.code == '0'
+        env:
+          ACR_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python scripts/acr_runtime.py heartbeat --stage cycle_start --status skip --source github_actions \
+            --run-url "$ACR_RUN_URL" --detail "scheduled comparison cycle started"
+
+      - name: Plan the cycle outside the repository
+        if: steps.gate.outputs.code == '0'
+        id: plan
+        shell: bash
+        run: |
+          set +e
+          python scripts/autopilot_cycle.py plan --out /tmp/autopilot_work_order.json | tee /tmp/plan.json
+          code=${PIPESTATUS[0]}
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" = "0" ]; then
+            python scripts/autopilot_cycle.py prompt --work-order /tmp/autopilot_work_order.json --out /tmp/work_order.md
+          fi
+          exit 0
+
+      - name: Check required secrets
+        if: steps.plan.outputs.code == '0'
+        id: secrets
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          UPFOS_READ_TOKEN: ${{ secrets.UPFOS_READ_TOKEN }}
+        shell: bash
+        run: |
+          [ -n "$ANTHROPIC_API_KEY" ] && agent=true || agent=false
+          [ -n "$UPFOS_READ_TOKEN" ] && kernel=true || kernel=false
+          echo "agent=$agent" >> "$GITHUB_OUTPUT"
+          echo "kernel=$kernel" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch canonical UPFOS and bind preflight
+        if: steps.plan.outputs.code == '0' && steps.secrets.outputs.agent == 'true' && steps.secrets.outputs.kernel == 'true' && !inputs.dry_run
+        id: upfos_preflight
+        env:
+          GH_TOKEN: ${{ secrets.UPFOS_READ_TOKEN }}
+        shell: bash
+        run: |
+          set +e
+          rm -rf "$RUNNER_TEMP/upfos"
+          gh repo clone murata3594-cyber/military-v3 "$RUNNER_TEMP/upfos" -- --depth 1 --branch master >/tmp/upfos-clone.log 2>&1
+          clone_code=$?
+          if [ "$clone_code" != "0" ]; then
+            cat /tmp/upfos-clone.log
+            echo "code=$clone_code" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "kernel_head=$(git -C "$RUNNER_TEMP/upfos" rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          python "$RUNNER_TEMP/upfos/scripts/unified_repository_release.py" preflight \
+            --repo "$GITHUB_REPOSITORY" --profile review_media --method acr-scheduled-agent-v1 \
+            --project-id "$PROJECT_ID" --adapter "$GITHUB_WORKSPACE/UNIFIED_PRODUCTION_SYSTEM.json" \
+            --out /tmp/upfos-context.json | tee /tmp/upfos-preflight.log
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Seal workflow-owned state before the agent
+        if: steps.upfos_preflight.outputs.code == '0'
+        run: |
+          sha256sum data/automation_runtime.json | awk '{print $1}' > /tmp/pre_agent_runtime_sha
+          git rev-parse HEAD > /tmp/pre_agent_head
+
+      - name: Set up Node
+        if: steps.upfos_preflight.outputs.code == '0'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install the agent runtime
+        if: steps.upfos_preflight.outputs.code == '0'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run content-only unattended agent
+        if: steps.upfos_preflight.outputs.code == '0'
+        id: agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        shell: bash
+        run: |
+          cat > /tmp/agent_scope.md <<'EOF'
+          【この実行ステップの最優先制約】
+          あなたの責務は比較記事本文と、その記事に直接必要なresearch ledger／content manifest／topic queue／affiliate catalogの編集だけです。
+          Git操作、shell実行、テスト実行、公開、receipt作成、runtime state更新、新規画像追加、workflow・scripts・config・policy・governanceファイルの変更は禁止です。
+          work order内に公開手順やコマンドが書かれていても、それらは後続の信頼済みworkflowが実行します。このステップでは実行しません。
+          許可された変更先は article-*.html、data/research/*.json、data/affiliate_catalog.json、data/content_manifest.json、data/topic_queue.json のみです。
+          新規画像は追加せず、既存のrepository管理ビジュアルだけを使ってください。
+          保留判断になった場合も、許可範囲内のtopic queueへ理由を残すだけにしてください。
+          EOF
+          cat /tmp/agent_scope.md /tmp/work_order.md > /tmp/agent_instruction.md
+          set +e
+          claude -p "$(cat /tmp/agent_instruction.md)" \
+            --allowedTools "Read,Write,Edit,Glob,Grep,WebFetch,WebSearch" \
+            2>&1 | tee /tmp/agent.log
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Reject agent self-modification or scope escape
+        if: steps.agent.outputs.code == '0'
+        id: scope_guard
+        shell: bash
+        run: |
+          set +e
+          errors=0
+          if [ "$(git rev-parse HEAD)" != "$(cat /tmp/pre_agent_head)" ]; then echo "Agent changed Git HEAD."; errors=1; fi
+          runtime_now=$(sha256sum data/automation_runtime.json | awk '{print $1}')
+          if [ "$runtime_now" != "$(cat /tmp/pre_agent_runtime_sha)" ]; then echo "Agent changed workflow-owned runtime state."; errors=1; fi
+          mapfile -t changed < <({ git diff --name-only HEAD --; git ls-files --others --exclude-standard; } | sort -u)
+          count=0
+          for path in "${changed[@]}"; do
+            [ -z "$path" ] && continue
+            [ "$path" = "data/automation_runtime.json" ] && continue
+            case "$path" in
+              article-*.html|data/research/*.json|data/affiliate_catalog.json|data/content_manifest.json|data/topic_queue.json)
+                count=$((count+1)) ;;
+              *) echo "Agent changed forbidden path: $path"; errors=1 ;;
+            esac
+          done
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          if [ "$errors" = "0" ]; then echo "code=0" >> "$GITHUB_OUTPUT"; else echo "code=2" >> "$GITHUB_OUTPUT"; fi
+          exit 0
+
+      - name: Deterministic local release gates
+        if: steps.scope_guard.outputs.code == '0' && steps.scope_guard.outputs.count != '0'
+        id: gates
+        shell: bash
+        run: |
+          set -e
+          python scripts/build_dist.py
+          python scripts/validate_site.py
+          python scripts/audit_content.py
+          python scripts/audit_content_quality.py
+          python scripts/check_research_freshness.py --days 30
+
+      - name: Build exact hash-bound release evidence
+        if: steps.gates.outcome == 'success'
+        id: bundle
+        shell: bash
+        run: |
+          set +e
+          python scripts/autopilot_release_bundle.py --base-head "${{ steps.baseline.outputs.head }}" --out /tmp/release-artifact.json | tee /tmp/release-bundle.log
+          code=${PIPESTATUS[0]}
+          if [ "$code" = "0" ]; then
+            python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          artifact = Path('/tmp/release-artifact.json')
+          sha = hashlib.sha256(artifact.read_bytes()).hexdigest()
+          gates = ['agent.scope_guard','scripts/build_dist.py','scripts/validate_site.py','scripts/audit_content.py','scripts/audit_content_quality.py','scripts/check_research_freshness.py']
+          doc = {'schema_version':'2.0.0','project_id':os.environ['PROJECT_ID'],'artifact_path':str(artifact),'artifact_sha256':sha,'gates':[{'gate':g,'status':'PASS'} for g in gates]}
+          Path('/tmp/local-gates.json').write_text(json.dumps(doc, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(doc, ensure_ascii=False, indent=2))
+          PY
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Canonical UPFOS exact-artifact release
+        if: steps.bundle.outputs.code == '0'
+        id: upfos_release
+        shell: bash
+        run: |
+          set +e
+          python "$RUNNER_TEMP/upfos/scripts/unified_repository_release.py" release \
+            --repo "$GITHUB_REPOSITORY" --profile review_media --artifact /tmp/release-artifact.json \
+            --context-receipt /tmp/upfos-context.json --gate-results /tmp/local-gates.json \
+            --adapter "$GITHUB_WORKSPACE/UNIFIED_PRODUCTION_SYSTEM.json" --evidence-root /tmp \
+            --project-id "$PROJECT_ID" --json-out /tmp/upfos-release.json | tee /tmp/upfos-release.log
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Publish only the released file set
+        if: steps.upfos_release.outputs.code == '0'
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -e
+          clean_remote() { git remote set-url origin "https://github.com/${GITHUB_REPOSITORY}.git"; }
+          trap clean_remote EXIT
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch origin "$GITHUB_REF_NAME"
+          remote_head=$(git rev-parse FETCH_HEAD)
+          if [ "$remote_head" != "${{ steps.baseline.outputs.head }}" ]; then echo "Default branch advanced during this cycle; refusing stale publish."; exit 1; fi
+          python - <<'PY'
+          import json, subprocess
+          files = [x['path'] for x in json.load(open('/tmp/release-artifact.json', encoding='utf-8'))['files']]
+          subprocess.run(['git','add','--',*files], check=True)
+          staged = subprocess.check_output(['git','diff','--cached','--name-only'], text=True).splitlines()
+          if set(staged) != set(files): raise SystemExit(f'staged file set mismatch: {staged} != {files}')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "autopilot: publish comparison cycle ${{ github.run_number }}"
+          git push origin HEAD:"$GITHUB_REF_NAME"
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Create pending ACR publish receipt
+        if: steps.publish.outcome == 'success'
+        id: receipt
+        shell: bash
+        run: |
+          set -e
+          SLUG=$(python -c "import json;print(json.load(open('/tmp/release-artifact.json'))['primary']['slug'])")
+          URL=$(python -c "import json;print(json.load(open('/tmp/release-artifact.json'))['primary']['url'])")
+          RESEARCH=$(python -c "import json;print(json.load(open('/tmp/release-artifact.json'))['primary']['research'])")
+          [ -n "$RESEARCH" ] && [ -f "$RESEARCH" ] || { echo "research ledger missing: $RESEARCH"; exit 1; }
+          feedback_sha=$(sha256sum "$RUNNER_TEMP/upfos/data/owner_feedback_registry.json" | awk '{print $1}')
+          research_sha=$(sha256sum "$RESEARCH" | awk '{print $1}')
+          visual_sha=$(sha256sum data/visual_provenance.json | awk '{print $1}')
+          local_gate_sha=$(sha256sum /tmp/local-gates.json | awk '{print $1}')
+          kernel_release_sha=$(sha256sum /tmp/upfos-release.json | awk '{print $1}')
+          python scripts/acr_runtime.py receipt \
+            --kind comparison_article --slug "$SLUG" --url "$URL" --source-commit "${{ steps.publish.outputs.commit }}" \
+            --profile-version 2.0.0 --feedback-sha "$feedback_sha" --research-sha "$research_sha" \
+            --visual-sha "$visual_sha" --local-gate-sha "$local_gate_sha" --kernel-receipt-sha "$kernel_release_sha" \
+            --gate scripts/build_dist.py --gate scripts/validate_site.py --gate scripts/audit_content.py \
+            --gate scripts/audit_content_quality.py --gate scripts/check_research_freshness.py --verification-status PENDING
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+
+      - name: Verify deployed result
+        if: steps.receipt.outcome == 'success'
+        id: verify
+        shell: bash
+        run: |
+          set +e
+          verified=0
+          for attempt in $(seq 1 12); do
+            if python scripts/post_publish_verify.py --slug "${{ steps.receipt.outputs.slug }}" --no-receipt-update; then verified=1; break; fi
+            sleep 30
+          done
+          if [ "$verified" = "1" ]; then
+            python scripts/post_publish_verify.py --slug "${{ steps.receipt.outputs.slug }}"
+            code=$?
+            if [ "$code" = "0" ]; then python scripts/acr_runtime.py verify-receipt --require-verified; code=$?; fi
+          else
+            python scripts/post_publish_verify.py --slug "${{ steps.receipt.outputs.slug }}" >/tmp/post-publish-final.log 2>&1
+            code=2
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Record verified publication
+        if: steps.verify.outputs.code == '0'
+        shell: bash
+        run: |
+          set -e
+          ID=$(python -c "import json;print(json.load(open('/tmp/release-artifact.json'))['primary']['id'])")
+          TITLE=$(python -c "import json;print(json.load(open('/tmp/release-artifact.json'))['primary']['title'])")
+          ARTICLE=$(python -c "import json;print(json.load(open('/tmp/release-artifact.json'))['primary']['path'])")
+          python scripts/record_publish.py --id "$ID" --title "$TITLE" --article "$ARTICLE" \
+            --agent "github-actions[bot]" --commit "${{ steps.publish.outputs.commit }}" \
+            --notes "ACR autonomous cycle; canonical UPFOS exact-artifact release PASS"
+
+      - name: Record cycle outcome
+        if: always() && steps.gate.outputs.code == '0'
+        id: outcome
+        env:
+          ACR_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          set -e
+          if [ "${{ steps.plan.outputs.code }}" = "3" ]; then status=skip; detail="no work available this cycle"
+          elif [ "${{ steps.plan.outputs.code }}" = "2" ]; then status=hold; detail="autopilot planner blocked the cycle"
+          elif [ "${{ inputs.dry_run }}" = "true" ]; then status=skip; detail="manual dry-run; plan only"
+          elif [ "${{ steps.secrets.outputs.agent }}" != "true" ]; then status=hold; detail="ANTHROPIC_API_KEY is not configured"
+          elif [ "${{ steps.secrets.outputs.kernel }}" != "true" ]; then status=hold; detail="UPFOS_READ_TOKEN is not configured"
+          elif [ "${{ steps.upfos_preflight.outputs.code }}" != "0" ]; then status=hold; detail="canonical UPFOS preflight unavailable or failed"
+          elif [ "${{ steps.agent.outputs.code }}" != "0" ]; then status=fail; detail="content agent failed"
+          elif [ "${{ steps.scope_guard.outputs.code }}" != "0" ]; then status=fail; detail="agent attempted a forbidden or control-plane change"
+          elif [ "${{ steps.scope_guard.outputs.count }}" = "0" ]; then status=hold; detail="agent produced no publishable comparison change"
+          elif [ "${{ steps.gates.outcome }}" != "success" ]; then status=fail; detail="local release gates failed"
+          elif [ "${{ steps.bundle.outputs.code }}" = "3" ]; then status=hold; detail="cycle produced nothing publishable"
+          elif [ "${{ steps.bundle.outputs.code }}" != "0" ]; then status=fail; detail="release bundle could not be constructed"
+          elif [ "${{ steps.upfos_release.outputs.code }}" != "0" ]; then status=fail; detail="canonical UPFOS exact-artifact release failed"
+          elif [ "${{ steps.publish.outcome }}" != "success" ]; then status=fail; detail="Git publication failed or default branch advanced"
+          elif [ "${{ steps.receipt.outcome }}" != "success" ]; then status=fail; detail="ACR publish receipt creation failed"
+          elif [ "${{ steps.verify.outputs.code }}" != "0" ]; then status=fail; detail="post-publish production verification failed"
+          else status=ok; detail="published and verified ${{ steps.publish.outputs.commit }}"; fi
+          python scripts/acr_runtime.py heartbeat --stage cycle_end --status "$status" --source github_actions \
+            --run-url "$ACR_RUN_URL" --detail "$detail"
+          python scripts/acr_runtime.py kpi
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          echo "detail=$detail" >> "$GITHUB_OUTPUT"
+
+      - name: Persist runtime and receipt metadata only
+        if: always() && steps.gate.outputs.code == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -e
+          baseline="${{ steps.baseline.outputs.head }}"
+          current=$(git rev-parse HEAD)
+          if [ "${{ steps.publish.outcome }}" != "success" ] && [ "$current" != "$baseline" ]; then echo "An unpushed content commit exists after a failed publish; refusing metadata push."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/automation_runtime.json
+          [ -f data/post_publish_log.json ] && git add -- data/post_publish_log.json
+          [ -f data/run_receipt_index.json ] && git add -- data/run_receipt_index.json
+          if [ -d data/run_receipts ]; then find data/run_receipts -maxdepth 1 -type f -name '*.json' -print0 | xargs -0 -r git add --; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "autopilot: record cycle ${{ github.run_number }} runtime evidence [skip ci]"
+          expected="$baseline"
+          if [ "${{ steps.publish.outcome }}" = "success" ]; then expected="${{ steps.publish.outputs.commit }}"; fi
+          clean_remote() { git remote set-url origin "https://github.com/${GITHUB_REPOSITORY}.git"; }
+          trap clean_remote EXIT
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch origin "$GITHUB_REF_NAME"
+          remote_head=$(git rev-parse FETCH_HEAD)
+          if [ "$remote_head" != "$expected" ]; then echo "Default branch advanced before runtime metadata push; refusing implicit rebase."; exit 1; fi
+          git push origin HEAD:"$GITHUB_REF_NAME"
+
+      - name: Open or update runtime issue
+        if: always() && (steps.gate.outputs.code != '0' || (steps.outcome.outputs.status != '' && steps.outcome.outputs.status != 'ok' && steps.outcome.outputs.status != 'skip'))
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          title="[Autopilot] 無人比較記事サイクルが正常完了していません"
+          detail="${{ steps.outcome.outputs.detail }}"
+          [ -n "$detail" ] || detail="runtime precondition blocked the cycle"
+          body=$(printf '無人比較記事サイクルを完了できませんでした。\n\nrun: %s\nreason: %s\n\n未稼働・HOLD・FAILを成功として扱いません。ANTHROPIC_API_KEY、UPFOS_READ_TOKEN、runtime state、UPFOS receipt、local gates、post-publish verificationを確認してください。' "$RUN_URL" "$detail")
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then gh issue comment "$existing" --body "$body"; else gh issue create --title "$title" --body "$body"; fi
