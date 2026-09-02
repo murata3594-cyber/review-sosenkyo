@@ -47,7 +47,10 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/acr_runtime.py gate --for-run --strict | tee /tmp/acr_gate.json
+          # A stale or not-yet-created heartbeat must not deadlock the scheduler
+          # that can repair it. --for-run still blocks PAUSED and hard-blocked
+          # repeated failures; freshness remains strict in runtime-watch.
+          python scripts/acr_runtime.py gate --for-run | tee /tmp/acr_gate.json
           echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
           exit 0
 
@@ -56,9 +59,11 @@ jobs:
         env:
           ACR_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          # cycle_start is liveness, not a successful production outcome. Using
+          # skip refreshes the heartbeat without clearing prior failure streaks.
           python scripts/acr_runtime.py heartbeat \
-            --stage cycle_start --status ok --source github_actions \
-            --run-url "$ACR_RUN_URL" --detail "scheduled autopilot cycle"
+            --stage cycle_start --status skip --source github_actions \
+            --run-url "$ACR_RUN_URL" --detail "scheduled autopilot cycle started"
 
       - name: Plan the cycle
         if: steps.gate.outputs.code == '0'
@@ -189,7 +194,7 @@ jobs:
         run: |
           title="[Autopilot] 無人比較記事サイクルが実行できません"
           gate_json="$(cat /tmp/acr_gate.json 2>/dev/null || echo '{}')"
-          body=$(printf 'ランタイム前提条件を満たさないため、自動比較記事サイクルを実行できませんでした。\n\nrun: %s\n\n```json\n%s\n```\n\n確認事項:\n- ANTHROPIC_API_KEY シークレットが設定されているか\n- data/automation_runtime.json が PAUSED になっていないか\n- 連続失敗が3回に達して hard block していないか（復旧後は python scripts/acr_runtime.py resume）\n' "$RUN_URL" "$gate_json")
+          body=$(printf 'ランタイム前提条件を満たさないため、自動比較記事サイクルを実行できませんでした。\n\nrun: %s\n\n```json\n%s\n```\n\n確認事項:\n- ANTHROPIC_API_KEY シークレットが設定されているか\n- data/automation_runtime.json が PAUSED になっていないか\n- 連続失敗が3回に達して hard block していないか。原因修正後は `python scripts/acr_runtime.py resume` に続けて `python scripts/acr_runtime.py heartbeat --stage manual_recovery --status ok --source manual --detail "recovery verified"` を実行して明示的に復旧を記録する\n' "$RUN_URL" "$gate_json")
           existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
             gh issue comment "$existing" --body "$body"
