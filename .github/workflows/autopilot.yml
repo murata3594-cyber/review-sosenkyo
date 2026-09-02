@@ -79,6 +79,11 @@ jobs:
         if: steps.plan.outputs.code == '0'
         run: python scripts/autopilot_cycle.py prompt --out /tmp/work_order.md
 
+      - name: Record the base commit
+        if: steps.plan.outputs.code == '0'
+        id: base
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Check the agent runtime is configured
         if: steps.plan.outputs.code == '0'
         id: agentkey
@@ -131,19 +136,54 @@ jobs:
           python scripts/audit_content_quality.py
           python scripts/check_research_freshness.py --days 30
 
-      - name: Publish
+      - name: Bind the release to an exact publishable file set
         if: steps.gates.outcome == 'success'
+        id: bundle
+        shell: bash
+        run: |
+          set +e
+          python scripts/autopilot_release_bundle.py \
+            --base-head "${{ steps.base.outputs.sha }}" \
+            --out /tmp/release_bundle.json | tee /tmp/bundle.log
+          code=${PIPESTATUS[0]}
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          # 0 publishable, 3 nothing to publish (a HOLD), anything else is a
+          # refusal: the cycle touched files outside the publishable set.
+          if [ "$code" != "0" ] && [ "$code" != "3" ]; then
+            echo "Refusing to publish: the cycle produced changes outside the publishable file set."
+            exit 1
+          fi
+          exit 0
+
+      - name: Publish
+        if: steps.bundle.outputs.code == '0'
         id: publish
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -z "$(git status --porcelain)" ]; then
+          # Stage exactly the hash-bound bundle, never `git add -A`. The agent
+          # runs with write access to the whole checkout; without this, anything
+          # it happened to write would be committed and deployed.
+          python - <<'PY' > /tmp/release_paths.txt
+          import json
+          doc = json.load(open("/tmp/release_bundle.json", encoding="utf-8"))
+          print("\n".join(f["path"] for f in doc["files"]))
+          PY
+          if [ ! -s /tmp/release_paths.txt ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No changes produced by this cycle."
+            echo "Empty release bundle."
             exit 0
           fi
-          git add -A
+          git add --pathspec-from-file=/tmp/release_paths.txt
+          # Publish evidence is deliberately outside the bundle (it describes the
+          # release rather than being part of it), so it is staged explicitly.
+          git add data/run_receipts data/run_receipt_index.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No staged changes to publish."
+            exit 0
+          fi
           git commit -m "autopilot: publish comparison cycle ${{ github.run_number }}"
           git pull --rebase origin "${{ github.ref_name }}"
           git push origin HEAD:"${{ github.ref_name }}"
@@ -169,6 +209,10 @@ jobs:
             status=fail; detail="agent run exited ${{ steps.agent.outputs.code }}"
           elif [ "${{ steps.gates.outcome }}" != "success" ]; then
             status=fail; detail="release gates failed"
+          elif [ "${{ steps.bundle.outputs.code }}" = "3" ]; then
+            status=hold; detail="cycle produced nothing publishable"
+          elif [ "${{ steps.bundle.outputs.code }}" != "0" ]; then
+            status=fail; detail="cycle touched files outside the publishable set"
           elif [ "${{ steps.publish.outputs.changed }}" = "true" ]; then
             status=ok; detail="published ${{ steps.publish.outputs.commit }}"
           else

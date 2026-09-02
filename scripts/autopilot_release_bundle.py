@@ -11,6 +11,13 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 ROOT = Path(__file__).resolve().parents[1]
+
+# Exit codes. The workflow branches on these, so they are part of the contract:
+#   0 a bundle was written and may be published
+#   2 the cycle touched paths that are not publishable - fail closed
+#   3 the cycle produced nothing to publish (a HOLD), which is not a failure
+EXIT_NOT_PUBLISHABLE = 2
+EXIT_NOTHING_TO_PUBLISH = 3
 MANIFEST = ROOT / "data" / "content_manifest.json"
 SITE = ROOT / "config" / "site.json"
 
@@ -66,7 +73,8 @@ def changed_paths(base_head: str) -> list[str]:
     result = [x for x in result if not x.startswith("data/run_receipts/")]
     bad = [x for x in result if not allowed(x)]
     if bad:
-        raise SystemExit("release bundle contains non-publishable paths: " + ", ".join(bad))
+        print("release bundle contains non-publishable paths: " + ", ".join(bad))
+        raise SystemExit(EXIT_NOT_PUBLISHABLE)
     return result
 
 
@@ -92,9 +100,12 @@ def pick_primary(base_head: str, paths: list[str]) -> dict:
         changed_articles = {x for x in paths if x.startswith("article-") and x.endswith(".html")}
         candidates = [a for a in current if str(a.get("article") or "") in changed_articles]
     if not candidates:
-        raise SystemExit("could not identify the comparison article represented by this release bundle")
+        print("could not identify the comparison article represented by this release bundle")
+        raise SystemExit(EXIT_NOT_PUBLISHABLE)
     if len(candidates) > 1:
-        raise SystemExit("one unattended cycle may publish only one comparison: " + ", ".join(str(a.get("id")) for a in candidates))
+        print("one unattended cycle may publish only one comparison: "
+              + ", ".join(str(a.get("id")) for a in candidates))
+        raise SystemExit(EXIT_NOT_PUBLISHABLE)
     a = candidates[0]
     rel = str(a.get("article") or "").lstrip("/")
     site = json.loads(SITE.read_text(encoding="utf-8"))
@@ -112,12 +123,17 @@ def pick_primary(base_head: str, paths: list[str]) -> dict:
 def build(base_head: str, out: Path) -> int:
     paths = changed_paths(base_head)
     if not paths:
-        raise SystemExit("no publishable changes in this cycle")
+        # Not an error. A cycle that held instead of publishing is a correct
+        # outcome, and the caller must be able to tell it apart from an agent
+        # that wrote outside the publishable set.
+        print("no publishable changes in this cycle")
+        raise SystemExit(EXIT_NOTHING_TO_PUBLISH)
     files = []
     for rel in paths:
         p = ROOT / rel
         if not p.is_file():
-            raise SystemExit(f"publishable path missing: {rel}")
+            print(f"publishable path missing: {rel}")
+            raise SystemExit(EXIT_NOT_PUBLISHABLE)
         files.append({"path": rel, "sha256": sha256(p), "bytes": p.stat().st_size})
     doc = {
         "schema_version": "1.0.0",
