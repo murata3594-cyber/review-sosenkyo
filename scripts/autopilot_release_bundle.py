@@ -11,11 +11,6 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 ROOT = Path(__file__).resolve().parents[1]
-
-# Exit codes. The workflow branches on these, so they are part of the contract:
-#   0 a bundle was written and may be published
-#   2 the cycle touched paths that are not publishable - fail closed
-#   3 the cycle produced nothing to publish (a HOLD), which is not a failure
 EXIT_NOT_PUBLISHABLE = 2
 EXIT_NOTHING_TO_PUBLISH = 3
 MANIFEST = ROOT / "data" / "content_manifest.json"
@@ -32,7 +27,6 @@ RELEASE_PATTERNS = (
     "data/affiliate_catalog.json",
     "data/content_manifest.json",
     "data/topic_queue.json",
-    "assets/images/*",
     "index.html",
     "rankings.html",
     "category.html",
@@ -123,9 +117,6 @@ def pick_primary(base_head: str, paths: list[str]) -> dict:
 def build(base_head: str, out: Path) -> int:
     paths = changed_paths(base_head)
     if not paths:
-        # Not an error. A cycle that held instead of publishing is a correct
-        # outcome, and the caller must be able to tell it apart from an agent
-        # that wrote outside the publishable set.
         print("no publishable changes in this cycle")
         raise SystemExit(EXIT_NOTHING_TO_PUBLISH)
     files = []
