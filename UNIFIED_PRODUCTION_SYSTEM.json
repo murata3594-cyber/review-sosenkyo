@@ -17,7 +17,7 @@
   "acr_runtime_doc": "docs/AUTONOMOUS_CONTENT_RUNTIME.md",
   "acr_runtime_registry": "config/acr_runtime_registry.json",
   "acr_client": "scripts/acr_runtime.py",
-  "acr_client_sha256": "acc54746f54585d58e456642050ff8dca52e612ecd61daf1d909280a68055e19",
+  "acr_client_sha256": "17cf34f8e107239a82e6af627e92f17ac5edeaa8008246e3668fc1b1ab9f1986",
   "automation": {
     "repository": "murata3594-cyber/review-sosenkyo",
     "automation_mode": "scheduled_agent",

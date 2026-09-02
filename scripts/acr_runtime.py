@@ -307,15 +307,37 @@ def validate_state(state) -> list:
     return errors
 
 
+NEVER_RUN = "never_run"
+
+
+def has_run(state) -> bool:
+    """True once the runtime has actually reported something."""
+    return bool((state.get("heartbeat") or {}).get("last_seen_at")
+                or state.get("last_success_at")
+                or state.get("last_failure_at"))
+
+
 def stale_reason(state, when: datetime):
-    """Return a reason string when an expected runtime has gone silent."""
+    """Return a reason string when an expected runtime is not reporting.
+
+    Two very different conditions are deliberately kept apart:
+
+    * NEVER_RUN - the runtime is declared but has never reported. This is the
+      state of a freshly installed adapter. It must never be shown as healthy,
+      but it must not block the run that would bootstrap it either, or the
+      first unattended cycle could never start.
+    * heartbeat_stale - the runtime reported before and then went silent past
+      its budget. That is a failure.
+    """
     if not state.get("runtime_expected"):
         return None
     if state.get("status") == "PAUSED":
         return None
+    if not has_run(state):
+        return NEVER_RUN
     last = parse_iso((state.get("heartbeat") or {}).get("last_seen_at"))
     if last is None:
-        return "no_heartbeat_recorded"
+        return NEVER_RUN
     limit = int(state.get("max_silence_hours") or 0)
     if limit <= 0:
         return "max_silence_hours_not_configured"
@@ -616,7 +638,12 @@ def cmd_gate(args) -> int:
     if state is not None and not state_errors:
         when = now_utc()
         stale = stale_reason(state, when)
-        if stale:
+        if stale == NEVER_RUN:
+            # Reported, never blocking: a runtime that has never run has to be
+            # allowed to run once. The central manifest still refuses to call it
+            # healthy, so this cannot be mistaken for a working runtime.
+            warnings.append("runtime_never_run")
+        elif stale:
             (errors if args.strict else warnings).append(f"runtime_stale:{stale}")
         if state.get("status") == "PAUSED":
             if args.for_run:
