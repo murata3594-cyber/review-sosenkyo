@@ -55,7 +55,13 @@ def today_jst() -> date:
 
 
 def runtime_gate(for_run: bool):
-    args = [sys.executable, str(RUNTIME_CLIENT), "gate", "--strict"]
+    """Delegate the runtime precondition to ACR without cold-start deadlock.
+
+    Planner/pre-run checks permit a missing or stale heartbeat so the scheduled
+    agent can repair its own liveness record. `--for-run` still blocks PAUSED and
+    repeated-failure hard blocks. Strict freshness belongs to runtime-watch.
+    """
+    args = [sys.executable, str(RUNTIME_CLIENT), "gate"]
     if for_run:
         args.append("--for-run")
     proc = subprocess.run(args, capture_output=True, text=True, cwd=str(ROOT))
@@ -307,7 +313,8 @@ def main(argv=None) -> int:
 
     pl = sub.add_parser("plan")
     pl.add_argument("--out")
-    pl.add_argument("--ci", action="store_true")
+    pl.add_argument("--ci", action="store_true",
+                    help="CI mode: validate planning without treating PAUSED as a run blocker")
     pl.set_defaults(func=cmd_plan)
 
     pr = sub.add_parser("prompt")
