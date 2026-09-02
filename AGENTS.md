@@ -1,5 +1,9 @@
 # review-sosenkyo — Universal Agent Entry Point
 
+## Unified Production Feedback OS v2
+
+記事制作・比較ロジック・公開・改稿では最初に `UNIFIED_PRODUCTION_SYSTEM.json` を読み、Global Governance Kernel `murata3594-cyber/military-v3` の `docs/UNIFIED_PRODUCTION_FEEDBACK_OS.md` と `data/owner_feedback_events/` を `review_media` profileで適用する。比較条件、evidence audit、affiliate safety等のローカル契約は維持するが、オーナー修正は会話内だけに残さず中央event logへ追記する。同一failure signature・同一method fingerprintで2回OWNER_REJECTEDになった方式は3回目を実行しない。公開判定は中央context/invariant証拠とこのrepo固有QAの両方を必須とする。Global Kernelをこのrepoへ複製・分岐させない。
+
 レビュー総選挙の正本はGitHub `main` です。ChatGPT / Codex / Claude Code / Gemini は、作業種別に必要な規約だけを読み、ルート文書・data全件を起動時に一括読込しないでください。
 
 ## 最小起動
