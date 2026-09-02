@@ -1,0 +1,12 @@
+{
+  "schema_version": "2.0.0",
+  "kernel_repository": "murata3594-cyber/military-v3",
+  "kernel_branch": "master",
+  "kernel_doc": "docs/UNIFIED_PRODUCTION_FEEDBACK_OS.md",
+  "kernel_gate": "scripts/unified_feedback_gate.py",
+  "required_kernel_version": "2.0.0",
+  "profiles": ["review_media"],
+  "default_profile": "review_media",
+  "must_not_fork_kernel": true,
+  "local_release_gates_remain_required": true
+}
