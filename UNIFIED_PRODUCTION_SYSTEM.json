@@ -5,8 +5,40 @@
   "kernel_doc": "docs/UNIFIED_PRODUCTION_FEEDBACK_OS.md",
   "kernel_gate": "scripts/unified_feedback_gate.py",
   "required_kernel_version": "2.0.0",
-  "profiles": ["review_media"],
+  "profiles": [
+    "review_media"
+  ],
   "default_profile": "review_media",
   "must_not_fork_kernel": true,
-  "local_release_gates_remain_required": true
+  "local_release_gates_remain_required": true,
+  "acr_runtime_doc": "docs/AUTONOMOUS_CONTENT_RUNTIME.md",
+  "acr_runtime_registry": "config/acr_runtime_registry.json",
+  "acr_client": "scripts/acr_runtime.py",
+  "acr_client_sha256": "acc54746f54585d58e456642050ff8dca52e612ecd61daf1d909280a68055e19",
+  "automation": {
+    "repository": "murata3594-cyber/review-sosenkyo",
+    "automation_mode": "scheduled_agent",
+    "runtime_expected": true,
+    "runtime_owner": "github_actions",
+    "max_silence_hours": 36,
+    "publish_targets": [
+      "https://review-sosenkyo.murata3594.workers.dev"
+    ],
+    "required_local_gates": [
+      "scripts/build_dist.py",
+      "scripts/validate_site.py",
+      "scripts/audit_content.py",
+      "scripts/audit_content_quality.py",
+      "scripts/check_research_freshness.py"
+    ],
+    "gate_order_note": "build_dist.py runs sync_content, validate_site, audit_content_quality, affiliate rendering and finalize_seo in one pass; run it first, then the standalone audits.",
+    "state_file": "data/automation_runtime.json",
+    "receipt_index": "data/run_receipt_index.json",
+    "post_publish_verification_required": true,
+    "activation_requirements": [
+      "autopilot workflow present on the default branch",
+      "ANTHROPIC_API_KEY repository secret configured",
+      "data/automation_runtime.json heartbeating"
+    ]
+  }
 }

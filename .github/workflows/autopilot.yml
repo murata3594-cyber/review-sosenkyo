@@ -1,0 +1,198 @@
+name: Autonomous comparison cycle
+
+# automation_mode: scheduled_agent
+# Publishing here was already deterministic, but nothing ever started a
+# comparison: the scheduled jobs only audited work a human had already done, so
+# the medium could go quiet indefinitely with nothing reporting a problem. This
+# cron starts the agent itself, and every outcome is written to
+# data/automation_runtime.json so a stall is visible.
+
+on:
+  schedule:
+    # 08:41 JST (23:41 UTC), off the :00 mark on purpose
+    - cron: "41 23 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Plan only: decide the work order but do not run the agent"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: review-sosenkyo-autopilot
+  cancel-in-progress: false
+
+jobs:
+  cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Runtime precondition
+        id: gate
+        shell: bash
+        run: |
+          set +e
+          python scripts/acr_runtime.py gate --for-run --strict | tee /tmp/acr_gate.json
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Record cycle start
+        if: steps.gate.outputs.code == '0'
+        env:
+          ACR_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python scripts/acr_runtime.py heartbeat \
+            --stage cycle_start --status ok --source github_actions \
+            --run-url "$ACR_RUN_URL" --detail "scheduled autopilot cycle"
+
+      - name: Plan the cycle
+        if: steps.gate.outputs.code == '0'
+        id: plan
+        shell: bash
+        run: |
+          set +e
+          python scripts/autopilot_cycle.py plan | tee /tmp/plan.json
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Render the agent work order
+        if: steps.plan.outputs.code == '0'
+        run: python scripts/autopilot_cycle.py prompt --out /tmp/work_order.md
+
+      - name: Check the agent runtime is configured
+        if: steps.plan.outputs.code == '0'
+        id: agentkey
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node
+        if: steps.plan.outputs.code == '0' && steps.agentkey.outputs.present == 'true' && !inputs.dry_run
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install the agent runtime
+        if: steps.plan.outputs.code == '0' && steps.agentkey.outputs.present == 'true' && !inputs.dry_run
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run the unattended comparison cycle
+        if: steps.plan.outputs.code == '0' && steps.agentkey.outputs.present == 'true' && !inputs.dry_run
+        id: agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        shell: bash
+        run: |
+          set +e
+          claude -p "$(cat /tmp/work_order.md)" \
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebFetch,WebSearch" \
+            2>&1 | tee /tmp/agent.log
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Release gates
+        if: steps.agent.outputs.code == '0'
+        id: gates
+        shell: bash
+        run: |
+          set -e
+          # build_dist.py runs sync_content, validate_site, audit_content_quality,
+          # affiliate rendering and finalize_seo in one pass and writes dist/.
+          # The standalone audits below re-assert the same invariants against the
+          # built output, so they run after it, never before.
+          python scripts/build_dist.py
+          python scripts/validate_site.py
+          python scripts/audit_content.py
+          python scripts/audit_content_quality.py
+          python scripts/check_research_freshness.py --days 30
+
+      - name: Publish
+        if: steps.gates.outcome == 'success'
+        id: publish
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes produced by this cycle."
+            exit 0
+          fi
+          git add -A
+          git commit -m "autopilot: publish comparison cycle ${{ github.run_number }}"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin HEAD:"${{ github.ref_name }}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Record cycle outcome
+        if: always() && steps.gate.outputs.code == '0'
+        env:
+          ACR_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "${{ steps.plan.outputs.code }}" = "3" ]; then
+            status=ok; detail="no work available this cycle"
+          elif [ "${{ steps.plan.outputs.code }}" = "2" ]; then
+            status=hold; detail="autopilot planner blocked the cycle"
+          elif [ "${{ steps.agentkey.outputs.present }}" != "true" ]; then
+            status=hold; detail="ANTHROPIC_API_KEY is not configured; agent half cannot run"
+          elif [ "${{ steps.agent.outputs.code }}" != "0" ]; then
+            status=fail; detail="agent run exited ${{ steps.agent.outputs.code }}"
+          elif [ "${{ steps.gates.outcome }}" != "success" ]; then
+            status=fail; detail="release gates failed"
+          elif [ "${{ steps.publish.outputs.changed }}" = "true" ]; then
+            status=ok; detail="published ${{ steps.publish.outputs.commit }}"
+          else
+            status=hold; detail="cycle ended without publishable output"
+          fi
+          python scripts/acr_runtime.py heartbeat \
+            --stage cycle_end --status "$status" --source github_actions \
+            --run-url "$ACR_RUN_URL" --detail "$detail"
+          python scripts/acr_runtime.py kpi
+          if [ -n "$(git status --porcelain data/automation_runtime.json)" ]; then
+            git add data/automation_runtime.json
+            git commit -m "autopilot: record cycle ${{ github.run_number }} state"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi
+
+      - name: Open an issue when the runtime is blocked
+        if: always() && (steps.gate.outputs.code != '0' || steps.agentkey.outputs.present == 'false')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          title="[Autopilot] 無人比較記事サイクルが実行できません"
+          gate_json="$(cat /tmp/acr_gate.json 2>/dev/null || echo '{}')"
+          body=$(printf 'ランタイム前提条件を満たさないため、自動比較記事サイクルを実行できませんでした。\n\nrun: %s\n\n```json\n%s\n```\n\n確認事項:\n- ANTHROPIC_API_KEY シークレットが設定されているか\n- data/automation_runtime.json が PAUSED になっていないか\n- 連続失敗が3回に達して hard block していないか（復旧後は python scripts/acr_runtime.py resume）\n' "$RUN_URL" "$gate_json")
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi

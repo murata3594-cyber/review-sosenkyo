@@ -1,0 +1,81 @@
+name: Autonomous runtime watch
+
+# Silence is not success. If the autopilot stops, the site simply stops gaining
+# comparisons and nothing reports it. This job independently asserts the runtime
+# is alive and the newest publish is still live, and raises an issue otherwise.
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: review-sosenkyo-runtime-watch
+  cancel-in-progress: true
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Runtime health
+        id: health
+        shell: bash
+        run: |
+          set +e
+          python scripts/acr_runtime.py gate --strict | tee /tmp/health.json
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Verify the newest publish is still live
+        id: live
+        shell: bash
+        run: |
+          set +e
+          python scripts/post_publish_verify.py | tee /tmp/live.json
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Refresh KPI and commit runtime state
+        shell: bash
+        run: |
+          set -e
+          python scripts/acr_runtime.py kpi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain data/automation_runtime.json data/run_receipts data/run_receipt_index.json)" ]; then
+            git add data/automation_runtime.json data/run_receipts data/run_receipt_index.json 2>/dev/null || true
+            git commit -m "runtime: refresh autonomous runtime state"
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi
+
+      - name: Raise a runtime issue
+        if: steps.health.outputs.code != '0' || steps.live.outputs.code == '2'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          title="[Runtime] 自動運転が停止または公開物が壊れています"
+          health="$(cat /tmp/health.json 2>/dev/null || echo '{}')"
+          live="$(cat /tmp/live.json 2>/dev/null || echo '{}')"
+          body=$(printf '無人運転の健全性チェックで問題を検出しました。\n\nrun: %s\n\n## runtime gate\n\n```json\n%s\n```\n\n## post-publish verification\n\n```json\n%s\n```\n\n沈黙は成功ではありません。heartbeat が止まっている場合、記事が増えていないのではなく実行系が落ちています。\n' "$RUN_URL" "$health" "$live")
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi

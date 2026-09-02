@@ -8,7 +8,13 @@
 - Build: `npm run build`
 - Deploy: `npx wrangler deploy`
 - Temporary URL: `https://review-sosenkyo.murata3594.workers.dev`
-- `config/site.json:indexing_enabled=false` のため、独自ドメイン取得までは検索登録しない。
+- 現在の実値は `config/site.json:indexing_enabled=true`、`canonical_host=cloudflare-workers`。
+  生成物もこれに一致しており、`robots.txt` は `Allow: /`、`sitemap.xml` の `loc` は
+  `https://review-sosenkyo.murata3594.workers.dev/...` を指す。**暫定URLのまま索引されている状態**である。
+  （このRunbookは以前 `indexing_enabled=false` と記載していたが、設定・robots・sitemapのいずれとも
+  一致していなかった。実装側が正であり、記述側を実態へ合わせた。）
+- 独自ドメインへ移行する際は、暫定URLが既に索引されている前提で、
+  canonical の切替に加えて旧URLからのリダイレクトを用意すること。切替だけでは重複索引が残る。
 
 ## 1回のBuildで自動実行される処理
 1. `scripts/sync_content.py` — manifestからトップ・一覧・sitemapを同期。
