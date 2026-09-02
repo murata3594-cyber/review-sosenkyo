@@ -41,7 +41,8 @@
     "activation_requirements": [
       "autopilot workflow present on the default branch",
       "ANTHROPIC_API_KEY repository secret configured",
-      "data/automation_runtime.json heartbeating"
+      "UPFOS_READ_TOKEN repository secret can read murata3594-cyber/military-v3",
+      "data/automation_runtime.json heartbeating from github_actions"
     ]
   }
 }
