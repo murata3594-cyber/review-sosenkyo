@@ -1,0 +1,17 @@
+{
+  "schema_version": "2.0.0",
+  "system_id": "UPFOS-ADAPTER",
+  "repository": "murata3594-cyber/review-sosenkyo",
+  "kernel_repository": "murata3594-cyber/military-v3",
+  "kernel_doc": "docs/UNIFIED_PRODUCTION_FEEDBACK_OS.md",
+  "kernel_gate": "scripts/unified_feedback_gate.py",
+  "release_evidence_schema": "schemas/upfos_release_evidence.schema.json",
+  "required_kernel_version": "2.0.0",
+  "profile": "generic_production",
+  "required_phases": ["preflight", "domain_gates", "release"],
+  "local_release_gate": "repository_local_release",
+  "must_not_fork_kernel": true,
+  "inherit_domain_rules": false,
+  "artifact_sha256_required_for_completion": true,
+  "retry_lineage_required_after_failure": true
+}
