@@ -1,0 +1,32 @@
+name: UPFOS Adapter Contract
+on:
+  push:
+    paths: ['UNIFIED_PRODUCTION_SYSTEM.json','UPFOS_ADAPTER_LOCK.json','.github/workflows/upfos-adapter-contract.yml']
+  pull_request:
+    paths: ['UNIFIED_PRODUCTION_SYSTEM.json','UPFOS_ADAPTER_LOCK.json','.github/workflows/upfos-adapter-contract.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  adapter-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Verify adapter and local lock
+        run: |
+          python - <<'PY'
+          import hashlib,json,re,subprocess
+          from pathlib import Path
+          root=Path('.'); a=root/'UNIFIED_PRODUCTION_SYSTEM.json'; l=root/'UPFOS_ADAPTER_LOCK.json'; assert a.is_file() and l.is_file(); d=json.loads(a.read_text(encoding='utf-8-sig')); lock=json.loads(l.read_text(encoding='utf-8-sig'))
+          req={'schema_version','kernel_repository','kernel_branch','kernel_release_gate','repository_gate_results_schema','release_contract','required_kernel_version','profiles','default_profile','must_not_fork_kernel','local_release_gates_remain_required'}; assert not(req-set(d)),sorted(req-set(d)); assert d['schema_version']=='2.0.0' and d['kernel_repository']=='murata3594-cyber/military-v3' and d['kernel_branch']=='master' and d['required_kernel_version']=='2.0.0'; assert d['kernel_release_gate']=='scripts/unified_repository_release.py' and d['repository_gate_results_schema']=='schemas/unified_repository_gate_results.schema.json' and d['release_contract']=='preflight_then_exact_artifact_release'; assert d['must_not_fork_kernel'] is True and d['local_release_gates_remain_required'] is True
+          p=list(map(str,d.get('profiles') or [])); assert p and len(p)==len(set(p)) and d['default_profile'] in p; blob=subprocess.check_output(['git','rev-parse','HEAD:UNIFIED_PRODUCTION_SYSTEM.json'],text=True).strip().lower(); assert re.fullmatch(r'[0-9a-f]{40}',blob); assert lock.get('schema_version')=='1.0.0' and lock.get('adapter_path')=='UNIFIED_PRODUCTION_SYSTEM.json' and lock.get('adapter_blob_sha')==blob; assert lock.get('kernel_repository')==d['kernel_repository'] and lock.get('kernel_branch')==d['kernel_branch'] and lock.get('required_kernel_version')==d['required_kernel_version']
+          for k in ('adapter_change_requires_lock_refresh','central_adapter_registry_must_be_refreshed','silent_adapter_drift_forbidden'): assert (lock.get('policy') or {}).get(k) is True
+          for row in d.get('domain_contract_pins') or []:
+              assert re.fullmatch(r'[0-9a-f]{40}',str(row.get('canonical_blob_sha') or '')) and re.fullmatch(r'[0-9a-f]{64}',str(row.get('canonical_sha256') or '')); m=str(row.get('local_mirror_path') or ''); assert m and (root/m).is_file(),m
+          for raw in (d.get('automation') or {}).get('required_local_gates') or []: assert (root/str(raw)).is_file(),raw
+          acr=str(d.get('acr_client') or ''); hs=str(d.get('acr_client_sha256') or '')
+          if acr or hs:
+              assert acr and re.fullmatch(r'[0-9a-f]{64}',hs); path=root/acr; assert path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest()==hs
+          print('UPFOS adapter contract PASS',blob)
+          PY
