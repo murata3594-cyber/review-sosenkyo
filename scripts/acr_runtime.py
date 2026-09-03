@@ -104,6 +104,10 @@ def client_hash() -> str:
     return hashlib.sha256(Path(__file__).resolve().read_bytes()).hexdigest()
 
 
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -201,6 +205,103 @@ def declared_publish_target(root: Path, automation: dict):
     return value.strip().rstrip("/"), []
 
 
+MAX_SILENCE_HOURS = 168
+
+# What the kernel declares about a medium and what the medium does have to be the
+# same thing. These are the fields where a quiet local edit turns monitoring off
+# or drops a release gate, so they are compared rather than trusted.
+REGISTRY_BOUND_FIELDS = (
+    "automation_mode",
+    "runtime_expected",
+    "runtime_owner",
+    "max_silence_hours",
+    "publish_targets",
+    "required_local_gates",
+    "post_publish_verification_required",
+    "generated_media_of_real_subjects_allowed",
+)
+
+# Adapter keys whose value is a path into THIS repository. kernel_doc, kernel_gate,
+# acr_runtime_doc and acr_runtime_registry name paths inside the kernel repository
+# by convention and are deliberately not in this set. A local declaration that
+# points at nothing is worse than no declaration: it reads as configured.
+DECLARED_PATH_KEYS = ("acr_client", "acr_registry_vendored")
+
+
+def declared_path_issues(root: Path, adapter: dict, automation: dict) -> list[str]:
+    """Every path the adapter names must exist in this repository."""
+    issues = []
+    for key in DECLARED_PATH_KEYS:
+        raw = adapter.get(key)
+        if raw is None:
+            continue
+        if not isinstance(raw, str) or not raw.strip():
+            issues.append(f"adapter_declared_path_not_string:{key}")
+            continue
+        if not (root / raw).is_file():
+            issues.append(f"adapter_declared_path_missing:{key}:{raw}")
+    # required_local_gates are deliberately not checked here: `gate` already
+    # reports required_local_gate_missing for them, and a second reporter would
+    # pre-empt it with a vaguer error.
+    for gate in (automation.get("excluded_gates") or {}):
+        if isinstance(gate, str) and gate.strip() and not (root / gate).is_file():
+            issues.append(f"adapter_excluded_gate_missing:{gate}")
+    return issues
+
+
+def registry_agreement_issues(root: Path, adapter: dict, automation: dict) -> list[str]:
+    """The medium may not quietly disagree with what the kernel declares for it.
+
+    runtime_expected, the silence budget and the required gate list are each one
+    edit away from switching monitoring off or dropping a gate, and until now the
+    repository was the only thing that decided them. The kernel's registry is
+    vendored in byte-identical and pinned, so the row for this repository is the
+    kernel's own declaration rather than a local restatement of it.
+    """
+    issues = []
+    if not automation:
+        # The kernel repository itself declares no medium, so there is nothing to
+        # agree with. Anything carrying an automation block is an ACR-managed
+        # medium and must be bound: dropping the block to escape this check would
+        # fail every other automation rule first.
+        return []
+    rel = adapter.get("acr_registry_vendored")
+    if not isinstance(rel, str) or not rel.strip():
+        return ["adapter_registry_not_vendored"]
+    path = root / rel
+    if not path.is_file():
+        return []  # already reported by declared_path_issues
+    pinned = adapter.get("acr_registry_sha256")
+    if not pinned:
+        issues.append("adapter_registry_sha256_missing")
+    elif pinned != sha256_file(path):
+        issues.append("vendored_registry_drift")
+    try:
+        registry = json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception as exc:
+        return issues + [f"runtime_registry_unreadable:{type(exc).__name__}"]
+
+    repository = automation.get("repository")
+    row = (registry.get("repositories") or {}).get(repository)
+    if not isinstance(row, dict):
+        return issues + [f"runtime_registry_row_missing:{repository}"]
+
+    for field in REGISTRY_BOUND_FIELDS:
+        if field not in row:
+            continue
+        if automation.get(field) != row[field]:
+            issues.append(
+                f"registry_disagreement:{field}:registry={row[field]!r}:adapter={automation.get(field)!r}"
+            )
+    required = {str(x) for x in (row.get("required_local_gates") or [])}
+    for gate in (automation.get("excluded_gates") or {}):
+        if str(gate) in required:
+            # Excluding a gate the kernel requires is a release-gate removal
+            # dressed up as configuration.
+            issues.append(f"excluded_gate_is_registry_required:{gate}")
+    return issues
+
+
 def validate_adapter(root: Path):
     adapter, errors = read_adapter(root)
     if adapter is None:
@@ -229,8 +330,12 @@ def validate_adapter(root: Path):
     if default_profile and isinstance(profiles, list) and default_profile not in profiles:
         errors.append("adapter_default_profile_not_in_profiles")
     silence = automation.get("max_silence_hours")
-    if silence is not None and (not isinstance(silence, int) or silence <= 0):
+    if silence is not None and (not isinstance(silence, int) or isinstance(silence, bool) or silence <= 0):
         errors.append("adapter_max_silence_hours_invalid")
+    elif isinstance(silence, int) and silence > MAX_SILENCE_HOURS:
+        # A silence budget long enough is the same thing as no monitoring, reached
+        # by editing one number rather than by declaring the runtime unmonitored.
+        errors.append(f"adapter_max_silence_hours_too_long:{silence}>{MAX_SILENCE_HOURS}")
     gates = automation.get("required_local_gates")
     if gates is not None and (not isinstance(gates, list) or not gates):
         errors.append("adapter_required_local_gates_empty")
@@ -242,6 +347,8 @@ def validate_adapter(root: Path):
     expected = adapter.get("acr_client_sha256")
     if expected and expected != client_hash():
         errors.append("vendored_client_drift")
+    errors += declared_path_issues(root, adapter, automation)
+    errors += registry_agreement_issues(root, adapter, automation)
 
     # The production URL is generated into canonical links, og:url, JSON-LD,
     # sitemap and RSS from the repository's own config, and post-publish
