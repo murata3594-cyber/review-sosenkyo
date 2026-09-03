@@ -167,6 +167,40 @@ def read_adapter(root: Path):
         return None, [f"adapter_not_json:{exc}"]
 
 
+def declared_publish_target(root: Path, automation: dict):
+    """Read the repository's own source of truth for its production URL.
+
+    A repository states where that lives via automation.publish_target_source,
+    because the two media that use this keep it in different places: a bare text
+    file in one, a JSON key in the other. When it is declared, publish_targets
+    has to agree with it.
+    """
+    source = automation.get("publish_target_source")
+    if not isinstance(source, dict):
+        return None, []
+    rel = source.get("path")
+    if not isinstance(rel, str) or not rel:
+        return None, ["adapter_publish_target_source_path_missing"]
+    path = root / rel
+    if not path.exists():
+        return None, [f"publish_target_source_missing:{rel}"]
+    try:
+        raw = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        return None, [f"publish_target_source_unreadable:{rel}:{exc}"]
+    key = source.get("json_key")
+    if key:
+        try:
+            value = json.loads(raw).get(key)
+        except json.JSONDecodeError as exc:
+            return None, [f"publish_target_source_not_json:{rel}:{exc}"]
+        if not isinstance(value, str):
+            return None, [f"publish_target_source_key_missing:{rel}:{key}"]
+    else:
+        value = raw
+    return value.strip().rstrip("/"), []
+
+
 def validate_adapter(root: Path):
     adapter, errors = read_adapter(root)
     if adapter is None:
@@ -208,6 +242,19 @@ def validate_adapter(root: Path):
     expected = adapter.get("acr_client_sha256")
     if expected and expected != client_hash():
         errors.append("vendored_client_drift")
+
+    # The production URL is generated into canonical links, og:url, JSON-LD,
+    # sitemap and RSS from the repository's own config, and post-publish
+    # verification checks that host. If publish_targets disagrees with it, the
+    # runtime is declaring one production site while the build ships another.
+    # This has already happened once; a rule stated only in prose is what let it.
+    source_value, source_errors = declared_publish_target(root, automation)
+    errors.extend(source_errors)
+    if source_value:
+        targets = automation.get("publish_targets")
+        declared = [str(t).strip().rstrip("/") for t in targets] if isinstance(targets, list) else []
+        if source_value not in declared:
+            errors.append(f"publish_target_drift:{source_value}!={declared}")
     return adapter, errors
 
 

@@ -17,7 +17,7 @@
   "acr_runtime_doc": "docs/AUTONOMOUS_CONTENT_RUNTIME.md",
   "acr_runtime_registry": "config/acr_runtime_registry.json",
   "acr_client": "scripts/acr_runtime.py",
-  "acr_client_sha256": "17cf34f8e107239a82e6af627e92f17ac5edeaa8008246e3668fc1b1ab9f1986",
+  "acr_client_sha256": "4a2a33385bf509547aa2aa19a0debdb1eac7eeffc116b38c46ca9ba5c7a45690",
   "automation": {
     "repository": "murata3594-cyber/review-sosenkyo",
     "automation_mode": "scheduled_agent",
@@ -43,6 +43,10 @@
       "ANTHROPIC_API_KEY repository secret configured",
       "UPFOS_READ_TOKEN repository secret can read murata3594-cyber/military-v3",
       "data/automation_runtime.json heartbeating from github_actions"
-    ]
+    ],
+    "publish_target_source": {
+      "path": "config/site.json",
+      "json_key": "production_url"
+    }
   }
 }
