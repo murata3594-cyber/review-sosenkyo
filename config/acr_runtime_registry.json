@@ -1,0 +1,139 @@
+{
+  "schema_version": "2.0.0",
+  "kernel_version": "2.0.0",
+  "canonical_repository": "murata3594-cyber/military-v3",
+  "canonical_runtime_doc": "docs/AUTONOMOUS_CONTENT_RUNTIME.md",
+  "canonical_runtime_client": "scripts/acr_runtime.py",
+  "acr_client_sha256": "b6901a7046233e61a9a58e40a7a757d551dbe66af941aa7772eab8e92e25f894",
+  "relationship_to_feedback_kernel": "Additive. config/unified_production_profiles.json and scripts/unified_feedback_gate.py own owner feedback, invariants, evidence and release verification. This registry owns only the operational half: is the medium actually running unattended, when did it last succeed, and does every publish carry a receipt. Neither file may redefine the other's fields.",
+  "automation_modes": {
+    "agent_driven": "起動されて初めて動く。起動後は公開まで自律。",
+    "event_driven": "repositoryへのcommit/webhookでbuild・QA・deployが進む。",
+    "scheduled_agent": "repositoryのcronがagent自体を起動する。発見から公開まで無人。",
+    "scheduled_daemon": "GitHubの外の常駐プロセスがサイクルを所有する。"
+  },
+  "runtime_contract": {
+    "adapter_file": "UNIFIED_PRODUCTION_SYSTEM.json",
+    "adapter_extension_key": "automation",
+    "state_file": "data/automation_runtime.json",
+    "receipt_dir": "data/run_receipts",
+    "receipt_index": "data/run_receipt_index.json",
+    "state_schema": "schemas/automation_runtime_state.schema.json",
+    "receipt_schema": "schemas/publish_receipt.schema.json",
+    "kpi_schema": "schemas/content_kpi.schema.json",
+    "central_status_manifest": "data/central_status_manifest.json",
+    "release_rule": "acr_runtime gate --for-run PASS AND required_local_gates PASS AND unified_repository_release exact-artifact PASS; post-publish verification remains required",
+    "pre_run_strict_freshness": false,
+    "strict_freshness_scope": "watchdog/health checks only; do not use --strict to bootstrap a never-run runtime",
+    "post_publish_verification_required": true,
+    "repeated_failure_hard_block_at": 3,
+    "silence_is_not_success": true
+  },
+  "repositories": {
+    "murata3594-cyber/military-now-site": {
+      "profile": "military_site_article",
+      "medium": "web_blog",
+      "automation_mode": "scheduled_agent",
+      "runtime_expected": true,
+      "runtime_owner": "github_actions",
+      "max_silence_hours": 36,
+      "publish_targets": [
+        "https://military-now.com"
+      ],
+      "required_local_gates": [
+        "scripts/build_dist.py",
+        "scripts/check_site.py",
+        "scripts/qa_natural_japanese.py",
+        "scripts/qa_three_roles.py",
+        "scripts/qa_reader_first.py",
+        "scripts/qa_revenue_density.py"
+      ],
+      "evidence_requirements": [
+        "current_primary_source_verification",
+        "hero_image_rights_and_subject_match",
+        "media_provenance_record",
+        "playable_related_video",
+        "related_articles_min_2"
+      ],
+      "generated_media_of_real_subjects_allowed": false,
+      "post_publish_verification_required": true,
+      "activation_requirements": [
+        "autopilot workflow present on the default branch",
+        "ANTHROPIC_API_KEY repository secret configured",
+        "UPFOS_READ_TOKEN repository secret can read murata3594-cyber/military-v3",
+        "data/automation_runtime.json committed and heartbeating from github_actions"
+      ],
+      "gate_order_note": "build_dist.py regenerates SEO and runs the injector chain against the source tree before writing dist/; the dist-reading QA gates are only meaningful after it.",
+      "excluded_gates": {
+        "scripts/qa_revenue_density.py": "superseded: enforces the removed seven-card revenue wall and interstitial"
+      }
+    },
+    "murata3594-cyber/review-sosenkyo": {
+      "profile": "review_media",
+      "medium": "web_blog",
+      "automation_mode": "scheduled_agent",
+      "runtime_expected": true,
+      "runtime_owner": "github_actions",
+      "max_silence_hours": 36,
+      "publish_targets": [
+        "https://review-sosenkyo.murata3594.workers.dev"
+      ],
+      "required_local_gates": [
+        "scripts/build_dist.py",
+        "scripts/validate_site.py",
+        "scripts/audit_content.py",
+        "scripts/audit_content_quality.py",
+        "scripts/check_research_freshness.py"
+      ],
+      "evidence_requirements": [
+        "research_ledger_entry",
+        "exact_product_identity_match",
+        "review_sample_size_and_source",
+        "price_and_availability_freshness",
+        "affiliate_disclosure"
+      ],
+      "fabricated_review_counts_allowed": false,
+      "post_publish_verification_required": true,
+      "activation_requirements": [
+        "autopilot workflow present on the default branch",
+        "ANTHROPIC_API_KEY repository secret configured",
+        "UPFOS_READ_TOKEN repository secret can read murata3594-cyber/military-v3",
+        "data/automation_runtime.json committed and heartbeating from github_actions"
+      ]
+    },
+    "murata3594-cyber/note-factory-v3": {
+      "profile": "note_article_automation",
+      "medium": "paid_note",
+      "automation_mode": "scheduled_daemon",
+      "runtime_expected": true,
+      "runtime_owner": "local_daemon",
+      "max_silence_hours": 48,
+      "canonical_branch": "master",
+      "publish_targets": [
+        "https://note.com"
+      ],
+      "required_local_gates": [
+        "src/note_factory/selftest.py",
+        "src/note_factory/quality.py",
+        "src/note_factory/factcheck.py",
+        "src/note_factory/terms_guard.py"
+      ],
+      "evidence_requirements": [
+        "market_scan_record",
+        "reference_originality_check",
+        "factcheck_record",
+        "platform_terms_check",
+        "paid_boundary_ratio_within_policy",
+        "price_within_policy"
+      ],
+      "unverifiable_earnings_claims_allowed": false,
+      "post_publish_verification_required": true,
+      "activation_requirements": [
+        "daemon pushes heartbeat into data/automation_runtime.json",
+        "note login session valid",
+        "OPENAI_API_KEY valid",
+        "sales export ingestion succeeding"
+      ]
+    }
+  }
+}
