@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "adapter_path": "UNIFIED_PRODUCTION_SYSTEM.json",
-  "adapter_blob_sha": "6eff7d7a256ec6ec1ef34c4d89a137193a9880bf",
+  "adapter_blob_sha": "2aaf935b09a3765dc8c71630dd2bdb2b17036e9f",
   "kernel_repository": "murata3594-cyber/military-v3",
   "kernel_branch": "master",
   "required_kernel_version": "2.0.0",
