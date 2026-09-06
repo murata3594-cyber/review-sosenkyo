@@ -207,6 +207,15 @@ def declared_publish_target(root: Path, automation: dict):
 
 MAX_SILENCE_HOURS = 168
 
+# One unattended cycle runs on one model at one effort. Switching either
+# mid-cycle throws away the prompt cache the cycle was budgeted around, so the
+# choice is declared at cycle_start and refused thereafter. The gap budget is a
+# warning rather than an error because a medium's cron legitimately spans cycles.
+BLANK_SESSION = {"model": None, "effort": None, "started_at": None}
+DEFAULT_MAX_IDLE_GAP_MINUTES = 55
+CYCLE_START, CYCLE_END = "cycle_start", "cycle_end"
+DISPATCH_PLAN_FILE = "dispatch_plan.json"
+
 # What the kernel declares about a medium and what the medium does have to be the
 # same thing. These are the fields where a quiet local edit turns monitoring off
 # or drops a release gate, so they are compared rather than trusted.
@@ -219,13 +228,17 @@ REGISTRY_BOUND_FIELDS = (
     "required_local_gates",
     "post_publish_verification_required",
     "generated_media_of_real_subjects_allowed",
+    "session_discipline_required",
+    "human_authority_medium",
+    "human_only_decisions",
 )
 
 # Adapter keys whose value is a path into THIS repository. kernel_doc, kernel_gate,
 # acr_runtime_doc and acr_runtime_registry name paths inside the kernel repository
 # by convention and are deliberately not in this set. A local declaration that
 # points at nothing is worse than no declaration: it reads as configured.
-DECLARED_PATH_KEYS = ("acr_client", "acr_registry_vendored")
+DECLARED_PATH_KEYS = ("acr_client", "acr_registry_vendored",
+                      "human_authority_constitution_vendored")
 
 
 def declared_path_issues(root: Path, adapter: dict, automation: dict) -> list[str]:
@@ -293,6 +306,16 @@ def registry_agreement_issues(root: Path, adapter: dict, automation: dict) -> li
             issues.append(
                 f"registry_disagreement:{field}:registry={row[field]!r}:adapter={automation.get(field)!r}"
             )
+    rel = adapter.get("human_authority_constitution_vendored")
+    if isinstance(rel, str) and rel.strip():
+        path = root / rel
+        if path.is_file():
+            pinned = adapter.get("human_authority_sha256")
+            if not pinned:
+                issues.append("adapter_human_authority_sha256_missing")
+            elif pinned != sha256_file(path):
+                issues.append("vendored_constitution_drift")
+
     required = {str(x) for x in (row.get("required_local_gates") or [])}
     for gate in (automation.get("excluded_gates") or {}):
         if str(gate) in required:
@@ -383,6 +406,7 @@ def blank_state(adapter) -> dict:
         "status": "UNCONFIGURED",
         "paused_reason": None,
         "heartbeat": {"last_seen_at": None, "source": None, "run_url": None},
+        "session": dict(BLANK_SESSION),
         "stages": {},
         "last_success_at": None,
         "last_failure_at": None,
@@ -408,9 +432,15 @@ def read_state(root: Path):
     if not path.exists():
         return None, [f"missing_state:{STATE_FILE}"]
     try:
-        return load_json(path), []
+        state = load_json(path)
     except json.JSONDecodeError as exc:
         return None, [f"state_not_json:{exc}"]
+    if isinstance(state, dict) and not isinstance(state.get("session"), dict):
+        # A state file written before session discipline existed is not invalid;
+        # it simply predates the field. It is filled in memory here and written
+        # back only by `state-migrate`, so reading never mutates the repository.
+        state["session"] = dict(BLANK_SESSION)
+    return state, []
 
 
 def validate_state(state) -> list:
@@ -434,6 +464,17 @@ def validate_state(state) -> list:
     hb = state.get("heartbeat")
     if not isinstance(hb, dict):
         errors.append("state_heartbeat_not_object")
+    session = state.get("session")
+    if not isinstance(session, dict):
+        errors.append("state_session_not_object")
+    else:
+        for key in ("model", "effort", "started_at"):
+            if key not in session:
+                errors.append(f"state_session_missing:{key}")
+            elif session[key] is not None and not isinstance(session[key], str):
+                errors.append(f"state_session_field_not_string:{key}")
+        if session.get("started_at") and not parse_iso(session["started_at"]):
+            errors.append("state_session_started_at_invalid")
     stages = state.get("stages")
     if not isinstance(stages, dict):
         errors.append("state_stages_not_object")
@@ -546,6 +587,35 @@ def cmd_state_init(args) -> int:
     return report("acr.state-init", [], extra={"written": STATE_FILE})
 
 
+def cmd_state_migrate(args) -> int:
+    """Add fields a newer client expects without touching anything already set."""
+    root = repo_root()
+    path = root / STATE_FILE
+    if not path.exists():
+        return report("acr.state-migrate", [f"missing_state:{STATE_FILE}"])
+    try:
+        # Read the file itself, not the backfilled view read_state returns, so
+        # the migration reports what is actually absent on disk.
+        state = load_json(path)
+    except json.JSONDecodeError as exc:
+        return report("acr.state-migrate", [f"state_not_json:{exc}"])
+    added = []
+    if not isinstance(state.get("session"), dict):
+        state["session"] = dict(BLANK_SESSION)
+        added.append("session")
+    else:
+        for key, value in BLANK_SESSION.items():
+            if key not in state["session"]:
+                state["session"][key] = value
+                added.append(f"session.{key}")
+    errors = validate_state(state)
+    if errors:
+        return report("acr.state-migrate", errors)
+    if added and not args.dry_run:
+        dump_json(path, state)
+    return report("acr.state-migrate", [], extra={"added": added, "dry_run": bool(args.dry_run)})
+
+
 def cmd_state_show(_args) -> int:
     root = repo_root()
     state, errors = read_state(root)
@@ -576,6 +646,15 @@ def cmd_state_validate(_args) -> int:
     return report("acr.state-validate", errors)
 
 
+def session_discipline_required(root: Path) -> bool:
+    """Whether this medium's kernel row demands a declared model and effort."""
+    adapter, errors = read_adapter(root)
+    if errors or not isinstance(adapter, dict):
+        return False
+    automation = adapter.get("automation") or {}
+    return bool(automation.get("session_discipline_required"))
+
+
 def cmd_heartbeat(args) -> int:
     root = repo_root()
     state, errors = read_state(root)
@@ -583,9 +662,34 @@ def cmd_heartbeat(args) -> int:
         return report("acr.heartbeat", errors)
     when = now_utc()
     stamp = iso(when)
+    session = state.get("session") or dict(BLANK_SESSION)
+    warnings: list[str] = []
+
+    if args.stage == CYCLE_START:
+        if session_discipline_required(root) and not (args.model and args.effort):
+            return report("acr.heartbeat", ["session_discipline_required_but_model_unset"])
+        session = {"model": args.model, "effort": args.effort, "started_at": stamp}
+    else:
+        # Mid-cycle a declared model or effort may be repeated, never changed.
+        for field, given in (("model", args.model), ("effort", args.effort)):
+            if given and session.get(field) and given != session[field]:
+                return report("acr.heartbeat",
+                              [f"session_{field}_changed_mid_cycle:{session[field]}->{given}"])
+            if given and not session.get(field):
+                session[field] = given
+        last = parse_iso((state.get("heartbeat") or {}).get("last_seen_at"))
+        if session.get("started_at") and last:
+            gap = (when - last).total_seconds() / 60.0
+            if gap > DEFAULT_MAX_IDLE_GAP_MINUTES:
+                warnings.append(f"session_idle_gap_exceeded:{int(gap)}min")
+
     entry = {"status": args.status, "at": stamp, "detail": args.detail or ""}
     if args.run_url:
         entry["run_url"] = args.run_url
+    if session.get("model"):
+        entry["model"] = session["model"]
+    if session.get("effort"):
+        entry["effort"] = session["effort"]
     state.setdefault("stages", {})[args.stage] = entry
     state["heartbeat"] = {
         "last_seen_at": stamp,
@@ -606,12 +710,15 @@ def cmd_heartbeat(args) -> int:
     elif args.status == "hold":
         if state.get("status") != "PAUSED":
             state["status"] = "HOLD"
+    # The cycle owns the session. When it ends, the next cycle declares its own.
+    state["session"] = dict(BLANK_SESSION) if args.stage == CYCLE_END else session
     errors = validate_state(state)
     if errors:
         return report("acr.heartbeat", errors)
     dump_json(root / STATE_FILE, state)
-    return report("acr.heartbeat", [], extra={"stage": args.stage, "recorded_at": stamp,
-                                              "runtime_status": state["status"]})
+    return report("acr.heartbeat", [], warnings,
+                  extra={"stage": args.stage, "recorded_at": stamp,
+                         "runtime_status": state["status"], "session": state["session"]})
 
 
 def cmd_pause(args) -> int:
@@ -655,6 +762,15 @@ def cmd_receipt(args) -> int:
         return report("acr.receipt", errors)
     if not SLUG_RE.match(args.slug or ""):
         return report("acr.receipt", [f"invalid_slug:{args.slug}"])
+    automation = adapter.get("automation") or {}
+    reserved = {str(x) for x in (automation.get("human_only_decisions") or [])}
+    if args.actor == "agent" and args.decision_id and str(args.decision_id) in reserved:
+        # The constitution reserves this decision to the owner. A receipt is the
+        # record that it was taken, so an agent may not be the one signing it.
+        return report("acr.receipt",
+                      [f"agent_performed_human_only_decision:{args.decision_id}"])
+    if args.dispatch_plan_sha and not re.fullmatch(r"[0-9a-f]{64}", args.dispatch_plan_sha):
+        return report("acr.receipt", [f"invalid_dispatch_plan_sha:{args.dispatch_plan_sha}"])
     when = now_utc()
     receipt = {
         "schema_version": RECEIPT_SCHEMA_VERSION,
@@ -669,6 +785,9 @@ def cmd_receipt(args) -> int:
         "visual_provenance_sha256": args.visual_sha,
         "local_gate_receipt_sha256": args.local_gate_sha,
         "kernel_receipt_sha256": args.kernel_receipt_sha,
+        "actor": args.actor,
+        "decision_id": args.decision_id,
+        "dispatch_plan_sha256": args.dispatch_plan_sha,
         "local_gates_passed": [g for g in (args.gate or []) if g],
         "post_publish_verification": {
             "status": args.verification_status,
@@ -705,6 +824,9 @@ def cmd_receipt(args) -> int:
         dump_json(root / STATE_FILE, state)
     return report("acr.receipt", [], warnings=state_errors,
                   extra={"receipt_id": receipt_id, "receipt_sha256": receipt["receipt_sha256"]})
+
+
+RECEIPT_ACTORS = {"agent", "owner"}
 
 
 def cmd_verify_receipt(args) -> int:
@@ -819,10 +941,19 @@ def cmd_gate(args) -> int:
         }
 
     if adapter and not adapter_errors:
-        for gate in adapter.get("automation", {}).get("required_local_gates", []):
+        automation = adapter.get("automation", {})
+        for gate in automation.get("required_local_gates", []):
             target = root / gate.split()[0]
             if not target.exists():
                 errors.append(f"required_local_gate_missing:{gate}")
+        if args.for_run and automation.get("session_discipline_required"):
+            plan = root / (args.dispatch_plan or DISPATCH_PLAN_FILE)
+            if not plan.is_file():
+                # The plan says which tier does what before the cycle spends
+                # anything. Its absence is the cycle starting undecided.
+                errors.append(f"dispatch_plan_missing:{plan.name}")
+            else:
+                extra["dispatch_plan_sha256"] = sha256_file(plan)
 
     return report("acr.gate", errors, warnings, extra)
 
@@ -843,12 +974,18 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("state-show").set_defaults(func=cmd_state_show)
     sub.add_parser("state-validate").set_defaults(func=cmd_state_validate)
 
+    sm = sub.add_parser("state-migrate")
+    sm.add_argument("--dry-run", action="store_true")
+    sm.set_defaults(func=cmd_state_migrate)
+
     hb = sub.add_parser("heartbeat")
     hb.add_argument("--stage", required=True)
     hb.add_argument("--status", required=True, choices=sorted(STAGE_STATUSES))
     hb.add_argument("--detail")
     hb.add_argument("--source")
     hb.add_argument("--run-url")
+    hb.add_argument("--model", help="declared once at cycle_start; refused if changed mid-cycle")
+    hb.add_argument("--effort", help="declared once at cycle_start; refused if changed mid-cycle")
     hb.set_defaults(func=cmd_heartbeat)
 
     pa = sub.add_parser("pause")
@@ -872,6 +1009,9 @@ def build_parser() -> argparse.ArgumentParser:
     rc.add_argument("--gate", action="append")
     rc.add_argument("--verification-status", default="PENDING", choices=["PASS", "FAIL", "PENDING"])
     rc.add_argument("--verification-detail")
+    rc.add_argument("--actor", default="agent", choices=sorted(RECEIPT_ACTORS))
+    rc.add_argument("--decision-id")
+    rc.add_argument("--dispatch-plan-sha")
     rc.set_defaults(func=cmd_receipt)
 
     vr = sub.add_parser("verify-receipt")
@@ -885,6 +1025,7 @@ def build_parser() -> argparse.ArgumentParser:
     gt.add_argument("--strict", action="store_true", help="treat a stale heartbeat as a failure")
     gt.add_argument("--for-run", action="store_true", help="gate an unattended run, not just CI")
     gt.add_argument("--max-consecutive-failures", type=int, default=3)
+    gt.add_argument("--dispatch-plan", help=f"default {DISPATCH_PLAN_FILE}")
     gt.set_defaults(func=cmd_gate)
 
     return p

@@ -4,7 +4,7 @@
   "canonical_repository": "murata3594-cyber/military-v3",
   "canonical_runtime_doc": "docs/AUTONOMOUS_CONTENT_RUNTIME.md",
   "canonical_runtime_client": "scripts/acr_runtime.py",
-  "acr_client_sha256": "b6901a7046233e61a9a58e40a7a757d551dbe66af941aa7772eab8e92e25f894",
+  "acr_client_sha256": "afb42699a9003db643162384b15e755b64030ebf93138b4eef8f0f4e20131351",
   "relationship_to_feedback_kernel": "Additive. config/unified_production_profiles.json and scripts/unified_feedback_gate.py own owner feedback, invariants, evidence and release verification. This registry owns only the operational half: is the medium actually running unattended, when did it last succeed, and does every publish carry a receipt. Neither file may redefine the other's fields.",
   "automation_modes": {
     "agent_driven": "起動されて初めて動く。起動後は公開まで自律。",
@@ -27,7 +27,10 @@
     "strict_freshness_scope": "watchdog/health checks only; do not use --strict to bootstrap a never-run runtime",
     "post_publish_verification_required": true,
     "repeated_failure_hard_block_at": 3,
-    "silence_is_not_success": true
+    "silence_is_not_success": true,
+    "human_authority_constitution": "config/human_authority_constitution.json",
+    "dispatch_plan_file": "dispatch_plan.json",
+    "session_discipline": "One cycle runs on one model at one effort. cycle_start declares both; a mid-cycle change is refused. Silence about the model is not the same as a model being fixed."
   },
   "repositories": {
     "murata3594-cyber/military-now-site": {
@@ -66,7 +69,19 @@
       "gate_order_note": "build_dist.py regenerates SEO and runs the injector chain against the source tree before writing dist/; the dist-reading QA gates are only meaningful after it.",
       "excluded_gates": {
         "scripts/qa_revenue_density.py": "superseded: enforces the removed seven-card revenue wall and interstitial"
-      }
+      },
+      "human_authority_medium": "web_blog",
+      "session_discipline_required": true,
+      "human_only_decisions": [
+        "credential_or_secret_change",
+        "external_account_action",
+        "hard_block_override",
+        "kernel_rule_weakening",
+        "legal_risk_publication",
+        "money_or_contract_commitment",
+        "owner_content_deletion",
+        "publish_on_hold_topic"
+      ]
     },
     "murata3594-cyber/review-sosenkyo": {
       "profile": "review_media",
@@ -99,6 +114,18 @@
         "ANTHROPIC_API_KEY repository secret configured",
         "UPFOS_READ_TOKEN repository secret can read murata3594-cyber/military-v3",
         "data/automation_runtime.json committed and heartbeating from github_actions"
+      ],
+      "human_authority_medium": "review_site",
+      "session_discipline_required": true,
+      "human_only_decisions": [
+        "credential_or_secret_change",
+        "external_account_action",
+        "hard_block_override",
+        "kernel_rule_weakening",
+        "legal_risk_publication",
+        "money_or_contract_commitment",
+        "owner_content_deletion",
+        "unverified_review_count_publication"
       ]
     },
     "murata3594-cyber/note-factory-v3": {
@@ -133,7 +160,20 @@
         "note login session valid",
         "OPENAI_API_KEY valid",
         "sales export ingestion succeeding"
-      ]
+      ],
+      "human_authority_medium": "note_article",
+      "session_discipline_required": false,
+      "human_only_decisions": [
+        "credential_or_secret_change",
+        "external_account_action",
+        "hard_block_override",
+        "kernel_rule_weakening",
+        "money_or_contract_commitment",
+        "owner_content_deletion",
+        "paid_content_pricing",
+        "unverifiable_earnings_claim_publication"
+      ],
+      "session_discipline_note": "daemon-owned cycle; the daemon does not emit cycle_start and its model is fixed in its own config, so requiring a declared model here would stop a working heartbeat without adding discipline. Enable once the daemon emits cycle_start with --model/--effort."
     }
   }
 }
