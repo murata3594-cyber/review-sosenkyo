@@ -43,5 +43,10 @@
     "holds": 1,
     "failures": 0,
     "computed_at": "2026-09-03T01:26:09Z"
+  },
+  "session": {
+    "model": null,
+    "effort": null,
+    "started_at": null
   }
 }

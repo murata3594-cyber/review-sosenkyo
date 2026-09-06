@@ -1,9 +1,13 @@
 {
   "schema_version": "1.0.0",
   "adapter_path": "UNIFIED_PRODUCTION_SYSTEM.json",
-  "adapter_blob_sha": "6eff7d7a256ec6ec1ef34c4d89a137193a9880bf",
+  "adapter_blob_sha": "a6f71851d9a6639e08cdeb4a70a747e759d32904",
   "kernel_repository": "murata3594-cyber/military-v3",
   "kernel_branch": "master",
   "required_kernel_version": "2.0.0",
-  "policy": {"adapter_change_requires_lock_refresh": true, "central_adapter_registry_must_be_refreshed": true, "silent_adapter_drift_forbidden": true}
+  "policy": {
+    "adapter_change_requires_lock_refresh": true,
+    "central_adapter_registry_must_be_refreshed": true,
+    "silent_adapter_drift_forbidden": true
+  }
 }

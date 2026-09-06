@@ -43,12 +43,48 @@ jobs:
         shell: bash
         run: echo "head=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+      - name: Fix the session model and write the dispatch plan
+        id: session
+        env:
+          ACR_MAIN_MODEL: ${{ vars.ACR_MAIN_MODEL }}
+          ACR_MAIN_EFFORT: ${{ vars.ACR_MAIN_EFFORT }}
+        shell: bash
+        run: |
+          # A cycle that starts without a declared model and effort is a cycle
+          # nobody decided the cost of. Silence is not a default here.
+          if [ -z "$ACR_MAIN_MODEL" ] || [ -z "$ACR_MAIN_EFFORT" ]; then
+            echo "::error::ACR_MAIN_MODEL / ACR_MAIN_EFFORT repository variables are not configured; the unattended cycle has no fixed model."
+            exit 1
+          fi
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          model, effort = os.environ["ACR_MAIN_MODEL"], os.environ["ACR_MAIN_EFFORT"]
+          plan = {
+              "schema_version": "1.0.0",
+              "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "main_model": model,
+              "main_effort": effort,
+              "tasks": [
+                  {"id": "plan", "work": "semantic_judgment", "tier": "judgment",
+                   "effort": effort, "delegated_to_subagent": False},
+                  {"id": "write", "work": "draft_writing", "tier": "directed",
+                   "effort": "medium", "delegated_to_subagent": True},
+                  {"id": "qa", "work": "review", "tier": "judgment",
+                   "effort": effort, "delegated_to_subagent": False},
+              ],
+          }
+          with open("dispatch_plan.json", "w", encoding="utf-8") as handle:
+              json.dump(plan, handle, ensure_ascii=False, indent=2)
+          print("dispatch plan fixed:", model, effort)
+          PY
+
       - name: Runtime precondition
         id: gate
         shell: bash
         run: |
           set +e
-          python scripts/acr_runtime.py gate --for-run | tee /tmp/acr_gate.json
+          python scripts/acr_runtime.py gate --for-run --dispatch-plan dispatch_plan.json | tee /tmp/acr_gate.json
           echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
           exit 0
 
@@ -58,6 +94,7 @@ jobs:
           ACR_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           python scripts/acr_runtime.py heartbeat --stage cycle_start --status skip --source github_actions \
+            --model "${{ vars.ACR_MAIN_MODEL }}" --effort "${{ vars.ACR_MAIN_EFFORT }}" \
             --run-url "$ACR_RUN_URL" --detail "scheduled comparison cycle started"
 
       - name: Plan the cycle outside the repository
@@ -146,6 +183,7 @@ jobs:
           cat /tmp/agent_scope.md /tmp/work_order.md > /tmp/agent_instruction.md
           set +e
           claude -p "$(cat /tmp/agent_instruction.md)" \
+            --model "${{ vars.ACR_MAIN_MODEL }}" \
             --allowedTools "Read,Write,Edit,Glob,Grep,WebFetch,WebSearch" \
             2>&1 | tee /tmp/agent.log
           echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"

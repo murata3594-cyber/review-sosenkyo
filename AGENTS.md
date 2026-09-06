@@ -19,6 +19,9 @@
 
 ## 常時守ること
 
+- **Human Authority Constitution v1**（`config/human_authority_constitution.json`）を作業前に読む。`human_only_decisions` に列挙された行為はAIが実行せず、決裁待ちとして報告する。AIが出した数字は一次資料で確認するまで未確認として扱う。
+- サイクルは1モデル・1 effortで走る。`cycle_start` で両方を宣言し（`python scripts/acr_runtime.py heartbeat --stage cycle_start --status ok --source github_actions --model "$ACR_MAIN_MODEL" --effort "$ACR_MAIN_EFFORT"`）、途中で変えない。変えようとする heartbeat は拒否される。
+- 完了報告は決裁書形式（情報収集／分析／リスク管理／レッドチーム／バックオフィス／結論／決裁待ち）で各1〜3行。レッドチーム欄が空の報告は完了ではない。人間にしか決められない項目は決裁待ちへ載せ、AIが代行しない。
 - 公開モードは既存契約どおり事後承認型。通常の根拠確認済みコンテンツはQA通過後に進める。
 - 公式仕様を一次根拠とし、レビューは使用傾向の根拠として扱う。レビュー数、評価、実使用、価格、在庫、試験結果、互換性を捏造しない。
 - 比較条件が揃わない場合は無理に総合1位を作らない。
