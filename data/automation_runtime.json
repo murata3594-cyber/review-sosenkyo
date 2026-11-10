@@ -10,22 +10,22 @@
   "status": "HOLD",
   "paused_reason": null,
   "heartbeat": {
-    "last_seen_at": "2026-11-09T02:57:55Z",
+    "last_seen_at": "2026-11-10T04:47:16Z",
     "source": "github_actions",
-    "run_url": "https://github.com/murata3594-cyber/review-sosenkyo/actions/runs/42553734691"
+    "run_url": "https://github.com/murata3594-cyber/review-sosenkyo/actions/runs/42758022960"
   },
   "stages": {
     "cycle_start": {
       "status": "skip",
-      "at": "2026-11-09T02:57:47Z",
+      "at": "2026-11-10T04:47:09Z",
       "detail": "scheduled comparison cycle started",
-      "run_url": "https://github.com/murata3594-cyber/review-sosenkyo/actions/runs/42553734691"
+      "run_url": "https://github.com/murata3594-cyber/review-sosenkyo/actions/runs/42758022960"
     },
     "cycle_end": {
       "status": "hold",
-      "at": "2026-11-09T02:57:55Z",
+      "at": "2026-11-10T04:47:16Z",
       "detail": "ANTHROPIC_API_KEY is not configured",
-      "run_url": "https://github.com/murata3594-cyber/review-sosenkyo/actions/runs/42553734691"
+      "run_url": "https://github.com/murata3594-cyber/review-sosenkyo/actions/runs/42758022960"
     }
   },
   "last_success_at": null,
@@ -42,6 +42,6 @@
     "post_publish_verified": 0,
     "holds": 1,
     "failures": 0,
-    "computed_at": "2026-11-09T02:57:55Z"
+    "computed_at": "2026-11-10T04:47:16Z"
   }
 }
