@@ -35,3 +35,11 @@ Only stop before publishing when a hold condition in `AUTONOMOUS_PUBLISHING.md` 
 Cloudflare Worker Static Assets is production. GitHub Pages is a noindex backup. Do not manually maintain deploy-time canonical/OG/JSON-LD, affiliate CTA blocks, analytics tags or generated sitemap metadata.
 
 Never add credentials, API keys, cookies, tokens, real `.env`, personal data, or bulk raw review text. Never invent missing evidence, ratings, review counts, firsthand use, product compatibility, prices or test results. Keep `main` deployable.
+
+<!-- ONE_STROKE_WORKFLOW:BEGIN -->
+## 一度の依頼で品質確認・保存まで完遂する工程
+新規・継続の実作業開始時に `docs/knowledge/ONE_STROKE_WORKFLOW.md` を読み、対象案件のCURRENT・過去の修正・採用済み成果へ接続してください。
+不要な再指示待ちをせず、実装・検査・原因修正・再検査・保存まで進めます。
+既存担当との重複、結果不明の再送、未変更成果の全再生成を避け、実物の品質確認を省略しません。
+この追補は既存の案件仕様・専門審査・担当・費用承認・公開条件を変更しません。
+<!-- ONE_STROKE_WORKFLOW:END -->
