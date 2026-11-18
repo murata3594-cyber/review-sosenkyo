@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "revision": "2026-11-15-rollout-v1",
+  "repository": "review-sosenkyo",
+  "scope": "workflow_only",
+  "manual_path": "docs/knowledge/ONE_STROKE_WORKFLOW.md",
+  "manual_sha256": "a44c1df9baeae7549cd0d9d40200c4e19f4e6547598df3783fd787b920a143e2",
+  "entrypoints": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md"
+  ],
+  "activation": "after_owner_merge_and_repository_context_read",
+  "execution_authorization_changed": false
+}
